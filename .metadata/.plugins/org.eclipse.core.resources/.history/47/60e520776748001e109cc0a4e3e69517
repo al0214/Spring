@@ -1,0 +1,11 @@
+package org.zerock.domain;
+
+import java.awt.List;
+import org.zerock.domain.SampleDTO
+
+import lombok.Data;
+
+@Data
+public class SampleDTOList {
+	private List<SampleDTO>
+}

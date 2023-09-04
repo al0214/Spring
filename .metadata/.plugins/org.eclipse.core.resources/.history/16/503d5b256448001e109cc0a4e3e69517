@@ -1,0 +1,21 @@
+package org.zerock.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.log4j.Log4j;
+
+// 자동으로 빈 객체에 등록
+// 그 이유는 servlet-context.xml에 <context:component-scan base-package="org.zerock.controller" /> 태그가 존재하기 때문
+
+@Controller
+@RequestMapping("/sample/*") // 모든 메서드들의 기본적인 URL 경로 지정
+@Log4j
+public class SampleController {
+	
+	@RequestMapping("")
+	public void basic(){
+		
+		log.info("basic................");
+	}
+}

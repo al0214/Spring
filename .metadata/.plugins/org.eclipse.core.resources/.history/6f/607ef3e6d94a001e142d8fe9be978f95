@@ -1,0 +1,10 @@
+package com.zerock.service;
+
+import java.awt.List;
+
+import com.zerock.domain.BoardVO;
+
+public interface BoardService {
+	
+	public BoardVO get(Long bno);
+}

@@ -1,0 +1,11 @@
+package com.zerock.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
+public class BoardMapper {
+	
+	@Select("select * from BOARD.LIST_BOARD")
+	public List<BoardVO> getList();
+}
