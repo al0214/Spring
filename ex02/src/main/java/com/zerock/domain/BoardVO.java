@@ -12,3 +12,5 @@ public class BoardVO {
 	private Date create_date;
 	private Date change_date;
 }
+
+// 데이터 형식대로 불러오는 곳

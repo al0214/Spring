@@ -1,0 +1,13 @@
+package com.jaeu.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
+import com.jaeu.domain.BoardVO;
+
+public interface BoardMapper {
+	
+	@Select("select * from boardExam")
+	public List<BoardVO> getList();
+}

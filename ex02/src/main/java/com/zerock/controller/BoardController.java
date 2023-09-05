@@ -1,9 +1,6 @@
 package com.zerock.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +28,7 @@ public class BoardController {
 		
 		
 		log.info("list");
-		model.addAttribute("list");
+		model.addAttribute("list", service.getList());
 	}
 	
 	@PostMapping("/register")
