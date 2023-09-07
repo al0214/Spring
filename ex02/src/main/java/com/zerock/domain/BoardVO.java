@@ -9,8 +9,8 @@ public class BoardVO {
 	private Long bno;
 	private String title;
 	private String detail;
-	private Date create_date;
-	private Date change_date;
+	private Date createDate;
+	private Date changeDate;
 }
 
 // 데이터 형식대로 불러오는 곳

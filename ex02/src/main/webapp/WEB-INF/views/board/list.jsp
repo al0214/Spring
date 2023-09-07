@@ -56,14 +56,15 @@
 									<td><c:out value="${board.bno}" /></td>
 									<td><c:out value="${board.title}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${board.create_date}" /></td>
+											value="${board.createDate}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${board.change_date}" /></td>
+											value="${board.changeDate}" /></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 
 					</table>
+				
 					<!-- /.table-responsive -->
 				</div>
 				<!-- /.panel-body -->

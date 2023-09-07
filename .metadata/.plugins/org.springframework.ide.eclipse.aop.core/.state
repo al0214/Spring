@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
 <aop-project name="Board"/>
+<aop-project name="BoardExam-Broken"/>
+<aop-project name="BoardExam"/>
+<aop-project name="BoardExam02"/>
 <aop-project name="ex01"/>
 <aop-project name="ex02"/>
 </aop-reference-model>

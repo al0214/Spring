@@ -30,46 +30,4 @@ public class BoardController {
 		log.info("list");
 		model.addAttribute("list", service.getList());
 	}
-	
-	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) { //RedirectAttributes 등록이 끝난후 다시 목록 화면으로 이동하기 위함
-		
-		log.info("register: " + board);
-		
-		service.register(board);
-		
-		rttr.addFlashAttribute("result", board.getBno());
-		
-		return "redirect:/board/list";
-		
-	}
-	
-	@GetMapping("/get")
-	public void get(@RequestParam("bno") Long bno, Model model) {
-		
-		log.info("/get");
-		model.addAttribute("board", service.get(bno));
-	}
-	
-	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
-		log.info("modify: " + board);
-		
-		if(service.modify(board)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/board/list";
-	}
-	
-	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
-		
-		log.info("remove..." + bno);
-		if(service.remove(bno)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		
-		return "redirect:/board/list";
-	}
-	
 }
