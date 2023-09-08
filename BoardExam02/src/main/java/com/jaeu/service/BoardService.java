@@ -11,5 +11,6 @@ public interface BoardService {
 	public List<BoardVO> getList(Criteria cri);
 	
 	public void register(BoardVO board);
+	
 
 }

@@ -13,25 +13,28 @@
 			from 
 			(
 			select
-			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
+			 	/*+INDEX_ASC(boardExam02 pk_boardExam02)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
 			 from 
-			 	boardExam where ROWNUM <= #{pageNum} * #{amount}
+			 	boardExam02 where ROWNUM <= #{pageNum} * #{amount}
 			 ) 
 			 where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
 	
 	<insert id="insert">
-		insert into boardExam(bno, title, detail) values (tqq_seq.nextval,#{title, jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
+		insert into BoardExam02(bno, title, detail)
+		values (boardExam02_seq.nextval, #{title, jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
-			select tqq_seq.nextval from dual
+			select BoardExam02_seq.nextval from dual
 		</selectKey>
 		
-		insert into boardExam(bno, title, detail) values (#{bno},#{title, jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
+		insert into boardExam02(bno, title, detail)
+		values (#{bno}, #{title, jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
 	</insert>
+	
 	<!--  java.sql.SQLException: ORA-17004: 열 유형이 부적합합니다.: 1111 해당 오류 발생해서 입력값을 줄때 jdbcType을 지정해서 해결했습니다. -->
 	<!-- 한글이 깨지는 문제가 발생하여 servlet-context에 설정하여 해결 했습니다. -->
 	<!-- 11g 10g의 차이는 대소문자 구별을 하는지 안하는지 여부 이다. alter system set sec_case_sensitive_logon=false; SQL 문을 사용하여 대소문자 구별 기능을 해지할 수 있다. -->

@@ -1,6 +1,7 @@
 package com.jaeu.service;
 
 
+
 import java.util.List;
 
 import com.jaeu.domain.BoardVO;
@@ -26,14 +27,12 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.getWithPaging(cri);
 	}
-
+	
 	@Override
 	public void register(BoardVO board) {
-		
-		log.info("register..................");
+		log.info("register...."+ board);
 		
 		mapper.insertSelectKey(board);
-		
 	}
-	
+
 }

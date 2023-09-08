@@ -56,8 +56,8 @@ CREATE SEQUENCE tqq_seq
 
 Create TABLE boardExam(
     bno number(10,0) ,
-    title varchar2(40) not null ,
-    detail varchar2(400) not null ,
+    title varchar2(400) not null ,
+    detail varchar2(1400) not null ,
     createDate date default SYSDATE,
     changeDate date default SYSDATE
 
@@ -93,7 +93,7 @@ select * from boardExam order by bno desc;
 
 select /*+ INDEX_DESC(boardExam pk_board */ * from boardExam where bno > 0;
 
-alter table boardExam add constraint pk_board primary key (bno);
+alter table boardExam02 add constraint pk_board primary key (bno);
 
 select * from boardExam order by bno desc;
 
@@ -167,3 +167,59 @@ select
 			 	boardExam where ROWNUM <= 1 * 5;
 
 select * from boardExam order by bno asc;
+
+CREATE SEQUENCE boardExam02_seq
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 1
+       MAXVALUE 1000000000000
+       NOCYCLE
+       NOCACHE
+       NOORDER;
+
+Create TABLE boardExam02(
+    bno number(10,0) ,
+    title varchar2(400) not null ,
+    detail varchar2(4000) not null ,
+    createDate date default SYSDATE,
+    changeDate date default SYSDATE
+
+);
+
+Drop table boardExam02;
+Drop SEQUENCE boardExam02_seq;
+
+alter table boardExam02 add constraint pk_boardExam02 primary key (bno);
+
+select ROWNUM rn, bno, title, detail, createDate, changeDate from boardExam02;
+
+insert into boardExam02(bno, title, detail) VALUES (boardExam02_seq.nextval, '테스트 제목', '테스트 내용');
+commit;
+
+select
+				bno, title, detail, createDate, changeDate
+			from
+			(
+			select
+			 	/*+INDEX_ASC(boardExam02 pk_boardExam02)*/ ROWNUM rmn, BNO, title, detail, createDate, changeDate
+			 from
+			 	boardExam02 where ROWNUM <= 1 * 10
+			 )
+			 where rmn > (1 -1) * 10;
+
+select * from BoardExam02 order by bno asc;
+
+select
+			 	/*+INDEX_ASC(boardExam02 pk_boardExam02)*/ ROWNUM rmn, BNO, title, detail, createDate, changeDate
+			 from
+boardExam where ROWNUM <= 1 * 10;
+
+select bno from boardExam02;
+
+insert into boardExam02(bno, title, detail) (select boardExam02_seq.nextval, title, detail from boardExam02);
+
+select count(*) from boardExam02;
+
+delete from boardExam02 where bno > 1;
+
+commit ;

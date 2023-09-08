@@ -43,21 +43,19 @@
 					<form name="frr" role="form" action="/board/register" method="post"
 						onSubmit="return Checkform()" onReset="return Returnform()"
 						accept-charset="utf-8">
-						<div style="margin-top: 10px">		
+						<div style="margin-top: 10px">
 							<div class="form-group" style="margin-bottom: 10px">
-								<h3>Title</h3> <input class="form-control"
-									name="title" style="width: 80%" placeholder="제목을 입력해 주세요" >
+								<h3>Title</h3>
+								<input class="form-control" name="title" style="width: 80%"
+									placeholder="제목을 입력해 주세요">
 							</div>
 							<div class="form-group">
 								<h3>Text area</h3>
 								<textarea name="detail" rows="3" class="form-control"
-									style="width: 80%; height=100px; resize: none;" placeholder="내용을 입력해 주세요"></textarea>
+									style="width: 80%; height =100px; resize: none;"
+									placeholder="내용을 입력해 주세요"></textarea>
 							</div>
 						</div>
-						<div>
-							<input type='file' name='files'>
-						</div>
-						
 						<div style="margin-top: 10px;">
 							<button type="submit" class="btn btn-default">Submit
 								Button</button>
@@ -77,7 +75,7 @@
 
 <script type="text/javascript">
 	function Checkform() {
-		if (frr.title.value == ""&frr.title.value=="&nbsp") {
+		if (frr.title.value == "" & frr.title.value == "&nbsp") {
 
 			frr.title.focus();
 			alert("제목을 입력해 주세요");
@@ -91,6 +89,8 @@
 
 			return false;
 		}
+		
+		alert("등록 되었습니다.")
 	}
 
 	function Returnform() {

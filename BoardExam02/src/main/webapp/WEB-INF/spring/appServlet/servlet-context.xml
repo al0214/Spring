@@ -27,13 +27,7 @@
 		<beans:property name="contentType"
 			value="text/html; charset=UTF-8" />
 	</beans:bean>
-	
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="defaultEncoding" value="utf-8"></beans:property>
-		<beans:property name="maxUploadSizePerFile" value="104857560"></beans:property>
-		<beans:property name="uploadTempDir" value="file:/D:/Project/Upload/tmp"></beans:property>
-		<beans:property name="maxInMemorySize" value="10485756"></beans:property>
-	</beans:bean>
+
 
 	<context:component-scan
 		base-package="com.jaeu.controller" />

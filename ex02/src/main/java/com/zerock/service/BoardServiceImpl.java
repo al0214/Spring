@@ -26,5 +26,23 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getList();
 	}
 
+	@Override
+	public Object get(long l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String remove(long l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String modify(BoardVO board) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
