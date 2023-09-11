@@ -1,5 +1,5 @@
 create user al0214 identified by board_1234;
-grant connect, resource, dba to al0214;
+create user al0214 identified by board_1234;
 commit;
 
 select * from all_users;
@@ -221,5 +221,6 @@ insert into boardExam02(bno, title, detail) (select boardExam02_seq.nextval, tit
 select count(*) from boardExam02;
 
 delete from boardExam02 where bno > 1;
+
 
 commit ;
