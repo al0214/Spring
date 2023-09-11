@@ -41,7 +41,23 @@
 <!-- Custom Fonts -->
 <link href="/resources/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+ <!-- jQuery -->
+    <script src="/resources/vendor/jquery/jquery.min.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="/resources/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="/resources/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/resources/dist/js/sb-admin-2.js"></script>
+	
 <!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -92,7 +108,25 @@
 						</tbody>
 
 					</table>
-
+					
+					<!-- 모달 추가 -->
+                    <div id="myModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                </div>
+                                <div class="modal-body">처리가 완료되었습니다.</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save change</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					
 					<div style="text-align: center">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
@@ -132,6 +166,24 @@
 			function() {
 
 				var result = '<c:out value="${result}"/>';
+
+                checkModal(result);
+
+                function checkModal(result){
+
+                    if (result === ''){
+                        return;
+                    }
+                    
+                    if(parseInt(result)>0){
+                        $(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다,");
+                    }
+                    $("#myModal").modal("show");
+                }
+
+                
+                
+                
 
 				$("#regBtn").on("click", function() {
 					self.location = "/board/register";
