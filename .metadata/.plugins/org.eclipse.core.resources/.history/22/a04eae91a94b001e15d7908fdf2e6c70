@@ -1,9 +1,0 @@
-package com.jaeu.mapper;
-
-import java.util.List;
-
-import com.jaeu.domain.BoardVO;
-
-public interface BoardMapper {
-	public List<BoardVO> getList();
-}
