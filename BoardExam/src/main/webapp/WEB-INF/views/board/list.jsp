@@ -4,22 +4,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="java.util.*"%>
 <%
- 
-    request.setCharacterEncoding("UTF-8");
- 
+	request.setCharacterEncoding("UTF-8");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
 <style>
-	th{
-		text-align: center;
-	}
- 	th, td {
-		border: 1px solid black;
-		
-	}
+th {
+	text-align: center;
+}
+
+th, td {
+	border: 1px solid black;
+}
 </style>
 
 <html>
@@ -33,38 +31,21 @@
 
 <title>Board</title>
 
-
-<!-- Bootstrap Core CSS -->
-<link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="/resources/vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
- <!-- jQuery -->
-    <script src="/resources/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="/resources/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="/resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="/resources/vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/resources/dist/js/sb-admin-2.js"></script>
-	
 <!-- JQuery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+
+
 </head>
 </head>
 
-<body style="margin:5%">
+<body style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Tables</h1>
@@ -75,30 +56,31 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading" style="margin-bottom:20px">
+				<div class="panel-heading" style="margin-bottom: 20px">
 					Board List Page
 					<button onclick="location='register'"
-						style="float: right; border: none;">Register
-						New Board</button>
+						style="float: right; border: none;">Register New Board</button>
 
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
-						style="border-collapse: collapse; text-align:center;">
+						style="border-collapse: collapse; text-align: center;">
 						<thead>
 							<tr>
-								<th style="text-align:center;">#번호</th>
-								<th style="text-align:center;">제목</th>
-								<th style="text-align:center;">작성일</th>
-								<th style="text-align:center;">수정일</th>
+								<th style="text-align: center;">#번호</th>
+								<th style="text-align: center;">제목</th>
+								<th style="text-align:center;">내용</th>
+								<th style="text-align: center;">작성일</th>
+								<th style="text-align: center;">수정일</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${list}" var="board">
 								<tr>
-									<td><c:out value="${board.bno}"/></td>
-									<td><c:out value="${board.title}" /></td>
+									<td><c:out value="${board.bno}" /></td>
+									<td><a href="/board/get"><c:out value="${board.title}" /></a></td>
+									<td><c:out value="${board.detail}"/></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
 											value="${board.createDate}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -108,25 +90,27 @@
 						</tbody>
 
 					</table>
-					
+
 					<!-- 모달 추가 -->
-                    <div id="myModal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                </div>
-                                <div class="modal-body">처리가 완료되었습니다.</div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save change</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					
-					
+					<div id="myModal" class="modal fade" id="myModal" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+								</div>
+								<div class="modal-body">처리가 완료되었습니다.</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal" style="border: none;background-color: #1a73e8;color: white;border: none;background-color: #1a73e8;color: white;">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
 					<div style="text-align: center">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev}">
@@ -167,23 +151,20 @@
 
 				var result = '<c:out value="${result}"/>';
 
-                checkModal(result);
+				checkModal(result);
 
-                function checkModal(result){
+				function checkModal(result) {
 
-                    if (result === ''){
-                        return;
-                    }
-                    
-                    if(parseInt(result)>0){
-                        $(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다,");
-                    }
-                    $("#myModal").modal("show");
-                }
+					if (result === '') {
+						return;
+					}
 
-                
-                
-                
+					if (parseInt(result) > 0) {
+						$(".modal-body").html(
+								"게시글 " + parseInt(result) + " 번이 등록되었습니다,");
+					}
+					$("#myModal").modal("show");
+				}
 
 				$("#regBtn").on("click", function() {
 					self.location = "/board/register";
@@ -200,10 +181,10 @@
 							console.log('click');
 							actionForm.find("input[name='pageNum']").val(
 									$(this).attr("href"));
-									actionForm.submit();
-							
+							actionForm.submit();
+
 						})
-						
+
 			})
 </script>
 

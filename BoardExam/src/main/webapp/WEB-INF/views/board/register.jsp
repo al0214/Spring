@@ -23,7 +23,7 @@
 <!-- Custom Fonts -->
 
 
-<div style="margin: 10%">
+<div style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board Register</h1>
@@ -34,46 +34,49 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="panel panel-default">
 
-				<div class="panel-heading">Board Register Page</div>
-				<!-- panel heading -->
-				<div class="panel-body">
+			<!-- panel heading -->
+			<div class="panel-body">
 
-					<form name="frr" role="form" action="/board/register" method="post"
-						onSubmit="return Checkform()" onReset="return Returnform()"
-						accept-charset="utf-8">
-						<div style="margin-top: 10px">		
+				<form name="frr" role="form" action="/board/register" method="post"
+					onSubmit="return Checkform()" onReset="return Returnform()"
+					accept-charset="utf-8">
+					<div style="padding: 5px 10px; padding-bottom: 20px;">
+						<div style="margin-top: 10px">
 							<div class="form-group" style="margin-bottom: 10px">
-								<h3>Title</h3> <input class="form-control"
-									name="title" style="width: 80%" placeholder="제목을 입력해 주세요" >
+								<h3>Title</h3>
+								<input class="form-control" name="title"
+									style="width: 80%; outline: none; border: none; font-size: 20px;"
+									placeholder="제목을 입력해 주세요">
 							</div>
 							<div class="form-group">
 								<h3>Text area</h3>
 								<textarea name="detail" rows="3" class="form-control"
-									style="width: 80%; height=100px; resize: none;" placeholder="내용을 입력해 주세요"></textarea>
+									style="width: 80%; height : 75px; resize: none; outline: none; border: none; font-size: 20px;"
+									placeholder="내용을 입력해 주세요"></textarea>
 							</div>
 						</div>
 						<div style="margin-top: 10px;">
-							<button type="submit" class="btn btn-default">Submit
-								Button</button>
-							<button type="reset" class="btn btn-default">Reset
+							<button type="submit" class="btn btn-sm btn-primary"
+								style="border: none; background-color: #1a73e8; color: white;">Submit</button>
+							<button type="reset" class="btn btn-sm btn-primary"
+								style="border: none; background-color: #1a73e8; color: white;">Reset
 								Button</button>
 						</div>
-					</form>
-				</div>
-				<!-- end panel-body -->
+					</div>
+				</form>
 			</div>
 			<!-- end panel-body -->
 		</div>
-		<!-- end panel -->
+		<!-- end panel-body -->
 	</div>
-	<!-- row -->
+	<!-- end panel -->
 </div>
+<!-- row -->
 
 <script type="text/javascript">
 	function Checkform() {
-		if (frr.title.value == ""&frr.title.value=="&nbsp") {
+		if (frr.title.value == "" & frr.title.value == "&nbsp") {
 
 			frr.title.focus();
 			alert("제목을 입력해 주세요");

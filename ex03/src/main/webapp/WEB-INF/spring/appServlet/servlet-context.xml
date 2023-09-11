@@ -24,8 +24,6 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.jaeu.controller" />
-	<context:component-scan base-package="com.jaeu.mapper" />
-	<context:component-scan base-package="com.jaeu.service" />
 	<context:component-scan base-package="com.jaeu.domain" />
 	
 </beans:beans>
