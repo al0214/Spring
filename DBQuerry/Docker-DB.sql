@@ -22,7 +22,16 @@ Create TABLE boardExam(
 
 );
 
+update boardExam set title='테스트 6', detail='테스트 6' where bno='6';
+
+insert into boardExam(bno, title, detail) values (tqq_seq.nextval, '테스트', '테스트 내용');
+
+select count(*) from boardExam;
 
 alter table boardExam add constraint pk_boardExam primary key (bno);
 
 select * from boardExam;
+
+insert into boardExam(bno, title, detail) (select tqq_seq.nextval, title, detail from boardExam);
+
+commit ;
