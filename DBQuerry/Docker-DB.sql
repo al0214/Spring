@@ -15,7 +15,7 @@ CREATE SEQUENCE tqq_seq
 
 Create TABLE boardExam(
     bno number(10,0) ,
-    title varchar2(400) not null ,
+    title varchar2(100) not null ,
     detail varchar2(1400) not null ,
     createDate date default SYSDATE,
     changeDate date default SYSDATE

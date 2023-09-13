@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Modify Page</h1>
-	<button onclick="location='list'" class="btn btn-sm btn-primary"
+	<h1>Board Modify</h1>
+	<!-- list -> detail로 변경해야 함 -->
+	<button onclick="location='list'" class="btn btn-sm btn-primary" 
 		style="border: none; background-color: #1a73e8; color: white; font-size: 15px;">Return
 		Button</button>
 </body>

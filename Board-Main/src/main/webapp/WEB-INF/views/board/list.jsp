@@ -78,7 +78,9 @@ th, td {
 							<c:forEach items="${list}" var="board">
 								<tr>
 									<td><c:out value="${board.bno}" /></td>
-									<td><a href="/board/detail?bno=<c:out value='${board.bno}' />"><c:out value="${board.title}" /></a></td>
+									<td><a
+										href="/board/detail?bno=<c:out value='${board.bno}'/>"><c:out
+												value="${board.title}" /></a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
 											value="${board.createDate}" /></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -151,8 +153,10 @@ th, td {
 				var result = '<c:out value="${result}"/>';
 
 				checkModal(result);
-
-				function checkModal(result) {
+				
+				history.replaceState({}, null, null)
+							
+				function checkModal(result = '' || history.state) {
 
 					if (result === '') {
 						return;
@@ -163,7 +167,7 @@ th, td {
 								"게시글 " + parseInt(result) + " 번이 등록되었습니다,");
 					}
 					$("#myModal").modal("show");
-				}
+				};
 
 				$("#regBtn").on("click", function() {
 					self.location = "/board/register";
