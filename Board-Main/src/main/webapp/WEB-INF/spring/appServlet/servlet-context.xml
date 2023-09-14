@@ -36,7 +36,7 @@
 		base-package="org.jaeu.mapper" />
 	<context:component-scan
 		base-package="org.jaeu.service" />
-		<context:component-scan
+	<context:component-scan
 		base-package="org.jaeu.exception" />
 
 

@@ -33,14 +33,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("/detail")
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void detail(@RequestParam("bno") Long bno, Model model) {
 		// 조회 페이지 테스트
 		log.info("detail........");
 		model.addAttribute("board", service.detail(bno));
 	}
 	
 	@GetMapping("/modify")
-	public void detail() {
+	public void modify() {
 		// 상세 페이지 테스트
 		log.info("modify........");
 	}

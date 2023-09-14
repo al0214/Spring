@@ -40,7 +40,9 @@
 		
 		insert into boardExam(bno, title, detail) values (#{bno},#{title, jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
 	</insert>
+	
 	<!--  java.sql.SQLException: ORA-17004: 열 유형이 부적합합니다.: 1111 해당 오류 발생해서 입력값을 줄때 jdbcType을 지정해서 해결했습니다. -->
 	<!-- 한글이 깨지는 문제가 발생하여 servlet-context에 설정하여 해결 했습니다. -->
 	<!-- 11g 10g의 차이는 대소문자 구별을 하는지 안하는지 여부 이다. alter system set sec_case_sensitive_logon=false; SQL 문을 사용하여 대소문자 구별 기능을 해지할 수 있다. -->
+	<!-- Board List에 번호가 하나씩 뛰어 넘는 경우가 있어서 해결 중 Oracle DB 시퀀스에서 ORDER 명령어를 사용해야지만 NOORDER 명령어를 사용한게 원인 이었다. -->
 </mapper>

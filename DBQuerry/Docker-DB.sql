@@ -10,13 +10,12 @@ CREATE SEQUENCE tqq_seq
        MINVALUE 1
        MAXVALUE 9999
        NOCYCLE
-       NOCACHE
-       NOORDER;
+       ORDER;
 
 Create TABLE boardExam(
     bno number(10,0) ,
-    title varchar2(100) not null ,
-    detail varchar2(1400) not null ,
+    title varchar2(90) not null ,
+    detail varchar2(1200) not null ,
     createDate date default SYSDATE,
     changeDate date default SYSDATE
 
@@ -35,3 +34,11 @@ select * from boardExam;
 insert into boardExam(bno, title, detail) (select tqq_seq.nextval, title, detail from boardExam);
 
 commit ;
+
+delete from boardExam where bno > 10;
+
+select * from boardExam;
+
+select count(*) from boardExam;
+
+delete from boardExam where bno = 4;
