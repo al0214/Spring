@@ -22,44 +22,71 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	private BoardService service;
 
+	// 리스트 페이지
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 
 		int total = service.getTotal();
-		
+
 		log.info("log.......");
 		model.addAttribute("list", service.getWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-	
+
+	// 상세 페이지
 	@GetMapping("/detail")
 	public void detail(@RequestParam("bno") Long bno, Model model) {
 		// 조회 페이지 테스트
 		log.info("detail........");
 		model.addAttribute("board", service.detail(bno));
 	}
-	
+
+	// 수정 페이지
 	@GetMapping("/modify")
-	public void modify() {
+	public void GetModify(@RequestParam("bno") Long bno, Model model) {
 		// 상세 페이지 테스트
-		log.info("modify........");
+		log.info("Open Modify........");
+
+		model.addAttribute("board", service.detail(bno));
 	}
-	
+
+	@PostMapping("/modify")
+	public String PostModify(Long bno, RedirectAttributes rttr) {
+		// 상세 페이지
+		log.info("Modify.......");
+		service.update(bno);
+
+		return "redirect:/board/list";
+
+	}
+
+	// 삭제 페이지
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+
+		log.info("Remove.........");
+		service.delete(bno);
+
+		return "redirect:/board/list";
+	}
+
+	// 등록할 때 사용
 	@GetMapping("/register")
-	public void RegisterableService() {
+	public void GetRegister() {
 		// 페이지를 보여줄때 사용
+		log.info("Open Register");
 	}
-	
+
 	@PostMapping("/register")
-	public String register(BoardVO borad, RedirectAttributes rttr) {
-		
+	public String PostRegister(BoardVO borad, RedirectAttributes rttr) {
+
 		log.info("register : " + borad);
-		
+
 		service.register(borad);
-		
+
 		// addFlashAttribute는 일회성으로 데이터를 넘길때 사용한다 ex) list?pageNum=5&amount=10
 		rttr.addFlashAttribute("result", borad.getBno());
-		
+
 		return "redirect:/board/list";
 	}
 }

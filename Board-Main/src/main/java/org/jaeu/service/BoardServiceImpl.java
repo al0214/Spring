@@ -47,5 +47,17 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.getTotal();
 	}
+
+	@Override
+	public BoardVO delete(Long bno) {
+		
+		return mapper.delete(bno);
+	}
+
+	@Override
+	public BoardVO update(Long bno) {
+		
+		return mapper.update(bno);
+	}
 	
 }

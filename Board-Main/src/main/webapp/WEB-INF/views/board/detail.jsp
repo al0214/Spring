@@ -31,7 +31,9 @@
 <div style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Board Detail</h1>
+			<h1 class="page-header"
+				style="border: 1px; background-color: #570df6; text-align: center; color: white; border-top-right-radius: 20px; border-top-left-radius: 20px; padding: 5px;">Board
+				Detail</h1>
 		</div>
 	</div>
 	<!-- row -->
@@ -40,43 +42,45 @@
 		<div class="col-lg-12">
 
 			<!-- panel heading -->
-			<div class="panel-body">
+			<div class="panel-body" style="margin: 10px;">
 
 				<div style="padding: 5px 10px; padding-bottom: 20px;">
 					<div style="margin-top: 10px">
 						<div class="form-group" style="margin-bottom: 10px">
+							<h3 style="margin-top: 10px">Bunho</h3>
+							<div class="form-control"
+								style="width: 80%; height: auto; font-size: 20px;">${board.bno}번
+							</div>
+
 							<h3>Title</h3>
 							<div class="form-control"
-								style="width: 80%; height:auto; outline: none; border: none; font-size: 20px;">${board.title}
+								style="width: 80%; height: auto; font-size: 20px;">${board.title}
 							</div>
-						</div>
-						<div class="form-group">
+
 							<h3>Content</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; height:auto; outline: none; border: none; font-size: 20px;">
+								style="width: 80%; resize: none; height: auto; font-size: 20px; white-space: pre-line;">
 								${board.detail}</div>
-						</div>
-						<div class="form-group">
+
 							<h3>작성 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; outline: none; border: none; font-size: 20px;">
+								style="width: 80%; resize: none; font-size: 20px;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.createDate}" />
 							</div>
-						</div>
-						<div class="form-group">
+
 							<h3>수정 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; outline: none; border: none; font-size: 20px;">
+								style="width: 80%; resize: none; font-size: 20px;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.changeDate}" />
 							</div>
 						</div>
 					</div>
 					<div style="float: right;">
-						<button onclick="location='modify'" class="btn btn-sm btn-primary"
-							style="border: none; background-color: #1a73e8; color: white; font-size: 15px;">Modify
-							Button</button>
+						<button onclick="location='modify?bno=${board.bno}'" class="btn btn-sm btn-primary"
+							style="border: none; background-color: #570df6; color: white; font-size: 15px;">Modify
+						</button>
 						<button onclick="location='list'" class="btn btn-sm btn-primary"
-							style="border: none; background-color: #1a73e8; color: white; font-size: 15px;">Return
+							style="border: none; background-color: #570df6; color: white; font-size: 15px;">Return
 							Page</button>
 					</div>
 				</div>

@@ -14,4 +14,8 @@ public interface BoardService {
 	public void register(BoardVO board);
 
 	public int getTotal();
+	
+	public BoardVO delete(Long bno);
+	
+	public BoardVO update(Long bno);
 }

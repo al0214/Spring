@@ -18,8 +18,15 @@ th {
 th, td {
 	border: 1px solid black;
 }
-</style>
 
+.pagination>.active>a {
+	z-index: 3;
+	color: #fff;
+	cursor: default;
+	background-color: #570df6 !important;
+	border-color: #570df6 !important;
+}
+</style>
 <html>
 
 <head>
@@ -47,7 +54,7 @@ th, td {
 <body style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Tables</h1>
+			<h1 class="page-header">Board List</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -58,7 +65,7 @@ th, td {
 				<div class="panel-heading" style="margin-bottom: 20px">
 					Board List Page
 					<button onclick="location='register'"
-						style="float: right; border: none; background-color: #1a73e8; color: white; border-radius: 4px;">Register
+						style="float: right; border: none; background-color: #570df6; color: white; border-radius: 4px;">Register
 						New Board</button>
 
 				</div>
@@ -78,7 +85,7 @@ th, td {
 							<c:forEach items="${list}" var="board">
 								<tr>
 									<td><c:out value="${board.bno}" /></td>
-									<td><a
+									<td><a class="move"
 										href="/board/detail?bno=<c:out value='${board.bno}'/>"><c:out
 												value="${board.title}" /></a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
@@ -105,7 +112,7 @@ th, td {
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal"
-										style="border: none; background-color: #1a73e8; color: white; border: none; background-color: #1a73e8; color: white;">Close</button>
+										style="border: none; background-color: #1a73e8; color: white; border: none; background-color: #570df6; color: white;">Close</button>
 								</div>
 							</div>
 						</div>
@@ -186,9 +193,12 @@ th, td {
 									$(this).attr("href"));
 							actionForm.submit();
 
-						})
-
-			})
+						});
+			});
+	
+			
+			
+			
 </script>
 
 </html>
