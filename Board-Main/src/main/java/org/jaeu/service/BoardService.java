@@ -7,7 +7,7 @@ import org.jaeu.domain.Criteria;
 
 public interface BoardService {
 	
-	public BoardVO detail(Long bno);
+	public BoardVO detail(Integer bno);
 	
 	public List<BoardVO> getWithPaging(Criteria cri);
 	
@@ -15,5 +15,5 @@ public interface BoardService {
 
 	public int getTotal();
 
-	boolean modify(BoardVO board);
+	public void update(BoardVO board);
 }

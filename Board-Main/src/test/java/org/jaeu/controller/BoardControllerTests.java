@@ -26,7 +26,6 @@ import lombok.extern.log4j.Log4j;
 // @ContextConfiguration(classes = {
 // org.zerock.config.RootConfig.class,
 // org.zerock.config.ServletConfig.class} )
-
 @Log4j
 public class BoardControllerTests {
 
@@ -41,17 +40,42 @@ public class BoardControllerTests {
 	}
 
 	@Test
-	public void testModify() throws Exception {
+	public void testList() throws Exception {
+
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.get("/board/list")).andReturn().getModelAndView().getModelMap());
+	}
+
+	@Test
+	public void testRegister() throws Exception {
 
 		String resultPage = mockMvc
-				.perform(MockMvcRequestBuilders.post("/board/modify").param("bno", "1").param("title", "수정된 테스트 새글 제목")
-						.param("detail", "수정된 테스트 새글 내용"))
+				.perform(MockMvcRequestBuilders.post("/board/register")
+				.param("title", "테스트 새글 제목")
+				.param("detail", "테스트 새글 내용"))
 				.andReturn().getModelAndView().getViewName();
 
 		log.info(resultPage);
 
 	}
 
+
+	@Test
+	public void testModify() throws Exception {
+		
+		String resultPage = mockMvc
+				.perform(MockMvcRequestBuilders.post("/board/modify")
+						.param("bno", "3")
+						.param("title", "수정된 테스트 새글 제목")
+						.param("detail", "수정된 테스트 새글 내용"))
+				.andReturn().getModelAndView().getViewName();
+		
+		log.info(resultPage);
+				
+	}
+
+
+	
 }
 
 

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
-	private Long bno;
+	private Integer bno;
 	private String title;
 	private String detail;
 	private Date createDate;

@@ -37,7 +37,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public BoardVO detail(Long bno) {
+	public BoardVO detail(Integer bno) {
 		
 		return mapper.detail(bno);
 	}
@@ -49,11 +49,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public boolean modify(BoardVO board) {
+	public void update(BoardVO board) {
 		
-		log.info("modify "+ board);
+		log.info("modify__ "+ board);
 		
-		return mapper.update(board) == 1;
+		mapper.update(board);
 	}
 	
 }

@@ -18,7 +18,7 @@ CREATE SEQUENCE tqq_seq
 -- 내용은 한글 기준 400 글자까지 가능하며 빈값을 허용하지 않음
 -- 생성, 수정 일자는 입력하지 않을시 컴퓨터 기준 시간이 자동 입력됩니다.
 Create TABLE boardExam(
-    bno number(4,0) ,
+    bno int ,
     title varchar2(90) not null ,
     detail varchar2(1200) not null ,
     createDate date default SYSDATE,
@@ -44,6 +44,6 @@ select * from boardExam;
 
 delete from boardExam where bno = 1;
 
-update boardExam set title='수정 테스트', detail='수정 테스트 글', changeDate=SYSDATE where bno=2;
+update boardExam set title='수정 테스트', detail='수정 테스트 글 내용', changeDate=SYSDATE where bno=2;
 
 update boardExam set title='수정', detail='수정', changeDate=SYSDATE where bno=1;

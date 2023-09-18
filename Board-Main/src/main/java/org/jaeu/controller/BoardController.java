@@ -35,7 +35,7 @@ public class BoardController {
 
 	// 상세 페이지
 	@GetMapping("/detail")
-	public void detail(@RequestParam("bno") Long bno, Model model) {
+	public void detail(@RequestParam("bno") Integer bno, Model model) {
 		// 조회 페이지 테스트
 		log.info("detail........");
 		model.addAttribute("board", service.detail(bno));
@@ -43,13 +43,21 @@ public class BoardController {
 
 	// 수정 페이지
 	@GetMapping("/modify")
-	public void GetModify(@RequestParam("bno") Long bno, Model model) {
+	public void GetModify(@RequestParam("bno") Integer bno, Model model) {
 		// 상세 페이지 테스트
 		log.info("Open Modify........");
 
 		model.addAttribute("board", service.detail(bno));
 	}
-
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO board, RedirectAttributes rttr) {
+		log.info("modify:__ " + board);
+		
+		service.update(board);
+		
+		return "redirect:/board/list";
+	}
 
 	// 등록할 때 사용
 	@GetMapping("/register")
@@ -70,14 +78,6 @@ public class BoardController {
 
 		return "redirect:/board/list";
 	}
+
 	
-	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
-		log.info("modify: " + board);
-		
-		if(service.modify(board)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/board/list";
-	}
 }
