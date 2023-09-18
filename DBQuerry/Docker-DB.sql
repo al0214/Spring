@@ -45,3 +45,5 @@ select * from boardExam;
 delete from boardExam where bno = 1;
 
 update boardExam set title='수정 테스트', detail='수정 테스트 글', changeDate=SYSDATE where bno=2;
+
+update boardExam set title='수정', detail='수정', changeDate=SYSDATE where bno=1;

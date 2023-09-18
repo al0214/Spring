@@ -50,25 +50,6 @@ public class BoardController {
 		model.addAttribute("board", service.detail(bno));
 	}
 
-	@PostMapping("/modify")
-	public String PostModify(Long bno, RedirectAttributes rttr) {
-		// 상세 페이지
-		log.info("Modify.......");
-		service.update(bno);
-
-		return "redirect:/board/list";
-
-	}
-
-	// 삭제 페이지
-	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
-
-		log.info("Remove.........");
-		service.delete(bno);
-
-		return "redirect:/board/list";
-	}
 
 	// 등록할 때 사용
 	@GetMapping("/register")
@@ -87,6 +68,16 @@ public class BoardController {
 		// addFlashAttribute는 일회성으로 데이터를 넘길때 사용한다 ex) list?pageNum=5&amount=10
 		rttr.addFlashAttribute("result", borad.getBno());
 
+		return "redirect:/board/list";
+	}
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO board, RedirectAttributes rttr) {
+		log.info("modify: " + board);
+		
+		if(service.modify(board)) {
+			rttr.addFlashAttribute("result", "success");
+		}
 		return "redirect:/board/list";
 	}
 }

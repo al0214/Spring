@@ -47,17 +47,13 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.getTotal();
 	}
-
+	
 	@Override
-	public BoardVO delete(Long bno) {
+	public boolean modify(BoardVO board) {
 		
-		return mapper.delete(bno);
-	}
-
-	@Override
-	public BoardVO update(Long bno) {
+		log.info("modify "+ board);
 		
-		return mapper.update(bno);
+		return mapper.update(board) == 1;
 	}
 	
 }
