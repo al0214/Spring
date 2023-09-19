@@ -18,7 +18,7 @@ CREATE SEQUENCE tqq_seq
 -- 내용은 한글 기준 400 글자까지 가능하며 빈값을 허용하지 않음
 -- 생성, 수정 일자는 입력하지 않을시 컴퓨터 기준 시간이 자동 입력됩니다.
 Create TABLE boardExam(
-    bno int ,
+    bno number(10, 0) ,
     title varchar2(90) not null ,
     detail varchar2(1200) not null ,
     createDate date default SYSDATE,
@@ -38,12 +38,19 @@ delete from boardExam where bno > 1;
 -- DB에 반영
 commit ;
 
+-- 수정 (changeDate만 날짜 변경 createDate는 수정하지 않음)
 update boardExam set title='수정', detail='수정', changeDate=SYSDATE where bno=bno;
+
+-- 삭제
+delete from boardExam where bno = 1;
 
 select * from boardExam;
 
-delete from boardExam where bno = 1;
+update boardExam set changeDate='2023-09-15' where bno=7;
 
 update boardExam set title='수정 테스트', detail='수정 테스트 글 내용', changeDate=SYSDATE where bno=2;
 
-update boardExam set title='수정', detail='수정', changeDate=SYSDATE where bno=1;
+update boardExam set changeDate='2023-09-10' where bno=bno;
+
+insert into boardExam(bno, title, detail, createDate)
+    values (tqq_seq.nextval, '전날 테스트3', '전날 테스트 내용3', '2023-09-19');

@@ -7,7 +7,7 @@ import org.jaeu.domain.Criteria;
 
 public interface BoardService {
 	
-	public BoardVO detail(Integer bno);
+	public BoardVO detail(Long bno);
 	
 	public List<BoardVO> getWithPaging(Criteria cri);
 	

@@ -95,7 +95,7 @@
 	function checkSpace(str) {
 		if (str.search(/\s/) != -1) {
 			return true;
-		} else {
+		} else {	
 			return false;
 		}
 	}

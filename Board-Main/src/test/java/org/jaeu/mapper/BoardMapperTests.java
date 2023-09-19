@@ -41,23 +41,23 @@ public class BoardMapperTests {
 	public void testRead() {
 
 		// 존재하는 게시물 번호로 테스트
-		BoardVO board = mapper.detail(5);
+		BoardVO board = mapper.detail(5L);
 
 		log.info(board);
 
 	}
-//	
-//	@Test
-//	public void testUpdate() {
-//		
-//		BoardVO board = new BoardVO();
-//		board.setBno(10);
-//		board.setTitle("수정된 제목");
-//		board.setDetail("수정된 내용");
-//		
-//		int count = mapper.update(board);
-//		log.info("UPDATE COUNT: " + count);
-//	}
+	
+	@Test
+	public void testUpdate() {
+		
+		BoardVO board = new BoardVO();
+		board.setBno(10L);
+		board.setTitle("수정된 제목");
+		board.setDetail("수정된 내용");
+		
+		int count = mapper.update(board);
+		log.info("UPDATE COUNT: " + count);
+	}
 
 
 

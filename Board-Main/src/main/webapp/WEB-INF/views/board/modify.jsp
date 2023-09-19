@@ -44,45 +44,51 @@
 			<!-- panel heading -->
 			<div class="panel-body" style="margin: 10px;">
 				<strong><span class="t_red">*</span> 표시는 필수입력 항목입니다.</strong>
-				
-				
+
+
 				<form name="frr" role="form" action="/board/modify" method="post"
-					onSubmit="return Checkform()" onReset="return Returnform()"
+					onSubmit="return Checkform()"
 					accept-charset="utf-8">
 					<div style="padding: 5px 10px; padding-bottom: 20px;">
 						<div style="margin-top: 10px">
 							<div class="form-group" style="margin-bottom: 10px">
 								<h3>Bno</h3>
-								<div
-									style="width: 80%; outline: none; border: none; font-size: 20px; padding-left: 10px">${board.bno}</div>
+								<input name="bno" id="bno" class="form-control"
+									style="width: 80%; outline: none; border: none; font-size: 20px; padding-left: 10px" value='${board.bno}' readonly/>
 							</div>
 							<div class="form-group" style="margin-bottom: 10px">
 								<h3>
 									Title<span class="t_red">*</span>
 								</h3>
-								<input name="title" id="title" class="form-control" maxlength='30'
+								<input name="title" id="title" class="form-control"
+									maxlength='30'
 									style="width: 80%; outline: none; border: none; font-size: 20px;"
-									placeholder="제목을 입력해 주세요 (최대 30 글자까지 적으실 수 있습니다.)" value="<c:out value='${board.title}'/>">
+									placeholder="제목을 입력해 주세요 (최대 30 글자까지 적으실 수 있습니다.)"
+									value="<c:out value='${board.title}'/>">
 							</div>
 							<div class="form-group">
 								<h3>
 									Text area<span class="t_red">*</span>
 								</h3>
-								<textarea name="detail" id="detail" rows="3" class="form-control"
+								<textarea name="detail" id="detail" rows="3"
+									class="form-control"
 									style="width: 80%; height: 75px; resize: none; outline: none; border: none; font-size: 20px;"
 									placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 									maxlength="400" wrap="hard">${board.detail}</textarea>
 							</div>
 						</div>
 						<div style="margin-top: 10px; float: right;">
-							<button type="submit" data-oper='modify' class="btn btn-sm btn-primary"
+							<button type="submit" data-oper='modify'
+								class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Modify
-								</button>
-							<button type="submit" data-oper='remove' class="btn btn-sm btn-primary"
+							</button>
+							<button type="submit" data-oper='remove'
+								class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Remove
-								</button>
-								
-							<button type="button" onclick="location='detail?bno=${board.bno}'"
+							</button>
+
+							<button type="submit"
+								data-oper='list'
 								class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Return
 								Page</button>
@@ -100,6 +106,28 @@
 <!-- row -->
 
 <script type="text/javascript">
+$(document).ready(function() {
+	var formObj = $("form");
+	
+	$('button').on("click", function(e){
+		e.preventDefault();
+		
+		var operation = $(this).data("oper");
+		
+		console.log(operation)
+		
+		if(opertation === 'remove'){
+			formObj.attr("action", "/board/remove");
+		} else if(operation === 'list'){
+			self.location="/board/list";
+			return;
+		}
+		
+		formObj.submit();
+		
+	});
+});
+
 	function checkSpace(str) {
 		if (str.search(/\s/) != -1) {
 			return true;
@@ -108,10 +136,6 @@
 		}
 	}
 
-	function Returnform() {
-		alert("리셋합니다.")
-		frr.title.focus();
-	}
 
 	function Checkform() {
 

@@ -49,28 +49,28 @@
 						<div class="form-group" style="margin-bottom: 10px">
 							<h3 style="margin-top: 10px">Bunho</h3>
 							<div class="form-control"
-								style="width: 80%; height: auto; font-size: 20px;">${board.bno}번
+								style="width: 80%; height: auto; font-size: 20px; border:none !important;">${board.bno}번
 							</div>
 
 							<h3>Title</h3>
 							<div class="form-control"
-								style="width: 80%; height: auto; font-size: 20px;">${board.title}
+								style="width: 80%; height: auto; font-size: 20px; border:none !important;">${board.title}
 							</div>
 
 							<h3>Content</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; height: auto; font-size: 20px; white-space: pre-line;">
+								style="width: 80%; resize: none; height: auto; font-size: 20px; border:none !important; white-space: pre-line;">
 								${board.detail}</div>
 
 							<h3>작성 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; font-size: 20px;">
+								style="width: 80%; resize: none; font-size: 20px; border:none !important;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.createDate}" />
 							</div>
 
 							<h3>수정 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; font-size: 20px;">
+								style="width: 80%; resize: none; font-size: 20px; border:none !important;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.changeDate}" />
 							</div>
 						</div>

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="c0a9eb59-feca-4aba-b841-ec5bc0ac55f3">
-      <driver-ref>oracle.19</driver-ref>
-      <synchronize>true</synchronize>
-      <remarks>localhost</remarks>
-      <auto-commit>false</auto-commit>
-      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@localhost:1521:XE</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="docker" uuid="af1584f8-11bf-45ce-9f9e-2b8ca69d5ac6">
       <driver-ref>oracle.19</driver-ref>
       <synchronize>true</synchronize>

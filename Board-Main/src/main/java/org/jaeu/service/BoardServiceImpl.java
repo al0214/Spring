@@ -30,14 +30,14 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void register(BoardVO board) {
 		
-		log.info("register..................");
+		log.info("service register..................");
 		
 		mapper.insertSelectKey(board);
 		
 	}
 	
 	@Override
-	public BoardVO detail(Integer bno) {
+	public BoardVO detail(Long bno) {
 		
 		return mapper.detail(bno);
 	}
@@ -50,8 +50,9 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public void update(BoardVO board) {
+		 
+		log.info("service : "+ board);
 		
-		log.info("modify__ "+ board);
 		
 		mapper.update(board);
 	}

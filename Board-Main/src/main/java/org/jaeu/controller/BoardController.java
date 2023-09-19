@@ -32,29 +32,21 @@ public class BoardController {
 		model.addAttribute("list", service.getWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-
-	// 상세 페이지
-	@GetMapping("/detail")
-	public void detail(@RequestParam("bno") Integer bno, Model model) {
-		// 조회 페이지 테스트
-		log.info("detail........");
-		model.addAttribute("board", service.detail(bno));
-	}
-
-	// 수정 페이지
-	@GetMapping("/modify")
-	public void GetModify(@RequestParam("bno") Integer bno, Model model) {
-		// 상세 페이지 테스트
-		log.info("Open Modify........");
-
+	
+	@GetMapping({"/detail", "/modify"})
+	public void detail(@RequestParam("bno") Long bno, Model model) {
+		// 조회 / 수정 페이지 테스트
+		log.info("/detail or /modify");
 		model.addAttribute("board", service.detail(bno));
 	}
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
-		log.info("modify:__ " + board);
+		log.info("controller " + board);
 		
 		service.update(board);
+		
+		rttr.addAttribute("result", board.getBno());
 		
 		return "redirect:/board/list";
 	}
@@ -69,7 +61,7 @@ public class BoardController {
 	@PostMapping("/register")
 	public String PostRegister(BoardVO borad, RedirectAttributes rttr) {
 
-		log.info("register : " + borad);
+		log.info("Contoller register : " + borad);
 
 		service.register(borad);
 
