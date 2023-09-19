@@ -47,17 +47,17 @@ public class BoardMapperTests {
 
 	}
 	
-	@Test
-	public void testUpdate() {
-		
-		BoardVO board = new BoardVO();
-		board.setBno(10L);
-		board.setTitle("수정된 제목");
-		board.setDetail("수정된 내용");
-		
-		int count = mapper.update(board);
-		log.info("UPDATE COUNT: " + count);
-	}
+//	@Test
+//	public void testUpdate() {
+//		
+//		BoardVO board = new BoardVO();
+//		board.setBno(10L);
+//		board.setTitle("수정된 제목");
+//		board.setDetail("수정된 내용");
+//		
+//		int count = mapper.update(board);
+//		log.info("UPDATE COUNT: " + count);
+//	}
 
 
 

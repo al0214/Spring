@@ -54,7 +54,7 @@
 							<div class="form-group" style="margin-bottom: 10px">
 								<h3>Bno</h3>
 								<input name="bno" id="bno" class="form-control"
-									style="width: 80%; outline: none; border: none; font-size: 20px; padding-left: 10px" value='${board.bno}' readonly/>
+									style="width: 100%;outline: none;border: none;font-size: 20px;padding-left: 10px;background-color: #d9d9d9cc !important;" value='${board.bno}' readonly/>
 							</div>
 							<div class="form-group" style="margin-bottom: 10px">
 								<h3>
@@ -62,7 +62,7 @@
 								</h3>
 								<input name="title" id="title" class="form-control"
 									maxlength='30'
-									style="width: 80%; outline: none; border: none; font-size: 20px;"
+									style="width: 100%; outline: none; border: none; font-size: 20px; background-color: #d9d9d9cc !important;"
 									placeholder="제목을 입력해 주세요 (최대 30 글자까지 적으실 수 있습니다.)"
 									value="<c:out value='${board.title}'/>">
 							</div>
@@ -72,7 +72,7 @@
 								</h3>
 								<textarea name="detail" id="detail" rows="3"
 									class="form-control"
-									style="width: 80%; height: 75px; resize: none; outline: none; border: none; font-size: 20px;"
+									style="width: 100%; height: 75px; resize: none; outline: none; border: none; font-size: 20px; background-color: #d9d9d9cc !important;"
 									placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 									maxlength="400" wrap="hard">${board.detail}</textarea>
 							</div>
@@ -80,17 +80,17 @@
 						<div style="margin-top: 10px; float: right;">
 							<button type="submit" data-oper='modify'
 								class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Modify
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Modify
 							</button>
 							<button type="submit" data-oper='remove'
 								class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Remove
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Remove
 							</button>
 
-							<button type="submit"
+							<button type="button"
 								data-oper='list'
-								class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Return
+								class="btn btn-sm btn-primary" onclick="location='detail?bno=${board.bno}'"
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Return
 								Page</button>
 						</div>
 					</div>
@@ -107,16 +107,18 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	var formObj = $("form");
 	
 	$('button').on("click", function(e){
+		
 		e.preventDefault();
 		
 		var operation = $(this).data("oper");
 		
 		console.log(operation)
 		
-		if(opertation === 'remove'){
+		if(operation === 'remove'){
 			formObj.attr("action", "/board/remove");
 		} else if(operation === 'list'){
 			self.location="/board/list";

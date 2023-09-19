@@ -49,38 +49,38 @@
 						<div class="form-group" style="margin-bottom: 10px">
 							<h3 style="margin-top: 10px">Bunho</h3>
 							<div class="form-control"
-								style="width: 80%; height: auto; font-size: 20px; border:none !important;">${board.bno}번
+								style="width: 100%; height: auto; font-size: 20px; border:none !important;background-color: #d9d9d9cc !important;">${board.bno}번
 							</div>
 
 							<h3>Title</h3>
 							<div class="form-control"
-								style="width: 80%; height: auto; font-size: 20px; border:none !important;">${board.title}
+								style="width: 100%; height: auto; font-size: 20px; border:none !important; background-color: #d9d9d9cc !important;">${board.title}
 							</div>
 
 							<h3>Content</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; height: auto; font-size: 20px; border:none !important; white-space: pre-line;">
+								style="width: 100%; resize: none; height: auto; font-size: 20px; border:none !important; white-space: pre-line;background-color: #d9d9d9cc !important;">
 								${board.detail}</div>
 
 							<h3>작성 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; font-size: 20px; border:none !important;">
+								style="width: 100%; resize: none; font-size: 20px; border:none !important; background-color: #d9d9d9cc !important;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.createDate}" />
 							</div>
 
 							<h3>수정 일자</h3>
 							<div name="detail" class="form-control"
-								style="width: 80%; resize: none; font-size: 20px; border:none !important;">
+								style="width: 100%; resize: none; font-size: 20px; border:none !important; background-color: #d9d9d9cc !important;">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.changeDate}" />
 							</div>
 						</div>
 					</div>
-					<div style="float: right;">
+					<div style="float: right; padding-top: 15px;">
 						<button onclick="location='modify?bno=${board.bno}'" class="btn btn-sm btn-primary"
-							style="border: none; background-color: #570df6; color: white; font-size: 15px;">Modify
+							style="border: none; background-color: #570df6; color: white; font-size: 20px;">Modify
 						</button>
 						<button onclick="location='list'" class="btn btn-sm btn-primary"
-							style="border: none; background-color: #570df6; color: white; font-size: 15px;">Return
+							style="border: none; background-color: #570df6; color: white; font-size: 20px;">Return
 							Page</button>
 					</div>
 				</div>

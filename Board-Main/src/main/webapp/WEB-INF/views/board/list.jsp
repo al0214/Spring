@@ -42,12 +42,9 @@ th, td {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
+<!-- CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -86,7 +83,7 @@ th, td {
 								<tr>
 									<td><c:out value="${board.bno}" /></td>
 									<td><a class="move"
-										href="/board/detail?bno=<c:out value='${board.bno}'/>"><c:out
+										href="/board/detail?bno=<c:out value="${board.bno}" />"><c:out
 												value="${board.title}" /></a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd"
 											value="${board.createDate}" /></td>
@@ -194,6 +191,8 @@ th, td {
 							actionForm.submit();
 
 						});
+
+				
 			});
 	
 			

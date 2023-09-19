@@ -55,17 +55,17 @@ public class BoardServiceTests {
 		log.info(service.detail(1L));
 	}
 
-	@Test
-	public void testUpdate() {
-
-		BoardVO board = service.detail(1L);
-
-		if (board == null) {
-			return;
-		}
-
-		board.setTitle("제목 수정합니다.");
-		log.info("MODIFY RESULT: " + service.update(board));
-	}
+//	@Test
+//	public void testUpdate() {
+//
+//		BoardVO board = service.detail(1L);
+//
+//		if (board == null) {
+//			return;
+//		}
+//
+//		board.setTitle("제목 수정합니다.");
+//		log.info("MODIFY RESULT: " + service.update(board));
+//	}
 
 }

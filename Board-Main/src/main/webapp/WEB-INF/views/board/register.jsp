@@ -29,16 +29,16 @@
 <title>Register Page</title>
 
 <div style="margin: 5%">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header"
-				style="border: 1px; background-color: #570df6; text-align: center; color: white; border-top-right-radius: 20px; border-top-left-radius: 20px; padding: 5px;">Board
-				Register</h1>
-		</div>
+
+	<div class="col-lg-12">
+		<h1 class="page-header"
+			style="border: 1px; background-color: #570df6; text-align: center; color: white; border-top-right-radius: 20px; border-top-left-radius: 20px; padding: 5px;">Board
+			Register</h1>
 	</div>
+
 	<!-- row -->
 
-	<div class="row" >
+	<div class="row">
 		<div class="col-lg-12">
 
 			<!-- panel heading -->
@@ -54,7 +54,7 @@
 									Title<span class="t_red">*</span>
 								</h3>
 								<input name="title" class="form-control" maxlength='30'
-									style="width: 80%; outline: none; border: none; font-size: 20px;"
+									style="width: 100%; outline: none; border: none; font-size: 20px; background-color: #d9d9d9cc !important;"
 									placeholder="제목을 입력해 주세요 (최대 30 글자까지 적으실 수 있습니다.)">
 							</div>
 							<div class="form-group">
@@ -62,22 +62,22 @@
 									Text area<span class="t_red">*</span>
 								</h3>
 								<textarea name="detail" rows="3" class="form-control"
-									style="width: 80%; height: 75px; resize: none; outline: none; border: none; font-size: 20px;"
+									style="width: 100%; height: 75px; resize: none; outline: none; border: none; font-size: 20px; background-color: #d9d9d9cc !important;"
 									placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 									maxlength="400" wrap="hard"></textarea>
 							</div>
 						</div>
 						<div style="margin-top: 10px; float: right;">
 							<button type="submit" class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Submit
-								Button</button>
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Submit
+								</button>
 							<button type="reset" class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Reset
-								Button</button>
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Reset
+								</button>
 							<button type="button" onclick="location='list'"
 								class="btn btn-sm btn-primary"
-								style="border: none; background-color: #570df6; color: white; font-size: 15px;">Return
-								Button</button>
+								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Return
+								Page</button>
 						</div>
 					</div>
 				</form>
@@ -95,7 +95,7 @@
 	function checkSpace(str) {
 		if (str.search(/\s/) != -1) {
 			return true;
-		} else {	
+		} else {
 			return false;
 		}
 	}
