@@ -27,7 +27,7 @@ public class PageDTO {
 		// 전체 데이터 수를 이용해서 진짜 끝 페이지를 구함
 	    int realEnd = (int) (Math.ceil((total * 1.0) / cri.getAmount()));
 		
-		// 만약 전체 realEnd가 endPage보다 작다면 끝 번호는 작은 값이 되어야만 하낟.
+		// 만약 전체 realEnd가 endPage보다 작다면 끝 번호는 작은 값이 되어야만 한다
 	    if (realEnd <= this.endPage) {
 	        this.endPage = realEnd;
 	      }

@@ -39,12 +39,15 @@ th, td {
 <title>List Page</title>
 
 <!-- JQuery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 </head>
 
@@ -160,13 +163,14 @@ th, td {
 				
 				history.replaceState({}, null, null)
 							
-				function checkModal(result = '' || history.state) {
+				function checkModal(result) {
 
-					if (result === '') {
+					if (result === '' || history.state	) {
 						return;
 					}
 
 					if (parseInt(result) > 0) {
+						console.log("여기 들어옴")
 						$(".modal-body").html(
 								"게시글 " + parseInt(result) + " 번이 등록되었습니다,");
 					}

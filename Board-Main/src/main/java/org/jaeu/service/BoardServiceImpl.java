@@ -51,5 +51,12 @@ public class BoardServiceImpl implements BoardService{
 		
 		return mapper.getTotal();
 	}
+
+	@Override
+	public void remove(BoardVO board) {
+		
+		mapper.remove(board);
+		
+	}
 	
 }

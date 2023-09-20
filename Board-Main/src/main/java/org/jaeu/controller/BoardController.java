@@ -56,7 +56,7 @@ public class BoardController {
 		// 페이지를 보여줄때 사용
 		log.info("C : Open Register");
 	}
-
+	
 	@PostMapping("/register")
 	public String PostRegister(BoardVO borad, RedirectAttributes rttr) {
 
@@ -75,7 +75,7 @@ public class BoardController {
 		
 		log.info("C : Remove -> " + board);
 		
-//		service.remove(board);
+		service.remove(board);
 		
 		rttr.addFlashAttribute("result", board.getBno());
 		

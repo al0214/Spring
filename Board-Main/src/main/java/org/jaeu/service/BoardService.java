@@ -16,4 +16,6 @@ public interface BoardService {
 	public int getTotal();
 
 	public void update(BoardVO board);
+
+	public void remove(BoardVO board);
 }

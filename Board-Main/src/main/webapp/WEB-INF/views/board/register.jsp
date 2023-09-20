@@ -70,10 +70,10 @@
 						<div style="margin-top: 10px; float: right;">
 							<button type="submit" class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Submit
-								</button>
+							</button>
 							<button type="reset" class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Reset
-								</button>
+							</button>
 							<button type="button" onclick="location='list'"
 								class="btn btn-sm btn-primary"
 								style="border: none; background-color: #570df6; color: white; font-size: 18px;">Return

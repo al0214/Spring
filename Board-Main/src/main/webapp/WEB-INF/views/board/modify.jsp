@@ -10,6 +10,8 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+
+
 <!-- Bootstrap Core CSS -->
 <link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -116,12 +118,12 @@ $(document).ready(function() {
 		
 		var operation = $(this).data("oper");
 		
-		console.log(operation)
+		console.log(operation);
 		
 		if(operation === 'remove'){
 			formObj.attr("action", "/board/remove");
 		} else if(operation === 'list'){
-			self.location="/board/list";
+			formObj.attr("action", "/board/list").attr("method", "get");
 			return;
 		}
 		

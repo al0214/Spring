@@ -54,3 +54,5 @@ update boardExam set changeDate='2023-09-10' where bno=bno;
 
 insert into boardExam(bno, title, detail, createDate)
     values (tqq_seq.nextval, '전날 테스트3', '전날 테스트 내용3', '2023-09-19');
+
+delete from boardExam where bno=1;
