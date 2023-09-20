@@ -28,7 +28,7 @@ public class BoardController {
 
 		int total = service.getTotal();
 
-		log.info("log.......");
+		log.info("C : list Page");
 		model.addAttribute("list", service.getWithPaging(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
@@ -36,7 +36,7 @@ public class BoardController {
 	@GetMapping({"/detail", "/modify"})
 	public void detail(@RequestParam("bno") Long bno, Model model) {
 		// 조회 / 수정 페이지 테스트
-		log.info("/detail or /modify");
+		log.info("C : Detail or Modify Page");
 		model.addAttribute("board", service.detail(bno));
 	}
 	
@@ -46,22 +46,21 @@ public class BoardController {
 		
 		service.update(board);
 		
-		rttr.addAttribute("result", board.getBno());
+		rttr.addFlashAttribute("result", board.getBno());
 		
 		return "redirect:/board/list";
 	}
 
-	// 등록할 때 사용
 	@GetMapping("/register")
 	public void GetRegister() {
 		// 페이지를 보여줄때 사용
-		log.info("Open Register");
+		log.info("C : Open Register");
 	}
 
 	@PostMapping("/register")
 	public String PostRegister(BoardVO borad, RedirectAttributes rttr) {
 
-		log.info("Contoller register : " + borad);
+		log.info("C : Register -> " + borad);
 
 		service.register(borad);
 
@@ -70,6 +69,16 @@ public class BoardController {
 
 		return "redirect:/board/list";
 	}
-
 	
+	@PostMapping("/remove")
+	public String PostRemove(BoardVO board, RedirectAttributes rttr) {
+		
+		log.info("C : Remove -> " + board);
+		
+//		service.remove(board);
+		
+		rttr.addFlashAttribute("result", board.getBno());
+		
+		return "redirect:/board/list";
+	}
 }

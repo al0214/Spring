@@ -15,7 +15,6 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
-@Log4j
 public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_ = @Autowired)
@@ -23,38 +22,34 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<BoardVO> getWithPaging(Criteria cri){
-		
+		// 리스트 페이지
 		return mapper.getWithPaging(cri);
 	}
-
+	
+	@Override
+	public BoardVO detail(Long bno) {
+		// 조회 및 수정 페이지
+		return mapper.detail(bno);
+	}
+	
 	@Override
 	public void register(BoardVO board) {
-		
-		log.info("service register..................");
-		
+		// 등록 페이지
 		mapper.insertSelectKey(board);
 		
 	}
 	
 	@Override
-	public BoardVO detail(Long bno) {
-		
-		return mapper.detail(bno);
+	public void update(BoardVO board) {
+		// 수정 구현
+		mapper.update(board);
 	}
+	
 	
 	@Override
 	public int getTotal() {
 		
 		return mapper.getTotal();
-	}
-	
-	@Override
-	public void update(BoardVO board) {
-		 
-		log.info("service : "+ board);
-		
-		
-		mapper.update(board);
 	}
 	
 }

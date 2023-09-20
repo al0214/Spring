@@ -46,7 +46,7 @@ delete from boardExam where bno = 1;
 
 select * from boardExam;
 
-update boardExam set changeDate='2023-09-15' where bno=7;
+update boardExam set changeDate='2023-09-16' where bno=3;
 
 update boardExam set title='수정 테스트', detail='수정 테스트 글 내용', changeDate=SYSDATE where bno=2;
 
