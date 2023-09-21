@@ -58,5 +58,12 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.remove(bno) == 1;
 		
 	}
+
+	@Override
+	public void allremove(BoardVO board) {
+		
+		mapper.allremove(board);
+		
+	}
 	
 }

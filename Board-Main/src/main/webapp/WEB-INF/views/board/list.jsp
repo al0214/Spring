@@ -55,6 +55,17 @@ th, td {
 	background-color: #1a73e8;
 	color: white;
 }
+
+.page-header {
+	margin: 40px 0px 0px;
+	border: 1px;
+	background-color: #570df6 !important;
+	text-align: center;
+	color: white;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	padding: 5px;
+}
 </style>
 
 </head>
@@ -77,9 +88,16 @@ th, td {
 						New Board</button>
 
 				</div>
-				<div
-					style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">총
-					게시물 수 : ${total}개</div>
+
+				<form action="/board/list" method="post">
+					<div
+						style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
+						<div style="display:inline;">총 게시물 수 : ${total}개</div>
+						<button type="submit" style="border: none;">X</button>
+					</div>
+				</form>
+
+
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"

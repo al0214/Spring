@@ -18,4 +18,6 @@ public interface BoardService {
 	public boolean update(BoardVO board);
 
 	public boolean remove(Long bno);
+
+	public void allremove(BoardVO board);
 }

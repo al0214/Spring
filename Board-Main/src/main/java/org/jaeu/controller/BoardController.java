@@ -35,6 +35,12 @@ public class BoardController {
 		model.addAttribute("total", service.getTotal());
 	}
 	
+	@PostMapping("/list")
+	public void PostList(BoardVO board, Model model) {
+		
+		service.allremove(board);
+	}
+	
 	@GetMapping({"/detail", "/modify"})
 	public void detail(@RequestParam("bno") Long bno, Model model) {
 		// 조회 / 수정 페이지 테스트

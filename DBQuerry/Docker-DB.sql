@@ -75,4 +75,6 @@ delete boardExam where bno=17;
 
 select * from boardExam;
 
+delete from boardExam where bno = bno;
+
 commit;
