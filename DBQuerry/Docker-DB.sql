@@ -44,11 +44,11 @@ update boardExam set title='수정', detail='수정', changeDate=SYSDATE where b
 -- 삭제
 delete from boardExam where bno = 1;
 
-select * from boardExam;
+select ROWNUM rmn, BNO, title, detail, createDate, changeDate from boardExam;
 
 update boardExam set changeDate='2023-09-16' where bno=3;
 
-update boardExam set title='수정 테스트', detail='수정 테스트 글 내용', changeDate=SYSDATE where bno=2;
+update boardExam set title='수정 테스트', detail='수정 테스트 글 내용', changeDate=SYSDATE where bno=3;
 
 update boardExam set changeDate='2023-09-10' where bno=bno;
 
@@ -56,3 +56,23 @@ insert into boardExam(bno, title, detail, createDate)
     values (tqq_seq.nextval, '전날 테스트3', '전날 테스트 내용3', '2023-09-19');
 
 delete from boardExam where bno=1;
+
+select
+				RN, BNO, TITLE, DETAIL, CREATEDATE, CHANGEDATE
+			from
+			(
+			select
+			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
+			 from
+			 	boardExam where ROWNUM <= 1 * 10
+			 	order by bno asc
+
+			 )
+			 where rn > 0;
+
+delete from boardExam where bno=16;
+delete boardExam where bno=17;
+
+select * from boardExam;
+
+commit;
