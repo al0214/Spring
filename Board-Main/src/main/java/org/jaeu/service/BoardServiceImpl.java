@@ -40,9 +40,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public void update(BoardVO board) {
+	public boolean update(BoardVO board) {
 		// 수정 구현
-		mapper.update(board);
+		return mapper.update(board) == 1;
 	}
 	
 	
@@ -53,9 +53,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void remove(BoardVO board) {
+	public boolean remove(Long bno) {
 		
-		mapper.remove(board);
+		return mapper.remove(bno) == 1;
 		
 	}
 	

@@ -8,11 +8,31 @@
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
+<head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>List Page</title>
+
+<!-- JQuery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
 th {
-	text-align: center;
+	text-align: center !important;
 }
 
 th, td {
@@ -26,32 +46,20 @@ th, td {
 	background-color: #570df6 !important;
 	border-color: #570df6 !important;
 }
+
+.btn {
+	border: none;
+	background-color: #1a73e8;
+	color: white;
+	border: none;
+	background-color: #1a73e8;
+	color: white;
+}
 </style>
-<html>
-
-<head>
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>List Page</title>
-
-<!-- JQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- jQuery Modal -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 </head>
 
-<body style="margin: 5%">
+<div style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board List</h1>
@@ -62,28 +70,32 @@ th, td {
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading" style="margin-bottom: 20px">
+				<div class="panel-heading" style="margin-bottom: 10px">
 					Board List Page
 					<button onclick="location='register'"
 						style="float: right; border: none; background-color: #570df6; color: white; border-radius: 4px;">Register
 						New Board</button>
 
 				</div>
+				<div
+					style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">총
+					게시물 수 : ${total}개</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
 						style="border-collapse: collapse; text-align: center;">
 						<thead>
 							<tr>
-								<th style="text-align: center;">#번호</th>
-								<th style="text-align: center;">제목</th>
-								<th style="text-align: center;">작성일</th>
-								<th style="text-align: center;">마지막 수정일</th>
+								<th>#번호</th>
+								<th>제목</th>
+								<th>작성일</th>
+								<th>마지막 수정일</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${list}" var="board">
 								<tr>
+
 									<td><c:out value="${board.bno}" /></td>
 									<td><a class="move"
 										href="/board/detail?bno=<c:out value="${board.bno}" />"><c:out
@@ -111,8 +123,7 @@ th, td {
 								<div class="modal-body">처리가 완료되었습니다.</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
-										data-dismiss="modal"
-										style="border: none; background-color: #1a73e8; color: white; border: none; background-color: #570df6; color: white;">Close</button>
+										data-dismiss="modal">Close</button>
 								</div>
 							</div>
 						</div>
@@ -152,7 +163,7 @@ th, td {
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
-</body>
+</div>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -160,22 +171,22 @@ th, td {
 				var result = '<c:out value="${result}"/>';
 
 				checkModal(result);
-				
+
 				history.replaceState({}, null, null)
-							
+
 				function checkModal(result) {
 
-					if (result === '' || history.state	) {
+					if (result === '' || history.state) {
 						return;
 					}
 
 					if (parseInt(result) > 0) {
-						console.log("여기 들어옴")
 						$(".modal-body").html(
 								"게시글 " + parseInt(result) + " 번이 등록되었습니다,");
 					}
 					$("#myModal").modal("show");
-				};
+				}
+				;
 
 				$("#regBtn").on("click", function() {
 					self.location = "/board/register";
@@ -196,12 +207,7 @@ th, td {
 
 						});
 
-				
 			});
-	
-			
-			
-			
 </script>
 
 </html>

@@ -15,7 +15,7 @@ public interface BoardService {
 
 	public int getTotal();
 
-	public void update(BoardVO board);
+	public boolean update(BoardVO board);
 
-	public void remove(BoardVO board);
+	public boolean remove(Long bno);
 }

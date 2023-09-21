@@ -24,6 +24,39 @@
 .t_red {
 	color: red;
 }
+
+.panel-body {
+	padding: 0px;
+}
+
+.page-header {
+	margin: 40px 0px 0px;
+	border: 1px;
+	background-color: #570df6 !important;
+	text-align: center;
+	color: white;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	padding: 5px;
+}
+
+.form-control {
+	
+	width: 100%;
+	resize: none;
+	outline: none;
+	border: none;
+	font-size: 20px;
+	background-color: #d9d9d9cc !important;
+	height: 40px;
+}
+
+.btn {
+	border: none;
+	background-color: #570df6;
+	color: white;
+	font-size: 20px;
+}
 </style>
 
 <title>Detail Page</title>
@@ -31,9 +64,7 @@
 <div style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header"
-				style="border: 1px; background-color: #570df6; text-align: center; color: white; border-top-right-radius: 20px; border-top-left-radius: 20px; padding: 5px;">Board
-				Detail</h1>
+			<h1 class="page-header">Board Detail</h1>
 		</div>
 	</div>
 	<!-- row -->
@@ -42,47 +73,40 @@
 		<div class="col-lg-12">
 
 			<!-- panel heading -->
-			<div class="panel-body" style="margin: 10px;">
+			<div class="panel-body">
 
 				<div style="padding: 5px 10px; padding-bottom: 20px;">
 					<div style="margin-top: 10px">
 						<div class="form-group" style="margin-bottom: 10px">
 							<h3 style="margin-top: 10px">Bunho</h3>
-							<div class="form-control"
-								style="width: 100%; height: auto; font-size: 20px; border: none !important; background-color: #d9d9d9cc !important;">${board.bno}번
+							<div class="form-control" id='form-control-css'>${board.bno}번
 							</div>
 
 							<h3>Title</h3>
-							<div class="form-control"
-								style="width: 100%; height: auto; font-size: 20px; border: none !important; background-color: #d9d9d9cc !important;">${board.title}
+							<div class="form-control" id='form-control-css'>${board.title}
 							</div>
 
 							<h3>Content</h3>
 							<textarea name="detail" id="detail" rows="3" class="form-control"
-								style="width: 100%; height: 75px; resize: none; outline: none; border: none; font-size: 20px; background-color: #d9d9d9cc !important;"
+								style="height: 75px;"
 								placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 								maxlength="400" wrap="hard" readonly>${board.detail}</textarea>
 
 							<h3>작성 일자</h3>
-							<div name="detail" class="form-control"
-								style="width: 100%; resize: none; font-size: 20px; border: none !important; background-color: #d9d9d9cc !important;">
+							<div name="createDate" class="form-control">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.createDate}" />
 							</div>
 
 							<h3>수정 일자</h3>
-							<div name="detail" class="form-control"
-								style="width: 100%; resize: none; font-size: 20px; border: none !important; background-color: #d9d9d9cc !important;">
+							<div name="changeDate" class="form-control">
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.changeDate}" />
 							</div>
 						</div>
 					</div>
 					<div style="float: right; padding-top: 15px;">
 						<button onclick="location='modify?bno=${board.bno}'"
-							class="btn btn-sm btn-primary"
-							style="border: none; background-color: #570df6; color: white; font-size: 20px;">Modify
-						</button>
-						<button onclick="location='list'" class="btn btn-sm btn-primary"
-							style="border: none; background-color: #570df6; color: white; font-size: 20px;">Return
+							class="btn btn-sm btn-primary">Modify</button>
+						<button onclick="location='list'" class="btn btn-sm btn-primary">Return
 							Page</button>
 					</div>
 				</div>
@@ -94,28 +118,4 @@
 	<!-- end panel -->
 </div>
 <!-- row -->
-
-<script type="text/javascript">
-	function Checkform() {
-		if (frr.title.value == "" || frr.title.value == "&nbsp") {
-
-			frr.title.focus();
-			alert("제목을 입력해 주세요");
-
-			return false;
-		}
-		if (frr.detail.value == "") {
-
-			frr.detail.focus();
-			alert("내용을 입력해 주세요");
-
-			return false;
-		}
-	}
-
-	function Returnform() {
-		alert("리셋합니다.")
-		frr.title.focus();
-	}
-</script>
 

@@ -25,6 +25,7 @@
 			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
 			 from 
 			 	boardExam where ROWNUM <= #{pageNum} * #{amount}
+			 	order by bno asc
 			 ) 
 			 where rn > (#{pageNum} -1) * #{amount}
 		]]>
