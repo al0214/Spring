@@ -20,4 +20,5 @@ public interface BoardService {
 	public boolean remove(Long bno);
 
 	public void allremove(BoardVO board);
+
 }

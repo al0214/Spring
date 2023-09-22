@@ -36,9 +36,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("/list")
-	public void PostList(BoardVO board, Model model) {
+	public String PostList(BoardVO board, RedirectAttributes rttr) {
+		log.info("C : Remove All Obj");
 		
 		service.allremove(board);
+		
+		return "redirect:/board/list";
 	}
 	
 	@GetMapping({"/detail", "/modify"})

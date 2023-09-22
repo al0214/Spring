@@ -89,10 +89,11 @@ th, td {
 
 				</div>
 
-				<form action="/board/list" method="post">
+				<form action="/board/list" method="post" name="frr" onSubmit="return CheckObj()">
 					<div
 						style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
-						<div style="display:inline;">총 게시물 수 : ${total}개</div>
+
+						<div style="display: inline;">총 게시물 수 : ${total}개</div>
 						<button type="submit" style="border: none;">X</button>
 					</div>
 				</form>
@@ -224,8 +225,10 @@ th, td {
 							actionForm.submit();
 
 						});
-
 			});
+	function CheckObj(){
+		alert("데이터를 전부 삭제 합니다.");
+	}
 </script>
 
 </html>
