@@ -75,6 +75,13 @@ delete boardExam where bno=17;
 
 select * from boardExam;
 
+insert into boardExam(bno, title, detail) values (tqq_seq.nextval, '테스트', '더미 데이터');
+
+
 delete from boardExam where bno = bno;
+
+select count(*) from boardExam;
+
+alter sequence tqq_seq INCREMENT BY 1;
 
 commit;
