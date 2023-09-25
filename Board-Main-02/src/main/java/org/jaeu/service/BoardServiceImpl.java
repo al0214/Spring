@@ -33,9 +33,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int register(BoardVO board) {
+	public void register(BoardVO board) {
 		// 등록 페이지
-		return mapper.insertSelectKey(board);
+		mapper.insertSelectKey(board);
 		
 	}
 	
@@ -60,9 +60,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int allremove(BoardVO board) {
+	public void allremove(BoardVO board) {
 		
-		return mapper.allremove(board);
+		mapper.allremove(board);
 		
 	}
 	

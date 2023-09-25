@@ -41,10 +41,17 @@ commit ;
 -- 수정 (changeDate만 날짜 변경 createDate는 수정하지 않음)
 update boardExam set title='수정', detail='수정', changeDate=SYSDATE where bno=bno;
 
+SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD') FROM DUAL;
+
 -- 삭제
 delete from boardExam where bno = 1;
+SELECT DATE_FORMAT("2021/01/24 12:33:32", "%Y-%m-%d");
 
-select ROWNUM rmn, BNO, title, detail, createDate, changeDate from boardExam;
+select TO_CHAR(createDate, 'YY-MM-DD') from boardExam;
+
+select * from boardExam;
+
+select ROWNUM rmn, BNO, title, detail, TO_CHAR(createDate, 'YY-MM-DD'), TO_CHAR(changeDate,'YY-MM-DD') from boardExam;
 
 update boardExam set changeDate='2023-09-16' where bno=3;
 
@@ -58,11 +65,11 @@ insert into boardExam(bno, title, detail, createDate)
 delete from boardExam where bno=1;
 
 select
-				RN, BNO, TITLE, DETAIL, CREATEDATE, CHANGEDATE
+            *
 			from
 			(
 			select
-			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
+			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, TO_CHAR(createDate, 'YY-MM-DD') AS createDate, TO_CHAR(changeDate, 'YY-MM-DD') AS changeDate
 			 from
 			 	boardExam where ROWNUM <= 1 * 10
 			 	order by bno asc
@@ -73,12 +80,14 @@ select
 delete from boardExam where bno=16;
 delete boardExam where bno=17;
 
+
+
 select * from boardExam;
 
 insert into boardExam(bno, title, detail) values (tqq_seq.nextval, '테스트', '더미 데이터');
 
 
-delete from boardExam where bno = bno;
+delete from boardExam where bno = 34;
 
 select count(*) from boardExam;
 

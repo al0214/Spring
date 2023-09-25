@@ -9,9 +9,9 @@ public interface BoardMapper {
 	
 	public BoardVO detail(Long bno);
 	public List<BoardVO> getWithPaging(Criteria cri);
-	public int insertSelectKey(BoardVO board);
+	public void insertSelectKey(BoardVO board);
 	public int getTotal();
 	public int update(BoardVO board);
 	public int remove(Long bno);
-	public int allremove(BoardVO board);
+	public void allremove(BoardVO board);
 }

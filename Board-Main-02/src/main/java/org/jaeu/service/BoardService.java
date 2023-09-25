@@ -11,7 +11,7 @@ public interface BoardService {
 	
 	public List<BoardVO> getWithPaging(Criteria cri);
 	
-	public int register(BoardVO board);
+	public void register(BoardVO board);
 
 	public int getTotal();
 
@@ -19,6 +19,6 @@ public interface BoardService {
 
 	public boolean remove(Long bno);
 
-	public int allremove(BoardVO board);
+	public void allremove(BoardVO board);
 
 }

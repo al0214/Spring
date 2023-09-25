@@ -89,7 +89,8 @@ th, td {
 
 				</div>
 
-				<form action="/board/list" method="post" name="frr" onSubmit="return CheckObj()">
+				<form action="/board/list" method="post" name="frr"
+					onSubmit="return CheckObj()">
 					<div
 						style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
 
@@ -111,20 +112,7 @@ th, td {
 								<th>마지막 수정일</th>
 							</tr>
 						</thead>
-						<tbody>
-							<c:forEach items="${list}" var="board">
-								<tr>
-
-									<td><c:out value="${board.bno}" /></td>
-									<td><a class="move"
-										href="/board/detail?bno=<c:out value="${board.bno}" />"><c:out
-												value="${board.title}" /></a></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${board.createDate}" /></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd"
-											value="${board.changeDate}" /></td>
-								</tr>
-							</c:forEach>
+						<tbody class="ListPage">
 						</tbody>
 
 					</table>
@@ -183,6 +171,7 @@ th, td {
 	</div>
 	<!-- /.row -->
 </div>
+<script type="text/javascript" src="/resources/js/board.js"></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -226,7 +215,44 @@ th, td {
 
 						});
 			});
-	function CheckObj(){
+	
+	$(document).ready(function() {
+		console.log("===============================");
+		var BoardPageUL = $(".ListPage");
+		showList(1);
+		
+		function showList(page){
+			BoardService.getList({page:page}, function(list){
+				var str="";
+				if(list==null||list.length==0){
+					
+					BoardPageUL.html("");
+					
+					return;
+				}
+				for(var i = 0, len = list.length || 0; i<len; i++){
+					str+= "<tr>"
+					str +=	"<td>"+list[i].bno+"</td>";
+					str += "<td>"+list[i].title+"</td>";
+					str += "<td>"+BoardService.displayTime(list[i].createDate)+"</td>";
+					str += "<td>"+BoardService.displayTime(list[i].changeDate)+"</td>";
+					str+= "</tr>"
+				}
+				BoardPageUL.html(str);
+			});
+		
+			
+			
+		};
+		
+		function showTotal(){
+			
+		}
+		console.log("===============================");
+
+	});
+
+	function CheckObj() {
 		alert("데이터를 전부 삭제 합니다.");
 	}
 </script>
