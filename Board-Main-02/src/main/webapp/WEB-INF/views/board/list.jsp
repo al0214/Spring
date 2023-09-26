@@ -29,6 +29,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	
+</script>
+
 
 <style>
 th {
@@ -39,12 +43,24 @@ th, td {
 	border: 1px solid black;
 }
 
-.pagination>.active>a {
+.pagination>.active>button {
 	z-index: 3;
-	color: #fff;
+	color: #fff !important;
 	cursor: default;
 	background-color: #570df6 !important;
 	border-color: #570df6 !important;
+}
+
+#NEO {
+	position: relative;
+	float: left;
+	padding: 6px 12px;
+	margin-left: -1px;
+	line-height: 1.42857143;
+	color: #337ab7;
+	text-decoration: none;
+	background-color: #fff;
+	border: 1px solid #ddd;
 }
 
 .btn {
@@ -86,7 +102,6 @@ th, td {
 					<button onclick="location='register'"
 						style="float: right; border: none; background-color: #570df6; color: white; border-radius: 4px;">Register
 						New Board</button>
-
 				</div>
 
 				<form action="/board/list" method="post" name="frr"
@@ -94,7 +109,7 @@ th, td {
 					<div
 						style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
 
-						<div style="display: inline;">총 게시물 수 : ${total}개</div>
+						<div class="Total" style="display: inline;"></div>
 						<button type="submit" style="border: none;">X</button>
 					</div>
 				</form>
@@ -139,21 +154,7 @@ th, td {
 
 					<div style="text-align: center;">
 						<ul class="pagination">
-							<c:if test="${pageMaker.prev}">
-								<li class="paginate_button"><a
-									href="${pageMaker.startPage -1}">Prev</a></li>
-							</c:if>
 
-							<c:forEach var="num" begin="${pageMaker.startPage}"
-								end="${pageMaker.endPage}">
-								<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""}">
-									<a href="${num}"> ${num} </a>
-								</li>
-							</c:forEach>
-							<c:if test="${pageMaker.next}">
-								<li class="paginate_button next"><a
-									href="${pageMaker.endPage +1}"> Next </a></li>
-							</c:if>
 						</ul>
 					</div>
 					<!-- /.table-responsive -->
@@ -175,7 +176,6 @@ th, td {
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-
 				var result = '<c:out value="${result}"/>';
 
 				checkModal(result);
@@ -214,44 +214,85 @@ th, td {
 							actionForm.submit();
 
 						});
-			});
-	
-	$(document).ready(function() {
-		console.log("===============================");
-		var BoardPageUL = $(".ListPage");
-		showList(1);
-		
-		function showList(page){
-			BoardService.getList({page:page}, function(list){
-				var str="";
-				if(list==null||list.length==0){
-					
-					BoardPageUL.html("");
-					
-					return;
-				}
-				for(var i = 0, len = list.length || 0; i<len; i++){
-					str+= "<tr>"
-					str +=	"<td>"+list[i].bno+"</td>";
-					str += "<td>"+list[i].title+"</td>";
-					str += "<td>"+BoardService.displayTime(list[i].createDate)+"</td>";
-					str += "<td>"+BoardService.displayTime(list[i].changeDate)+"</td>";
-					str+= "</tr>"
-				}
-				BoardPageUL.html(str);
-			});
-		
-			
-			
-		};
-		
-		function showTotal(){
-			
-		}
-		console.log("===============================");
 
-	});
+			});
 
+	console.log("===============================");
+	var BoardPageUL = $(".ListPage");
+	var BoardTotal = $(".Total");
+	var BoardPaging = $(".pagination")
+	showList(1);
+
+	function showList(page) {
+		BoardService
+				.getList(
+						{
+							page : page
+						},
+						function(list) {
+							var str = "";
+							var strr = "";
+							DaTe = list.TableData.data
+							if (list == null || list.length == 0) {
+
+								BoardPageUL.html("");
+								BoardTotal.html("");
+
+								return;
+							}
+
+							// 총 게시물 개수 출력
+							BoardTotal.html("총 게시물 개수는 : "
+									+ list.ListData.total + "")
+
+							// 테이블 출력
+							for (var i = 0, len = DaTe.length || 0; i < len; i++) {
+								str += "<tr>"
+								str += "<td>" + DaTe[i].bno + "</td>";
+								str += "<td>" + DaTe[i].title + "</td>";
+								str += "<td>"
+										+ BoardService
+												.displayTime(DaTe[i].createDate)
+										+ "</td>";
+								str += "<td>"
+										+ BoardService
+												.displayTime(DaTe[i].changeDate)
+										+ "</td>";
+								str += "</tr>";
+							}
+
+							BoardPageUL.html(str);
+
+							var startPa = (list.ListData.pageDTO.startPage) - 1;
+							var endPa = (list.ListData.pageDTO.endPage) + 1;
+
+							strr += "<c:if test="+ list.ListData.pageDTO.prev +">";
+							strr += "<li class="paginate_button previous">";
+							strr += "<a href=" + startPa + ">Previous</a></li></c:if>";
+
+							for (var i = 1; i <= endPa - startPa; i++) {
+								var tf = (list.ListData.pageDTO.cri.pageNum == i ? "'paginate_button active'"
+										: "paginate_button");
+								strr += "<li class="+ tf +">";
+								strr += "<button id="+ i +" class='click-btn'>"
+										+ i + "</button></li>";
+							}
+
+							strr += "<c:if test="+ list.ListData.pageDTO.prev +">";
+							strr += "<li class="paginate_button previous">";
+							strr += "<a href=" + endPa + ">Next</a></li></c:if>";
+
+							BoardPaging.html(strr);
+
+
+							$(".click-btn").on("click", function(e) {
+								a = e.target.id;
+								showList(a)
+								
+							});
+						});
+
+	};
 	function CheckObj() {
 		alert("데이터를 전부 삭제 합니다.");
 	}
