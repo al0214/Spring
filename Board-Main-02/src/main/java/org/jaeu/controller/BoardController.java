@@ -24,13 +24,6 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	private BoardService service;
 
-	// 리스트 페이지
-	@GetMapping("/list")
-	public String list() {
-
-		return "/board/list";
-	}
-	
 	@PostMapping("/list")
 	public String PostList(BoardVO board, RedirectAttributes rttr) {
 		log.info("C : Remove All Obj");

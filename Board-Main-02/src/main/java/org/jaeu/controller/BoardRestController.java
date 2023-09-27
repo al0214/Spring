@@ -11,11 +11,13 @@ import org.jaeu.service.BoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,6 +28,12 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class BoardRestController {
 	private BoardService service;
+	
+	@RequestMapping("/list")
+	public ModelAndView manage() {
+		ModelAndView mav = new ModelAndView("board/list");
+		return mav;
+	}
 	
 	@GetMapping(value = "/list/{page}", 
 			produces = { MediaType.APPLICATION_XML_VALUE,
@@ -56,6 +64,12 @@ public class BoardRestController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	
+	@DeleteMapping(value = "/list/alldel", 
+			produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void alldel(BoardVO board) {
+		
+		service.allremove(board);
+	}
 
 }

@@ -8,7 +8,7 @@ drop sequence tqq_seq;
 CREATE SEQUENCE tqq_seq
        INCREMENT BY 1
        START WITH 1
-       MINVALUE 1
+       MINVALUE 0
        MAXVALUE 9999
        NOCYCLE
        ORDER;
@@ -45,7 +45,16 @@ SELECT TO_CHAR(SYSDATE, 'YYYY/MM/DD') FROM DUAL;
 
 -- 삭제
 delete from boardExam where bno = 1;
-SELECT DATE_FORMAT("2021/01/24 12:33:32", "%Y-%m-%d");
+
+-- 시퀀스 초기화
+SELECT tqq_seq.currval FROM DUAL;
+
+ALTER SEQUENCE tqq_seq INCREMENT BY ;
+
+SELECT tqq_seq.NEXTVAL FROM DUAL;
+
+ALTER SEQUENCE tqq_seq INCREMENT BY 1;
+-----------------------------------------------
 
 select TO_CHAR(createDate, 'YY-MM-DD') from boardExam;
 

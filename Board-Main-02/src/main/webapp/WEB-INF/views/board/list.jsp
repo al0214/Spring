@@ -51,6 +51,13 @@ th, td {
 	border-color: #570df6 !important;
 }
 
+.pagination>li>a {
+	border: none;
+	background-color: white;
+	color: 570df6;
+	border: none;
+}
+
 #NEO {
 	position: relative;
 	float: left;
@@ -63,13 +70,25 @@ th, td {
 	border: 1px solid #ddd;
 }
 
-.btn {
+.click-btn {
 	border: none;
-	background-color: #1a73e8;
-	color: white;
+	background-color: white;
+	color: 570df6;
 	border: none;
-	background-color: #1a73e8;
-	color: white;
+}
+
+.Next {
+	border: none !important;
+	background-color: white;
+	color: 570df6;
+	border: none;
+}
+
+.Prev {
+	border: none !important;
+	background-color: white;
+	color: 570df6;
+	border: none;
 }
 
 .page-header {
@@ -104,15 +123,13 @@ th, td {
 						New Board</button>
 				</div>
 
-				<form action="/board/list" method="post" name="frr"
-					onSubmit="return CheckObj()">
-					<div
-						style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
 
-						<div class="Total" style="display: inline;"></div>
-						<button type="submit" style="border: none;">X</button>
-					</div>
-				</form>
+				<div
+					style="float: right; padding-bottom: 5px; padding-right: 16px; font-weight: bold;">
+
+					<div class="Total" style="display: inline;"></div>
+					<button onclick="OnDelBtn()" style="border: none;">X</button>
+				</div>
 
 
 				<!-- /.panel-heading -->
@@ -124,7 +141,7 @@ th, td {
 								<th>#번호</th>
 								<th>제목</th>
 								<th>작성일</th>
-								<th>마지막 수정일</th>
+								<th>수정일</th>
 							</tr>
 						</thead>
 						<tbody class="ListPage">
@@ -216,6 +233,7 @@ th, td {
 						});
 
 			});
+	// end $(document).ready
 
 	console.log("===============================");
 	var BoardPageUL = $(".ListPage");
@@ -263,36 +281,66 @@ th, td {
 
 							BoardPageUL.html(str);
 
-							var startPa = (list.ListData.pageDTO.startPage) - 1;
-							var endPa = (list.ListData.pageDTO.endPage) + 1;
-
-							strr += "<c:if test="+ list.ListData.pageDTO.prev +">";
-							strr += "<li class="paginate_button previous">";
-							strr += "<a href=" + startPa + ">Previous</a></li></c:if>";
-
-							for (var i = 1; i <= endPa - startPa; i++) {
+							var startPa = (list.ListData.pageDTO.startPage);
+							var endPa = (list.ListData.pageDTO.endPage);
+							console.log("지나감");
+							if ((list.ListData.pageDTO.prev) == true) {
+								strr += "<li class=paginate_button previous>";
+								strr += "<button class='Prev'>Prev</a></li>";
+							}
+							
+							console.log("startPa : " +startPa);
+							console.log("endPa : " + endPa);
+							for (var i = startPa; i <= endPa; i++) {
+								console.log("지나감2");
 								var tf = (list.ListData.pageDTO.cri.pageNum == i ? "'paginate_button active'"
 										: "paginate_button");
 								strr += "<li class="+ tf +">";
+								console.log(i)
 								strr += "<button id="+ i +" class='click-btn'>"
 										+ i + "</button></li>";
 							}
 
-							strr += "<c:if test="+ list.ListData.pageDTO.prev +">";
-							strr += "<li class="paginate_button previous">";
-							strr += "<a href=" + endPa + ">Next</a></li></c:if>";
+							console.log(list.ListData.pageDTO.prev);
+							console.log(list.ListData.pageDTO.next);
+
+							if ((list.ListData.pageDTO.next) == true) {
+								strr += "<li class='paginate_button next' style='float:right'>";
+								strr += "<button class='Next'>Next</button></li>"
+							}
 
 							BoardPaging.html(strr);
-
 
 							$(".click-btn").on("click", function(e) {
 								a = e.target.id;
 								showList(a)
-								
+
 							});
+							$(".Next").on("click", function() {
+								a = endPa + 1;
+								showList(a)
+
+							});
+							$(".Prev").on("click", function() {
+								a = startPa - 1;
+								showList(a)
+
+							});
+							
+							console.log("===============================")
+
 						});
 
 	};
+	function OnDelBtn() {
+		$.ajax({
+			type : 'DELETE',
+			url : "/board/list/alldel"
+		}).done(function() {
+			console.log("모든 데이터가 삭제 되었습니다.");
+			showList(1);
+		})
+	}
 	function CheckObj() {
 		alert("데이터를 전부 삭제 합니다.");
 	}
