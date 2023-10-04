@@ -10,6 +10,9 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
 <!-- Bootstrap Core CSS -->
 <link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -74,8 +77,9 @@
 			<!-- panel heading -->
 			<div class="panel-body">
 				<strong><span class="t_red">*</span> 표시는 필수입력 항목입니다.</strong>
-				<form name="frr" role="form" action="/board/register" method="post"
-					onSubmit="return Checkform()" onReset="return Returnform()">
+				<form name="frr" role="form" action="/board/register" id='form'
+					enctype="application/json" method="post"
+					onReset="return Returnform()">
 					<div style="padding: 5px 10px; padding-bottom: 20px;">
 						<div style="margin-top: 10px">
 							<div class="form-group" style="margin-bottom: 10px">
@@ -96,7 +100,7 @@
 							</div>
 						</div>
 						<div style="margin-top: 10px; float: right;">
-							<button type="submit" class="btn btn-sm btn-primary" style="">Submit
+							<button type="button" class="btn btn-sm btn-primary" id='submit'>Submit
 							</button>
 							<button type="reset" class="btn btn-sm btn-primary">Reset
 							</button>
@@ -116,6 +120,32 @@
 <!-- row -->
 
 <script type="text/javascript">
+	$(function() {
+		$('#submit').on("click", function() {
+			if (Checkform() == 1) {
+				var formm = {
+					title : frr.title.value,
+					detail : frr.detail.value
+				}
+
+				var loc = location.href = 'list';
+
+				console.log(formm);
+
+				$.ajax({
+					type : 'POST',
+					url : "/board/register",
+					contentType : "application/json; charset=utf-8",
+					data : JSON.stringify(formm)
+				}).done(function() {
+					console.log("등록");
+				})
+			} else{
+				return;
+			}
+
+		})
+	});
 	function checkSpace(str) {
 		if (str.search(/\s/) != -1) {
 			return true;
@@ -138,7 +168,7 @@
 			frr.title.focus();
 			alert("제목을 입력해 주세요");
 
-			return false;
+			return 0;
 		}
 
 		else if (frr.title.value == "" || frr.title.value == "&nbsp") {
@@ -146,13 +176,13 @@
 			frr.title.focus();
 			alert("제목을 입력해 주세요");
 
-			return false;
+			return 0;
 		} else if (frr.detail.value == "") {
 
 			frr.detail.focus();
 			alert("내용을 입력해 주세요");
 
-			return false;
+			return 0;
 		}
 
 		title = title.trim();
@@ -160,8 +190,10 @@
 
 		if (title == "" || detail == "") {
 			alert("공백 문자는 허용하지 않습니다.")
-			return false;
+			return 0;
 		}
+		
+		return 1;
 	}
 </script>
 

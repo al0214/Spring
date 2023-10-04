@@ -118,7 +118,7 @@ th, td {
 			<div class="panel panel-default">
 				<div class="panel-heading" style="margin-bottom: 10px">
 					Board List Page
-					<button onclick="location='register'"
+					<button class="btn_N"
 						style="float: right; border: none; background-color: #570df6; color: white; border-radius: 4px;">Register
 						New Board</button>
 				</div>
@@ -232,10 +232,14 @@ th, td {
 
 						});
 
+				$(".btn_N").on("click", function() {
+					console.log("등록 페이지 이동")
+					location.href = 'register'
+				});
+
 			});
 	// end $(document).ready
 
-	console.log("===============================");
 	var BoardPageUL = $(".ListPage");
 	var BoardTotal = $(".Total");
 	var BoardPaging = $(".pagination")
@@ -267,7 +271,8 @@ th, td {
 							for (var i = 0, len = DaTe.length || 0; i < len; i++) {
 								str += "<tr>"
 								str += "<td>" + DaTe[i].bno + "</td>";
-								str += "<td>" + DaTe[i].title + "</td>";
+								str += "<td><a href='/' class='clickId' id='"+ DaTe[i].bno +"'>"
+										+ DaTe[i].title + "</a></td>";
 								str += "<td>"
 										+ BoardService
 												.displayTime(DaTe[i].createDate)
@@ -283,16 +288,13 @@ th, td {
 
 							var startPa = (list.ListData.pageDTO.startPage);
 							var endPa = (list.ListData.pageDTO.endPage);
-							console.log("지나감");
+
 							if ((list.ListData.pageDTO.prev) == true) {
 								strr += "<li class=paginate_button previous>";
 								strr += "<button class='Prev'>Prev</a></li>";
 							}
-							
-							console.log("startPa : " +startPa);
-							console.log("endPa : " + endPa);
+
 							for (var i = startPa; i <= endPa; i++) {
-								console.log("지나감2");
 								var tf = (list.ListData.pageDTO.cri.pageNum == i ? "'paginate_button active'"
 										: "paginate_button");
 								strr += "<li class="+ tf +">";
@@ -300,9 +302,6 @@ th, td {
 								strr += "<button id="+ i +" class='click-btn'>"
 										+ i + "</button></li>";
 							}
-
-							console.log(list.ListData.pageDTO.prev);
-							console.log(list.ListData.pageDTO.next);
 
 							if ((list.ListData.pageDTO.next) == true) {
 								strr += "<li class='paginate_button next' style='float:right'>";
@@ -326,23 +325,30 @@ th, td {
 								showList(a)
 
 							});
-							
-							console.log("===============================")
+							$(".clickId").on("click", function(e) {
+								e.preventDefault();
+
+								$.ajax({
+									type : 'GET',
+									url : "/board/list/" + e.target.id
+								}).done(function(){
+									console.log("성공");
+									location.href="detail/"+e.target.id
+								});
+							});
 
 						});
 
 	};
+
 	function OnDelBtn() {
 		$.ajax({
 			type : 'DELETE',
-			url : "/board/list/alldel"
+			url : "/board/list"
 		}).done(function() {
 			console.log("모든 데이터가 삭제 되었습니다.");
 			showList(1);
 		})
-	}
-	function CheckObj() {
-		alert("데이터를 전부 삭제 합니다.");
 	}
 </script>
 

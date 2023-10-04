@@ -49,7 +49,7 @@ delete from boardExam where bno = 1;
 -- 시퀀스 초기화
 SELECT tqq_seq.currval FROM DUAL;
 
-ALTER SEQUENCE tqq_seq INCREMENT BY ;
+ALTER SEQUENCE tqq_seq INCREMENT BY -1;
 
 SELECT tqq_seq.NEXTVAL FROM DUAL;
 
