@@ -177,7 +177,7 @@ th, td {
 					<!-- /.table-responsive -->
 				</div>
 				<!-- /.panel-body -->
-				<form id='actionForm' action="/board/list" method='get'>
+				<form id='actionForm' action="/list" method='get'>
 					<input type='hidden' name='pageNum'
 						value='${pageMaker.cri.pageNum}'> <input type='hidden'
 						name='amount' value='${pageMaker.cri.amount}'>
@@ -214,7 +214,7 @@ th, td {
 				;
 
 				$("#regBtn").on("click", function() {
-					self.location = "/board/register";
+					self.location = "/register";
 				});
 
 				var actionForm = $("#actionForm");
@@ -271,7 +271,7 @@ th, td {
 							for (var i = 0, len = DaTe.length || 0; i < len; i++) {
 								str += "<tr>"
 								str += "<td>" + DaTe[i].bno + "</td>";
-								str += "<td><a href='/' class='clickId' id='"+ DaTe[i].bno +"'>"
+								str += "<td><a href='detail/" + DaTe[i].bno +"'>"
 										+ DaTe[i].title + "</a></td>";
 								str += "<td>"
 										+ BoardService
@@ -325,18 +325,6 @@ th, td {
 								showList(a)
 
 							});
-							$(".clickId").on("click", function(e) {
-								e.preventDefault();
-
-								$.ajax({
-									type : 'GET',
-									url : "/board/list/" + e.target.id
-								}).done(function(){
-									console.log("성공");
-									location.href="detail/"+e.target.id
-								});
-							});
-
 						});
 
 	};
@@ -344,7 +332,7 @@ th, td {
 	function OnDelBtn() {
 		$.ajax({
 			type : 'DELETE',
-			url : "/board/list"
+			url : "list"
 		}).done(function() {
 			console.log("모든 데이터가 삭제 되었습니다.");
 			showList(1);

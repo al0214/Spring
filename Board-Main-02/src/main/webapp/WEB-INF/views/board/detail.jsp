@@ -107,7 +107,7 @@
 						</div>
 					</div>
 					<div style="float: right; padding-top: 15px;">
-						<button onclick="location='modify?bno=${board.bno}'"
+						<button onclick="location.href='/modify/${board.bno}'"
 							class="btn btn-sm btn-primary">Modify</button>
 						<button onclick="location='list'" class="btn btn-sm btn-primary">Return
 							Page</button>

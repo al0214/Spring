@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RequestMapping("/board/*")
+@RequestMapping("*")
 @RestController
 @Log4j
 @AllArgsConstructor
@@ -41,7 +41,6 @@ public class BoardRestController {
 		ModelAndView mav = new ModelAndView("board/register");
 		return mav;
 	}
-	
 
 	@GetMapping(value = "/list/pages/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -85,14 +84,24 @@ public class BoardRestController {
 	}
 	
 	
-	@GetMapping(value = "/list/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
+	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<BoardVO> detail(@PathVariable Long bno) {
+	public ModelAndView detail(@PathVariable Long bno) {
 		
+		ModelAndView mav = new ModelAndView("board/detail");
+		mav.addObject("board", service.detail(bno));
 		log.info("Open Detail Page : " + bno+"번");
 		
-		return new ResponseEntity<>(service.detail(bno), HttpStatus.OK);
+		return mav;
 	
+	}
+	
+	@GetMapping(value = "/modify/{bno}")
+	public ModelAndView modify(@PathVariable Long bno) {
+		ModelAndView mav = new ModelAndView("/board/modify");
+		mav.addObject("board", service.detail(bno));
+		
+		return mav;
 	}
 	
 	
