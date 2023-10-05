@@ -134,7 +134,7 @@
 
 				$.ajax({
 					type : 'POST',
-					url : "/board/register",
+					url : "/register",
 					contentType : "application/json; charset=utf-8",
 					data : JSON.stringify(formm)
 				}).done(function() {

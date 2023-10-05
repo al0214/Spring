@@ -10,8 +10,29 @@ var BoardService = (function() {
 			url : "/list/pages/"+page+".json",
 			data : param,
 			dataType : "json",
-			type : "GET",
-			asyn : false,
+			type : "GET"
+		}).done(function(data) {
+			if (callback) {
+				callback(data);
+			}
+			;
+		}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	}
+	;
+	
+	function getDetail(param, callback, error) {
+
+		var page = param.page;
+
+		$.ajax({
+			url : "/list/pages/"+page+".json",
+			data : param,
+			dataType : "json",
+			type : "GET"
 		}).done(function(data) {
 			if (callback) {
 				callback(data);
@@ -32,7 +53,7 @@ var BoardService = (function() {
 		var mm = dateObj.getMonth() + 1; // getMonth는 0부터 시작
 		var dd = dateObj.getDate();
 
-		return [ yy, '/', mm + '/', dd ].join('');
+		return [ yy, '-', mm + '-', dd ].join('');
 	}
 	;
 

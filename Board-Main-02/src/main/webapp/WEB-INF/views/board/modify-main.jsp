@@ -101,7 +101,7 @@
 							</div>
 							<div class="form-group">
 								<h3>
-									Content<span class="t_red">*</span>
+									Text area<span class="t_red">*</span>
 								</h3>
 								<textarea name="detail" id="detail" rows="3"
 									class="form-control" style="height: 75px;"
@@ -134,7 +134,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		 
 		var formObj = $("form");
 
 		$('button').on("click", function(e) {
@@ -148,7 +148,7 @@
 			if (operation === 'remove') {
 				formObj.attr("action", "/board/remove");
 			} else if (operation === 'list') {
-				self.location = "/board/list";
+				self.location = "/list";
 				return;
 			}
 
@@ -156,14 +156,6 @@
 
 		});
 	});
-
-	function checkSpace(str) {
-		if (str.search(/\s/) != -1) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	function Checkform() {
 

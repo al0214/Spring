@@ -44,7 +44,6 @@
 }
 
 .form-control {
-	
 	width: 100%;
 	resize: none;
 	outline: none;
@@ -67,12 +66,12 @@
 <div style="margin: 5%">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Board Detail</h1>
+			<h1 class="page-header"></h1>
 		</div>
 	</div>
 	<!-- row -->
 
-	<div class="row">
+	<div class="row" id="changeLoc">
 		<div class="col-lg-12">
 
 			<!-- panel heading -->
@@ -82,32 +81,28 @@
 					<div style="margin-top: 10px">
 						<div class="form-group" style="margin-bottom: 10px">
 							<h3 style="margin-top: 10px">Bunho</h3>
-							<div class="form-control" id='form-control-css'>${board.bno}번
-							</div>
+							<div class="form-control" id='bno'></div>
 
 							<h3>Title</h3>
-							<div class="form-control" id='form-control-css'>${board.title}
-							</div>
+							<input name="title" id="title" class="form-control" readonly />
 
 							<h3>Content</h3>
 							<textarea name="detail" id="detail" rows="3" class="form-control"
 								style="height: 75px;"
 								placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
-								maxlength="400" wrap="hard" readonly>${board.detail}</textarea>
+								maxlength="400" wrap="hard" readonly></textarea>
 
 							<h3>작성 일자</h3>
-							<div name="createDate" class="form-control">
-								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.createDate}" />
-							</div>
+							<div name="createDate" class="form-control" id='creDate'></div>
 
 							<h3>수정 일자</h3>
-							<div name="changeDate" class="form-control">
+							<div name="changeDate" class="form-control" id='chanDate'>
 								<fmt:formatDate pattern="yyyy-MM-dd" value="${board.changeDate}" />
 							</div>
 						</div>
 					</div>
 					<div style="float: right; padding-top: 15px;">
-						<button onclick="location.href='/modify/${board.bno}'"
+						<button onclick="return changeModify()"
 							class="btn btn-sm btn-primary">Modify</button>
 						<button onclick="location='list'" class="btn btn-sm btn-primary">Return
 							Page</button>
@@ -121,4 +116,60 @@
 	<!-- end panel -->
 </div>
 <!-- row -->
+<script type="text/javascript" src="/resources/js/board.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// detail 페이지 불러옴
+		detailPage();
+
+	});
+	function detailPage() {
+		creDateStr = "";
+		chanDateStr = "";
+
+		$.ajax({
+			type : 'GET',
+			url : "/detail/${bno}.json",
+			dataType : "json"
+		}).done(
+				function(list) {
+
+					creDateStr += "<div>"
+							+ BoardService.displayTime(list.createDate)
+							+ "</div>"
+					chanDateStr += "<div>"
+							+ BoardService.displayTime(list.changeDate)
+							+ "</div>"
+
+					$(".page-header").html("Board Detail");
+					$("#bno").html(list.bno + "번");
+					$("#title").attr('value', list.title )
+					$("#detail").html(list.detail);
+					$("#creDate").html(creDateStr);
+					$("#chanDate").html(chanDateStr);
+
+				})
+	};
+	function changeModify() {
+		$.ajax({
+			type : 'POST',
+			url : "/modify",
+			dataType : "html",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8"
+		}).done(function(list) {
+			$('#changeLoc').children().remove();
+			$('#changeLoc').html(list);
+			$.ajax({
+				type : 'GET',
+				url : "/detail/${bno}.json",
+				dataType : "json"
+			}).done(function(list) {
+				$(".page-header").html("Board Modify");
+				$("#bno").html(list.bno + "번");
+				$("#title").attr('value', list.title )
+				$("#detail").html(list.detail);
+			})
+		})
+	}
+</script>
 

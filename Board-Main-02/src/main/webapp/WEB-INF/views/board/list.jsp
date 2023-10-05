@@ -113,7 +113,7 @@ th, td {
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
-	<div class="row">
+	<div class="row" id="changeLoc">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading" style="margin-bottom: 10px">

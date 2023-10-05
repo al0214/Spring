@@ -35,7 +35,7 @@ public class BoardRestController {
 		ModelAndView mav = new ModelAndView("board/list");
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/register")
 	public ModelAndView viewcreate() {
 		ModelAndView mav = new ModelAndView("board/register");
@@ -82,28 +82,33 @@ public class BoardRestController {
 		log.info(board);
 		service.register(board);
 	}
-	
-	
+
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ModelAndView detail(@PathVariable Long bno) {
-		
+	public ModelAndView detailView(@PathVariable Long bno) {
+
 		ModelAndView mav = new ModelAndView("board/detail");
-		mav.addObject("board", service.detail(bno));
-		log.info("Open Detail Page : " + bno+"번");
-		
+		mav.addObject("bno", bno);
+		log.info("Open Detail Page : " + bno + "번");
+
 		return mav;
-	
+
 	}
-	
-	@GetMapping(value = "/modify/{bno}")
-	public ModelAndView modify(@PathVariable Long bno) {
+
+	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<BoardVO> detail(@PathVariable("bno") Long bno) {
+		return new ResponseEntity<>(service.detail(bno), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/modify", produces = "application/text; charset=UTF-8")
+	public ModelAndView modify() {
 		ModelAndView mav = new ModelAndView("/board/modify");
-		mav.addObject("board", service.detail(bno));
-		
+
+		log.info("지나감");
+
+		log.info(mav);
 		return mav;
 	}
-	
-	
 
 }
