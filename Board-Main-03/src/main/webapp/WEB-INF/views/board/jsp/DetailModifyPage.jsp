@@ -6,9 +6,45 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<style>
+.t_red {
+	color: red;
+}
 
+.panel-body {
+	padding: 6px 0 0 0px !important;
+}
 
-<div class="col-lg-12" id="detailPage">
+.page-header {
+	margin: 40px 0px 0px;
+	border: 1px;
+	background-color: #570df6 !important;
+	text-align: center;
+	color: white;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	padding: 5px;
+}
+
+.form-control {
+	width: 100%;
+	resize: none;
+	outline: none;
+	border: none;
+	font-size: 20px;
+	background-color: #d9d9d9cc !important;
+	height: 40px;
+}
+
+.btn {
+	border: none;
+	background-color: #570df6;
+	color: white;
+	font-size: 20px;
+}
+</style>
+
+<div class="col-lg-12" id="detailPage" style="display: none;">
 
 	<!-- panel heading -->
 	<div class="panel-body">
@@ -38,8 +74,8 @@
 			<div style="float: right; padding-top: 15px;">
 				<button onclick="return changePage(0)"
 					class="btn btn-sm btn-primary">Modify</button>
-				<button onclick="location.replace('/list')" class="btn btn-sm btn-primary">Return
-					Page</button>
+				<button onclick="OnClickReturn(0)"
+					class="btn btn-sm btn-primary">Return Page</button>
 			</div>
 		</div>
 	</div>

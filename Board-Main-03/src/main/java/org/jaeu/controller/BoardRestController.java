@@ -31,42 +31,36 @@ import lombok.extern.log4j.Log4j;
 public class BoardRestController {
 	private BoardService service;
 
+	// 메인 페이지 호출
 	@RequestMapping("/board")
 	public ModelAndView manage() {
-		ModelAndView mav = new ModelAndView("board/MainPage");
+		ModelAndView mav = new ModelAndView("board/mainPage/MainPage");
 		return mav;
 	}
-	
+
+	// 리스트 페이지 호출
 	@PostMapping(value = "/list")
 	public ModelAndView list() {
-		ModelAndView mav = new ModelAndView("board/listPage");
-
-		return mav;
-	}
-	
-	@PostMapping(value = "/detail/page")
-	public ModelAndView detailpage() {
-		ModelAndView mav = new ModelAndView("board/detail");
+		ModelAndView mav = new ModelAndView("board/jsp/ListPage");
 
 		return mav;
 	}
 
+	// 등록 페이지 호출
 	@PostMapping(value = "/register/page")
 	public ModelAndView viewcreate() {
-		ModelAndView mav = new ModelAndView("board/register");
+		ModelAndView mav = new ModelAndView("board/jsp/RegisterPage");
 		return mav;
 	}
-	
-	
-	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void create(@RequestBody BoardVO board) {
-		log.info("Send Register : " + board);
-		log.info(board);
-		service.register(board);
+
+	// 상세 및 수정 삭제 페이지 호출
+	@PostMapping(value = "/detail/page")
+	public ModelAndView detailpage() {
+		ModelAndView mav = new ModelAndView("board/jsp/DetailModifyPage");
+		return mav;
 	}
 
-	
+	// 페이징 기능
 	@GetMapping(value = "/list/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable("page") int page) {
@@ -94,46 +88,37 @@ public class BoardRestController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/list")
+	// 전부 삭제
+	@DeleteMapping(value = "/remove/all")
 	public void alldel(BoardVO board) {
 		log.info("All Remove Board Object");
 		service.allremove(board);
 	}
 
-	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ModelAndView detailView(@PathVariable Long bno) {
-
-		ModelAndView mav = new ModelAndView("board/page");
-		mav.addObject("bno", bno);
-		log.info("Open Detail Page : " + bno + "번");
-
-		return mav;
-
-	}
-
+	// 상세 페이지 데이터
 	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<BoardVO> detail(@PathVariable("bno") Long bno) {
 		return new ResponseEntity<>(service.detail(bno), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/modify", produces = "application/text; charset=UTF-8")
-	public ModelAndView modify() {
-		ModelAndView mav = new ModelAndView("/board/modify");
-
-		log.info("지나감");
-
-		log.info(mav);
-		return mav;
+	// 등록 기능
+	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void create(@RequestBody BoardVO board) {
+		log.info("Send Register : " + board);
+		log.info(board);
+		service.register(board);
 	}
 
+	// 수정 기능
 	@PutMapping(value = "/modify/update")
 	public void update(@RequestBody BoardVO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
 
+	// 삭제 기능
 	@DeleteMapping(value = "/modify/delete/{bno}")
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);

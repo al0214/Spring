@@ -5,12 +5,14 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<div class="col-lg-12">
+<div class="col-lg-12" id="listPage">
 	<div class="panel panel-default">
 		<div class="panel-heading" style="margin-bottom: 10px">
 			Board List Page
-			<button class="btn_N"
+			<button onclick="return OnClickNew()"
 				style="float: right; border: none; background-color: #570df6; color: white; border-radius: 4px;">Register
 				New Board</button>
 		</div>
