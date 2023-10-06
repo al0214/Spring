@@ -31,19 +31,43 @@ import lombok.extern.log4j.Log4j;
 public class BoardRestController {
 	private BoardService service;
 
-	@RequestMapping("/list")
+	@RequestMapping("/board")
 	public ModelAndView manage() {
-		ModelAndView mav = new ModelAndView("board/list");
+		ModelAndView mav = new ModelAndView("board/MainPage");
+		return mav;
+	}
+	
+	@PostMapping(value = "/list")
+	public ModelAndView list() {
+		ModelAndView mav = new ModelAndView("board/listPage");
+
+		return mav;
+	}
+	
+	@PostMapping(value = "/detail/page")
+	public ModelAndView detailpage() {
+		ModelAndView mav = new ModelAndView("board/detail");
+
 		return mav;
 	}
 
-	@GetMapping(value = "/register")
+	@PostMapping(value = "/register/page")
 	public ModelAndView viewcreate() {
 		ModelAndView mav = new ModelAndView("board/register");
 		return mav;
 	}
+	
+	
+	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public void create(@RequestBody BoardVO board) {
+		log.info("Send Register : " + board);
+		log.info(board);
+		service.register(board);
+	}
 
-	@GetMapping(value = "/list/pages/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
+	
+	@GetMapping(value = "/list/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable("page") int page) {
 		Map<String, Object> response1 = new HashMap<>();
@@ -76,21 +100,6 @@ public class BoardRestController {
 		service.allremove(board);
 	}
 
-	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void create(@RequestBody BoardVO board) {
-		log.info("Send Register : " + board);
-		log.info(board);
-		service.register(board);
-	}
-	
-	@PostMapping(value = "/detail/page")
-	public ModelAndView detailpage() {
-		ModelAndView mav = new ModelAndView("board/detail");
-		
-		return mav;
-	}
-	
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ModelAndView detailView(@PathVariable Long bno) {
@@ -118,13 +127,13 @@ public class BoardRestController {
 		log.info(mav);
 		return mav;
 	}
-	
+
 	@PutMapping(value = "/modify/update")
 	public void update(@RequestBody BoardVO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
-	
+
 	@DeleteMapping(value = "/modify/delete/{bno}")
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);
