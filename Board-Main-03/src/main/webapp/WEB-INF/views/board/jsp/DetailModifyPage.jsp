@@ -56,7 +56,7 @@
 					<input class="form-control" id='bno' readonly></input>
 
 					<h3>Title</h3>
-					<input name="title" id="title" class="form-control" readonly />
+					<input name="title" id="title" class="form-control" readonly></input>
 
 					<h3>Content</h3>
 					<textarea name="detail" id="detail" rows="3" class="form-control"
@@ -74,8 +74,8 @@
 			<div style="float: right; padding-top: 15px;">
 				<button onclick="return changePage(0)"
 					class="btn btn-sm btn-primary">Modify</button>
-				<button onclick="OnClickReturn(0)"
-					class="btn btn-sm btn-primary">Return Page</button>
+				<button onclick="OnClickReturn(0)" class="btn btn-sm btn-primary">Return
+					Page</button>
 			</div>
 		</div>
 	</div>

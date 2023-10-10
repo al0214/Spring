@@ -160,6 +160,7 @@ th, td {
 
 	});
 
+	// Register 페이지 이동
 	function OnClickNew() {
 		console.log("click");
 		$('.page-header').text("Board Register");
@@ -168,10 +169,12 @@ th, td {
 
 	}
 
+	// Register 페이지 Reset 버트
 	function Returnform() {
 		console.log("Reset");
 	}
 
+	// Register 등록
 	function OnClickSubmit() {
 		check = Checkform(0);
 		console.log("확인 " + check);
@@ -187,16 +190,23 @@ th, td {
 				type : 'POST',
 				url : "/register",
 				contentType : "application/json; charset=utf-8",
-				data : JSON.stringify(formm)
-			}).done(function() {
-				console.log("등록");
-				rest();
-				$('.page-header').text("Board List");
-				$("#registerPage").attr("style", "display:none;");
-				$("#listPage").removeAttr("style");
+				data : JSON.stringify(formm),
+				success : function() {
+					console.log("등록");
+					ListData(1);
+					rest();
+					$('.page-header').text("Board List");
+					$("#registerPage").attr("style", "display:none;");
+					$("#listPage").removeAttr("style");
+				},
+				error : function() {
+					console.log("등록 페이지 에러")
+				}
 
 			})
+
 		} else if (check == 0) {
+			alert("오류 다시 시도해주세요!");
 			return;
 		} else {
 			alert("오류 다시 시도해주세요!");
@@ -212,6 +222,7 @@ th, td {
 		$("#detail").val("");
 	}
 
+	// Return 버튼 함수
 	function OnClickReturn(c) {
 		if (c == 0) {
 			$('.page-header').text("Board List");
@@ -221,23 +232,22 @@ th, td {
 		}
 	}
 
+	// 전체 데이터 삭제 함수
 	function OnDelBtn() {
 		$.ajax({
 			type : 'DELETE',
 			url : "/remove/all"
 		}).done(function() {
 			console.log("모든 데이터가 삭제 되었습니다.");
-			PageData(1);
+			ListData(1);
 		})
 	}
 
 	// Detail 페이지 호출
-
 	var a = 0;
 	var j = 0;
 
 	function PageDetail(j) {
-		console.log("호출");
 		$(".page-header").html("Board Detail");
 		$("#listPage").attr("style", "display:none;");
 		$("#detailPage").removeAttr("style");
@@ -251,32 +261,33 @@ th, td {
 		$.ajax({
 			type : 'GET',
 			url : "/detail/" + a + ".json",
-			dataType : "json"
-		}).done(
-				function(list) {
+			dataType : "json",
+			success : function(list) {
+				creDateStr += "<div>"
+						+ BoardService.displayTime(list.createDate) + "</div>";
 
-					creDateStr += "<div>"
-							+ BoardService.displayTime(list.createDate)
-							+ "</div>";
-					chanDateStr += "<div>"
-							+ BoardService.displayTime(list.changeDate)
-							+ "</div>";
-					console.log("지나감");
+				chanDateStr += "<div>"
+						+ BoardService.displayTime(list.changeDate) + "</div>";
+				console.log(list.bno, list.title, list.detail)
+				$("#bno").attr('value', list.bno);
+				$("#title").attr('value', list.title);
+				$("#detail").html(list.detail);
+				$("#creDate").html(creDateStr);
+				$("#chanDate").html(chanDateStr);
+				$("#bno2").last().attr('value', list.bno);
+				$("#title2").attr('value', list.title);
+				$("#detail2").html(list.detail);
+			},
+			error : function(){
+				console.log("에러");
+			}
+		})
 
-					$("#bno").attr('value', list.bno);
-					$("#title").attr('value', list.title);
-					$("#detail").html(list.detail);
-					$("#creDate").html(creDateStr);
-					$("#chanDate").html(chanDateStr);
-					$("#bno2").last().attr('value', list.bno);
-					$("#title2").attr('value', list.title);
-					$("#detail2").html(list.detail);
-
-				})
 	};
 
 	var b = 0;
-	//  테이블 Modify 변경 요청 
+
+	//  Modify 페이지 화면 변경 요청
 	function changePage(b) {
 
 		if (b == 0) {
@@ -322,7 +333,7 @@ th, td {
 	function removeData() {
 		$.ajax({
 			type : 'DELETE',
-			url : "/modify/delete/" + $("#bno").val(),
+			url : "/remove/" + $("#bno").val(),
 			contentType : "application/json; charset=utf-8",
 			success : function() {
 				console.log($("#bno").val() + "번이 삭제되었습니다");

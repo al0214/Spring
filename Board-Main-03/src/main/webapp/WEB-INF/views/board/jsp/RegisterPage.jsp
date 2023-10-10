@@ -74,7 +74,7 @@
 				<div style="margin-top: 10px; float: right;">
 					<button type="button" class="btn btn-sm btn-primary" onclick="return OnClickSubmit()">Submit
 					</button>
-					<button type="reset" class="btn btn-sm btn-primary">Reset
+					<button type="button" onclickk="return reset()" class="btn btn-sm btn-primary">Reset
 					</button>
 					<button type="button" onclick="return OnClickReturn(0)"
 						class="btn btn-sm btn-primary">Return Page</button>

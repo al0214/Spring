@@ -32,7 +32,7 @@ public class BoardRestController {
 	private BoardService service;
 
 	// 메인 페이지 호출
-	@RequestMapping("/board")
+	@GetMapping("/board")
 	public ModelAndView manage() {
 		ModelAndView mav = new ModelAndView("board/mainPage/MainPage");
 		return mav;
@@ -87,8 +87,10 @@ public class BoardRestController {
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
-	// 전부 삭제
+	
+	// 기능
+	
+	// 데이터 전부 삭제
 	@DeleteMapping(value = "/remove/all")
 	public void alldel(BoardVO board) {
 		log.info("All Remove Board Object");
@@ -119,7 +121,7 @@ public class BoardRestController {
 	}
 
 	// 삭제 기능
-	@DeleteMapping(value = "/modify/delete/{bno}")
+	@DeleteMapping(value = "/remove/{bno}")
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);
 		service.remove(bno);
