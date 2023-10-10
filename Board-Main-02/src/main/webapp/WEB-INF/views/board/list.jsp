@@ -140,6 +140,7 @@ th, td {
 								<tr>
 									<th>#번호</th>
 									<th>제목</th>
+									<th>첨부 파일</th>
 									<th>작성일</th>
 									<th>수정일</th>
 								</tr>
@@ -274,6 +275,12 @@ th, td {
 								str += "<td>" + DaTe[i].bno + "</td>";
 								str += "<td><a href='detail/" + DaTe[i].bno +"'>"
 										+ DaTe[i].title + "</a></td>";
+								str += "<td style='padding: 0px; vertical-align:middle;'>";
+								str += "<a href='https://naver.com'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
+								str += "<a href='https://google.com'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
+								str += "<a href='https://daum.net'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
+								str += "</td>";
+
 								str += "<td>"
 										+ BoardService
 												.displayTime(DaTe[i].createDate)

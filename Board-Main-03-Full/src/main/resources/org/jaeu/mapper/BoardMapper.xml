@@ -45,8 +45,8 @@
 	
 	<update id="update">
 		update boardExam 
-		set title=#{title, jdbcType=VARCHAR}, 
-		detail=#{detail, jdbcType=VARCHAR}, 
+		set title=#{title, jdbcType=VARCHAR},
+		detail=#{detail, jdbcType=VARCHAR},
 		changeDate=SYSDATE 
 		where bno=#{bno}
 

@@ -50,6 +50,7 @@ public class BoardRestController {
 	@PostMapping(value = "/register/page")
 	public ModelAndView viewcreate() {
 		ModelAndView mav = new ModelAndView("board/jsp/RegisterPage");
+		
 		return mav;
 	}
 
@@ -57,6 +58,7 @@ public class BoardRestController {
 	@PostMapping(value = "/detail/page")
 	public ModelAndView detailpage() {
 		ModelAndView mav = new ModelAndView("board/jsp/DetailModifyPage");
+		
 		return mav;
 	}
 

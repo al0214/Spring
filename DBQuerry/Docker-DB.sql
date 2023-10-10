@@ -23,10 +23,28 @@ Create TABLE boardExam(
     detail varchar2(1200) not null ,
     createDate date default SYSDATE,
     changeDate date default SYSDATE
-
 );
+
+alter table boardExam add constraint boardExam_bno_uq unique (bno);
 -- bno에 primary key 설정
 alter table boardExam add constraint pk_boardExam primary key (bno);
+
+CREATE TABLE FileUpLoad
+(
+    fileBno number(10, 0) primary key ,
+    bno number(10, 0),
+    clientName varchar2(90) not null,
+    serverName varchar2(90) not null ,
+    path varchar2(300) not null,
+    createDate date default SYSDATE,
+    changeDate date default SYSDATE,
+
+    CONSTRAINT fk_code FOREIGN KEY(bno) REFERENCES boardExam(bno) ON DELETE CASCADE
+);
+
+-- 최대 파일 업로드 개수 3개
+-- 년도 월 일 폴더 생성
+-- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
 
 -- 더미 데이터 입력
 insert into boardExam(bno, title, detail) values (tqq_seq.nextval, '테스트', '더미 데이터');
