@@ -177,12 +177,6 @@ th, td {
 						</div>
 						<!-- /.table-responsive -->
 					</div>
-					<!-- /.panel-body -->
-					<form id='actionForm' action="/list" method='get'>
-						<input type='hidden' name='pageNum'
-							value='${pageMaker.cri.pageNum}'> <input type='hidden'
-							name='amount' value='${pageMaker.cri.amount}'>
-					</form>
 				</div>
 				<!-- /.panel -->
 			</div>

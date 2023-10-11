@@ -1,5 +1,10 @@
 package org.jaeu.controller;
 
+import java.io.Console;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -83,14 +89,14 @@ public class BoardRestController {
 		log.info(board);
 		service.register(board);
 	}
-	
+
 	@PostMapping(value = "/detail/page")
 	public ModelAndView detailpage() {
 		ModelAndView mav = new ModelAndView("board/detail");
-		
+
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ModelAndView detailView(@PathVariable Long bno) {
@@ -118,17 +124,53 @@ public class BoardRestController {
 		log.info(mav);
 		return mav;
 	}
-	
+
 	@PutMapping(value = "/modify/update")
 	public void update(@RequestBody BoardVO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
-	
+
 	@DeleteMapping(value = "/modify/delete/{bno}")
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);
 		service.remove(bno);
 	}
 
-}
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date date = new Date();
+
+		String string = sdf.format(date);
+
+		return string.replace("-", File.separator);
+	}
+
+	@PostMapping(value = "/upload")
+	public void uploadFormPost(MultipartFile[] uploadFile) {
+		String uploadFolder = "D://UpLoadFile/main";
+
+		File uploadPath = new File(uploadFolder, getFolder());
+
+		if (uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		}
+		
+		log.info("지나감");
+		log.info(uploadFile);
+		for (MultipartFile multipartFile : uploadFile) {
+			log.info("지나감");
+			log.info(multipartFile.getOriginalFilename());
+			File saveFile = new File(uploadPath, multipartFile.getOriginalFilename());
+
+			try {
+				multipartFile.transferTo(saveFile);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.error(e.getMessage());
+
+			}
+		}
+	}
+};
