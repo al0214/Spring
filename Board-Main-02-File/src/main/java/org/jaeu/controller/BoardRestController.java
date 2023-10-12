@@ -2,20 +2,23 @@ package org.jaeu.controller;
 
 import java.io.Console;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jaeu.domain.BoardVO;
-import org.jaeu.domain.Criteria;
-import org.jaeu.domain.PageDTO;
+import org.apache.commons.io.FilenameUtils;
+import org.jaeu.domain.BoardDTO;
+import org.jaeu.domain.CriteriaVO;
+import org.jaeu.domain.FileDTO;
+import org.jaeu.domain.PageVO;
 import org.jaeu.service.BoardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.log4j.Log4j;
 
 @RequestMapping("*")
@@ -52,18 +56,19 @@ public class BoardRestController {
 	@GetMapping(value = "/list/pages/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable("page") int page) {
+		Map<String, Object> response = new HashMap<>();
 		Map<String, Object> response1 = new HashMap<>();
 		Map<String, Object> response2 = new HashMap<>();
-		Map<String, Object> response = new HashMap<>();
 
 		int total = service.getTotal();
-		Criteria cri = new Criteria(page, 10);
-		List<BoardVO> getWithPage = service.getWithPaging(cri);
-		PageDTO pageDTO = new PageDTO(cri, total);
+		CriteriaVO cri = new CriteriaVO(page, 10);
+		List<BoardDTO> getWithPage = service.getWithPaging(cri);
+
+		PageVO pageVO = new PageVO(cri, total);
 
 		response1.put("data", getWithPage);
 
-		response2.put("pageDTO", pageDTO);
+		response2.put("pageDTO", pageVO);
 		response2.put("total", total);
 
 		response.put("TableData", response1);
@@ -77,16 +82,17 @@ public class BoardRestController {
 	}
 
 	@DeleteMapping(value = "/list")
-	public void alldel(BoardVO board) {
+	public void alldel(BoardDTO board) {
 		log.info("All Remove Board Object");
 		service.allremove(board);
 	}
 
 	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void create(@RequestBody BoardVO board) {
+	public void create(@RequestBody BoardDTO board) {
 		log.info("Send Register : " + board);
 		log.info(board);
+		service.increase();
 		service.register(board);
 	}
 
@@ -111,7 +117,7 @@ public class BoardRestController {
 
 	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<BoardVO> detail(@PathVariable("bno") Long bno) {
+	public ResponseEntity<BoardDTO> detail(@PathVariable("bno") Long bno) {
 		return new ResponseEntity<>(service.detail(bno), HttpStatus.OK);
 	}
 
@@ -126,7 +132,7 @@ public class BoardRestController {
 	}
 
 	@PutMapping(value = "/modify/update")
-	public void update(@RequestBody BoardVO board) {
+	public void update(@RequestBody BoardDTO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
@@ -144,33 +150,70 @@ public class BoardRestController {
 
 		String string = sdf.format(date);
 
+		// yyyy-MM-dd -> yyyy/mm/dd
 		return string.replace("-", File.separator);
 	}
 
-	@PostMapping(value = "/upload")
-	public void uploadFormPost(MultipartFile[] uploadFile) {
-		String uploadFolder = "D://UpLoadFile/main";
+	private String makeFilename(String d) {
+		Date now = new Date();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmSS");
+		String nowString = sdf1.format(now);
 
+		nowString = nowString + "." + d;
+		return nowString;
+	}
+
+	private String makeOnlyFileName(String a) {
+		return FilenameUtils.getBaseName(a);
+	}
+
+	@GetMapping(value = "/file/{bno}")
+	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable ("bno") Long bno){
+		
+		
+		return new ResponseEntity<>(service.getfiles(bno), HttpStatus.OK);
+		
+	}
+	
+	
+	@PostMapping(value = "/upload")
+	public void uploadFormPost(@RequestBody MultipartFile[] uploadFile) {
+		String uploadFolder = "D://UpLoadFile/main";
+		FileDTO fileDTO = new FileDTO();
+
+		// 업로드 폴더에 getFolder 위치 추가
 		File uploadPath = new File(uploadFolder, getFolder());
 
+		// 파일 생성
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
-		
-		log.info("지나감");
-		log.info(uploadFile);
+
 		for (MultipartFile multipartFile : uploadFile) {
-			log.info("지나감");
-			log.info(multipartFile.getOriginalFilename());
-			File saveFile = new File(uploadPath, multipartFile.getOriginalFilename());
+
+			// 확장자 가져오기
+			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+			String serverName = makeFilename(extension);
 
 			try {
+				File saveFile = new File(uploadPath, serverName);
+				fileDTO.setClientName(makeOnlyFileName(multipartFile.getOriginalFilename()));
+				fileDTO.setServerName(makeOnlyFileName(serverName));
+				fileDTO.setPath(saveFile.toString());
+				// 업로드 폴더에 이름으로 저장
+
+				// 파일에 실질적으로 저장
 				multipartFile.transferTo(saveFile);
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				log.error(e.getMessage());
 
 			}
+			log.info(fileDTO);
+			service.registerFile(fileDTO);
 		}
-	}
+
+	};
+
 };

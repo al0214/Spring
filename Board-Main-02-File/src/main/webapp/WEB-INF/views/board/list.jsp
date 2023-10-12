@@ -242,6 +242,18 @@ th, td {
 	var BoardPaging = $(".pagination")
 	showList(1);
 
+	function getFile(a) {
+		return $.ajax({
+			type : "GET",
+			url : "/file/" + a,
+			dataType : 'json',
+			success : function(list) {
+				return list[0].fileBno
+			},
+		});
+
+	}
+
 	function showList(page) {
 		BoardService
 				.getList(
@@ -259,21 +271,20 @@ th, td {
 
 								return;
 							}
-
 							// 총 게시물 개수 출력
 							BoardTotal.html("총 게시물 개수는 : "
 									+ list.ListData.total + "")
 
 							// 테이블 출력
 							for (var i = 0, len = DaTe.length || 0; i < len; i++) {
+
 								str += "<tr>"
 								str += "<td>" + DaTe[i].bno + "</td>";
 								str += "<td><a href='detail/" + DaTe[i].bno +"'>"
 										+ DaTe[i].title + "</a></td>";
 								str += "<td style='padding: 0px; vertical-align:middle;'>";
-								str += "<a href='https://naver.com'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
-								str += "<a href='https://google.com'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
-								str += "<a href='https://daum.net'><img id='img' src='/resources/img/Chumbu.png' style='height:30px; width:30px' /></a>";
+								a = getFile(DaTe[i].bno);
+								str += a;
 								str += "</td>";
 
 								str += "<td>"

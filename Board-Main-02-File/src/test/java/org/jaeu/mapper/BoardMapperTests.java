@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.jaeu.domain.BoardVO;
-import org.jaeu.domain.Criteria;
+import org.jaeu.domain.BoardDTO;
+import org.jaeu.domain.CriteriaVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -28,7 +28,7 @@ public class BoardMapperTests {
 	@Test
 	public void testInsertSelectKey() {
 
-		BoardVO board = new BoardVO();
+		BoardDTO board = new BoardDTO();
 		board.setTitle("새로 작성하는 글 select key");
 		board.setDetail("새로 작성하는 내용 select key");
 
@@ -41,7 +41,7 @@ public class BoardMapperTests {
 	public void testRead() {
 
 		// 존재하는 게시물 번호로 테스트
-		BoardVO board = mapper.detail(5L);
+		BoardDTO board = mapper.detail(5L);
 
 		log.info(board);
 

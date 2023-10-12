@@ -88,8 +88,8 @@
 								<h3>
 									Title<span class="t_red">*</span>
 								</h3>
-								<input name="title" class="form-control" maxlength='30'
-									style="height: 40px !important;"
+								<input name="title" id="title" class="form-control"
+									maxlength='30' style="height: 40px !important;"
 									placeholder="제목을 입력해 주세요 (최대 30 글자까지 적으실 수 있습니다.)">
 							</div>
 
@@ -98,7 +98,8 @@
 								<h3>
 									Text area<span class="t_red">*</span>
 								</h3>
-								<textarea name="detail" rows="3" class="form-control"
+								<textarea name="detail" id="detail" rows="3"
+									class="form-control"
 									placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 									maxlength="400" wrap="hard"></textarea>
 							</div>
@@ -142,11 +143,11 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"
 	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="/resources/js/checkform.js"></script>
 <script type="text/javascript">
 	len = $("input[type='file']").get(0).files.length;
 
-	function postFile(a){
+	function postFile(a) {
 		console.log("지나감");
 		$.ajax({
 			url : "/upload",
@@ -157,6 +158,7 @@
 			data : a,
 			success : function() {
 				console.log("파일 등록 성공");
+				location.href("list");
 			},
 			error : function() {
 				return;
@@ -164,8 +166,8 @@
 
 		});
 	}
-	
-	function postRegister(b){
+
+	function postRegister(b) {
 		$.ajax({
 			type : 'POST',
 			url : "/register",
@@ -173,16 +175,16 @@
 			data : JSON.stringify(b),
 			success : function() {
 				console.log("등록");
-				location.href = 'list';
+				location.replace('list');
 			},
 			error : function() {
 				alert("등록 실패");
 			}
 		});
 	}
-	
+
 	$('#submit').on("click", function() {
-		if (Checkform() == 1) {
+		if (Checkform(0) == 1) {
 			if (Checklen() == 1) {
 				var formm = {
 					title : frr.title.value,
@@ -191,25 +193,36 @@
 
 				console.log(frr.files.value);
 				console.log(formm);
-				
+
 				var formData = new FormData();
-				
-				var inputFile =  $("input[type='file']");
-				
+
+				var inputFile = $("input[type='file']");
+
 				var files = inputFile[0].files;
-				
-				for (var i = 0; i< files.length; i++){
-					formData.append("uploadFile", files[i])
+
+				for (var i = 0; i < files.length; i++) {
+					formData.append("uploadFile", files[i]);
 				}
-				
+
 				if (len > 0) {
-					postFile();
-					postRegister(formm);
+					$.ajax({
+						type : 'POST',
+						url : "/register",
+						contentType : "application/json; charset=utf-8",
+						data : JSON.stringify(formm),
+						success : function() {
+							postFile(formData);
+							location.replace('list');
+						},
+						error : function() {
+							alert("등록 실패");
+						}
+					});
+
 				} else {
 					postRegister(formm);
 				}
 
-				
 			}
 
 		} else {
@@ -231,14 +244,6 @@
 
 	});
 
-	function checkSpace(str) {
-		if (str.search(/\s/) != -1) {
-			return true;
-		} else {
-			return false;
-		}
-	};
-
 	function Returnform() {
 		alert("리셋합니다.")
 		frr.title.focus();
@@ -250,43 +255,6 @@
 			alert("3개까지 첨부가 가능합니다.");
 			return 0;
 		}
-		return 1;
-	}
-
-	function Checkform() {
-
-		title = frr.title.value;
-		detail = frr.detail.value;
-
-		if (title == "" & detail == "") {
-			frr.title.focus();
-			alert("제목을 입력해 주세요");
-
-			return 0;
-		}
-
-		else if (frr.title.value == "" || frr.title.value == "&nbsp") {
-
-			frr.title.focus();
-			alert("제목을 입력해 주세요");
-
-			return 0;
-		} else if (frr.detail.value == "") {
-
-			frr.detail.focus();
-			alert("내용을 입력해 주세요");
-
-			return 0;
-		}
-
-		title = title.trim();
-		detail = detail.trim();
-
-		if (title == "" || detail == "") {
-			alert("공백 문자는 허용하지 않습니다.")
-			return 0;
-		}
-
 		return 1;
 	}
 </script>

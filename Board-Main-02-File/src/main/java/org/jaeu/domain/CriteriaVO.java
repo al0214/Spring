@@ -5,16 +5,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Criteria {
+public class CriteriaVO {
 	
 	private int pageNum;
 	private int amount;
 	
-	public Criteria() {
+	public CriteriaVO() {
 		this(1, 10);
 	}
 	
-	public Criteria(int pageNum, int amount) {
+	public CriteriaVO(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}

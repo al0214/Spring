@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class FileUpLoad {
+public class FileDTO {
 	private Long fileBno;
 	private Long bno;
 	private String clientName;

@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.jaeu.domain.BoardVO;
-import org.jaeu.domain.Criteria;
+import org.jaeu.domain.BoardDTO;
+import org.jaeu.domain.CriteriaVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -33,7 +33,7 @@ public class BoardServiceTests {
 	@Test
 	public void testRegister() {
 
-		BoardVO board = new BoardVO();
+		BoardDTO board = new BoardDTO();
 		board.setTitle("새로 작성하는 글");
 		board.setDetail("새로 작성하는 내용");
 
@@ -46,7 +46,7 @@ public class BoardServiceTests {
 	public void testGetList() {
 
 		// service.getList().forEach(board -> log.info(board));
-		service.getWithPaging(new Criteria(2, 10)).forEach(board -> log.info(board));
+		service.getWithPaging(new CriteriaVO(2, 10)).forEach(board -> log.info(board));
 	}
 
 	@Test

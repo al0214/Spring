@@ -11,7 +11,17 @@ CREATE SEQUENCE tqq_seq
        MINVALUE 0
        MAXVALUE 9999
        NOCYCLE
-       ORDER;
+       ORDER
+       NOCACHE ;
+
+CREATE SEQUENCE file_seq
+       INCREMENT BY 1
+       START WITH 1
+       MINVALUE 0
+       MAXVALUE 9999
+       NOCYCLE
+       ORDER
+       NOCACHE ;
 
 -- bno 4자리수까지 표현 가능 소수점은 허용하지 않음
 -- 제목은 한글 기준 30 글자까지 가능하며 빈값을 허용하지 않음
@@ -46,6 +56,14 @@ CREATE TABLE FileUpLoad
 -- 년도 월 일 폴더 생성
 -- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
 
+select * from FileUpLoad order by bno;
+select * from boardExam;
+
+select tqq_seq.nextval from DUAL;
+select tqq_seq.currval from dual;
+
+insert into FileUpLoad(fileBno, bno, clientName, serverName, path) values (1, 1,'4.pdf', '202310121112929.pdf',
+'D:\UpLoadFile\main\2023\10\12\202310121112929.pdf');
 -- 더미 데이터 입력
 insert into boardExam(bno, title, detail) values (tqq_seq.nextval, '테스트', '더미 데이터');
 insert into boardExam(bno, title, detail) (select tqq_seq.nextval, title, detail from boardExam);
@@ -67,12 +85,22 @@ delete from boardExam where bno = 1;
 -- 시퀀스 초기화
 SELECT tqq_seq.currval FROM DUAL;
 
-ALTER SEQUENCE tqq_seq INCREMENT BY -1;
+ALTER SEQUENCE tqq_seq INCREMENT BY 1;
 
 SELECT tqq_seq.NEXTVAL FROM DUAL;
 
 ALTER SEQUENCE tqq_seq INCREMENT BY 1;
 -----------------------------------------------
+
+UPDATE user_sequences
+SET last_number = 6
+WHERE sequence_name = 'tqq_seq';
+
+
+update USER_SEQUENCES set LAST_NUMBER = 6 where SEQUENCE_NAME = 'TQQ_SEQ';
+
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'TQQ_SEQ';
+
 
 select TO_CHAR(createDate, 'YY-MM-DD') from boardExam;
 
@@ -121,3 +149,5 @@ select count(*) from boardExam;
 alter sequence tqq_seq INCREMENT BY 1;
 
 commit;
+
+select path from FileUpLoad where bno = 38

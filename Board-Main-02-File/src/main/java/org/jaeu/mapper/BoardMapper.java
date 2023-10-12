@@ -2,16 +2,20 @@ package org.jaeu.mapper;
 
 import java.util.List;
 
-import org.jaeu.domain.BoardVO;
-import org.jaeu.domain.Criteria;
+import org.jaeu.domain.BoardDTO;
+import org.jaeu.domain.CriteriaVO;
+import org.jaeu.domain.FileDTO;
 
 public interface BoardMapper {
 	
-	public BoardVO detail(Long bno);
-	public List<BoardVO> getWithPaging(Criteria cri);
-	public void insertSelectKey(BoardVO board);
+	public BoardDTO detail(Long bno);
+	public List<BoardDTO> getWithPaging(CriteriaVO cri);
+	public void insertSelectKey(BoardDTO board);
 	public int getTotal();
-	public int update(BoardVO board);
+	public int update(BoardDTO board);
 	public int remove(Long bno);
-	public void allremove(BoardVO board);
+	public void allremove(BoardDTO board);
+	public void registerFile(FileDTO fileDTO);
+	public void increase();
+	public List<FileDTO> getFiles(Long bno);
 }
