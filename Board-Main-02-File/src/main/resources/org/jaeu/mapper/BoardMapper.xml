@@ -15,7 +15,15 @@
 		select * from boardExam where bno
 		= #{bno}
 	</select>
-
+	
+	
+	
+	<select id="getFileName" resultType="org.jaeu.domain.FileDTO">
+		select fileBno, bno,
+		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		where serverName = #{serverName, jdbcType=VARCHAR}
+	</select>
+	
 	<select id="getWithPaging" resultType="org.jaeu.domain.BoardDTO">
 		<![CDATA[
 			select 
@@ -31,9 +39,11 @@
 			 where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
-	
+
 	<select id="getFiles" resultType="org.jaeu.domain.FileDTO">
-		select fileBno from FileUpLoad where bno = #{bno}
+		select fileBno, bno,
+		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		where bno = #{bno}
 	</select>
 
 	<select id="increase" resultType="int">

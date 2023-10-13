@@ -35,6 +35,10 @@ Create TABLE boardExam(
     changeDate date default SYSDATE
 );
 
+select FILEBNO from FileUpLoad;
+
+select fileBno, bno, clientName, serverName, path, createDate, changeDate from FileUpLoad;
+
 alter table boardExam add constraint boardExam_bno_uq unique (bno);
 -- bno에 primary key 설정
 alter table boardExam add constraint pk_boardExam primary key (bno);
@@ -55,6 +59,8 @@ CREATE TABLE FileUpLoad
 -- 최대 파일 업로드 개수 3개
 -- 년도 월 일 폴더 생성
 -- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
+select fileBno from FileUpLoad;
+
 
 select * from FileUpLoad order by bno;
 select * from boardExam;

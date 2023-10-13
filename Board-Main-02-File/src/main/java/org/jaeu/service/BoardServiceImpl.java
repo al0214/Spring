@@ -1,7 +1,10 @@
 package org.jaeu.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
@@ -81,6 +83,27 @@ public class BoardServiceImpl implements BoardService {
 	public List<FileDTO> getfiles(Long bno) {
 		// TODO Auto-generated method stub
 		return mapper.getFiles(bno);
+	}
+
+	@Override
+	public List<FileDTO> getfileName(String serverName) {
+		
+		return mapper.getFileName(serverName);
+	}
+
+	@Override
+	public String makeFilename(String d) {
+		Date now = new Date();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmSS");
+		String nowString = sdf1.format(now);
+
+		nowString = nowString + "." + d;
+		return nowString;
+	}
+
+	@Override
+	public String makeOnlyFileName(String a) {
+		return FilenameUtils.getBaseName(a);
 	}
 
 }

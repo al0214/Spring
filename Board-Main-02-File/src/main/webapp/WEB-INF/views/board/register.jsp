@@ -157,14 +157,15 @@
 			contentType : false,
 			data : a,
 			success : function() {
-				console.log("파일 등록 성공");
-				location.href("list");
+
 			},
 			error : function() {
 				return;
 			}
-
+			
 		});
+		console.log("파일 등록 성공");
+		location.href = "list";
 	}
 
 	function postRegister(b) {
@@ -202,6 +203,7 @@
 
 				for (var i = 0; i < files.length; i++) {
 					formData.append("uploadFile", files[i]);
+					console.log(formData);
 				}
 
 				if (len > 0) {
@@ -211,14 +213,13 @@
 						contentType : "application/json; charset=utf-8",
 						data : JSON.stringify(formm),
 						success : function() {
+							console.log("지나감@")
 							postFile(formData);
-							location.replace('list');
 						},
 						error : function() {
 							alert("등록 실패");
 						}
 					});
-
 				} else {
 					postRegister(formm);
 				}

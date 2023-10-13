@@ -243,17 +243,35 @@ th, td {
 	showList(1);
 
 	function getFile(a) {
-		return $.ajax({
+		$.ajax({
 			type : "GET",
-			url : "/file/" + a,
-			dataType : 'json',
+			url : "/file/" + a + ".json",
+			dataType : "JSON",
+			async : false,
 			success : function(list) {
-				return list[0].fileBno
-			},
+				return c = list
+			}
+		});
+		return c
+	}
+	
+	function getLink(d){
+		date = {"clientName" : d}
+		$.ajax({
+			type : "GET",
+			url : "/download",
+			dataType : 'JSON',
+			daa : date,
+			processData : false,
+			contentType : false,
+			success : function(list){
+				console.log(list);
+			}
+			
 		});
 
 	}
-
+	
 	function showList(page) {
 		BoardService
 				.getList(
@@ -283,8 +301,12 @@ th, td {
 								str += "<td><a href='detail/" + DaTe[i].bno +"'>"
 										+ DaTe[i].title + "</a></td>";
 								str += "<td style='padding: 0px; vertical-align:middle;'>";
-								a = getFile(DaTe[i].bno);
-								str += a;
+								data = getFile(DaTe[i].bno)
+								for (var b = 0; data.length > b; b++) {
+									str += "<a href='download?serverName="
+											+ data[b].serverName
+											+ "'><img src='/resources/img/Chumbu.png' style='height: 36px; width: 34px;'></a>"
+								}
 								str += "</td>";
 
 								str += "<td>"
@@ -312,7 +334,6 @@ th, td {
 								var tf = (list.ListData.pageDTO.cri.pageNum == i ? "'paginate_button active'"
 										: "paginate_button");
 								strr += "<li class="+ tf +">";
-								console.log(i)
 								strr += "<button id="+ i +" class='click-btn'>"
 										+ i + "</button></li>";
 							}

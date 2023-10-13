@@ -28,4 +28,10 @@ public interface BoardService {
 
 	public List<FileDTO> getfiles(Long bno);
 
+	public List<FileDTO> getfileName(String serverName);
+
+	public String makeFilename(String d);
+	
+	public String makeOnlyFileName(String a); 
+
 }

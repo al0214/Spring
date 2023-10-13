@@ -38,7 +38,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
-		log.info("download file : " + fileName);
+		log.info("download file : " + fileName);	
 
 		Resource resource = new FileSystemResource("D://UpLoadFile/main/" + fileName);
 

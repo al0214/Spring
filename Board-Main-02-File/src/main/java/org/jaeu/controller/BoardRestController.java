@@ -1,20 +1,21 @@
 package org.jaeu.controller;
 
-import java.io.Console;
 import java.io.File;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
 import org.jaeu.domain.PageVO;
 import org.jaeu.service.BoardService;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.log4j.Log4j;
 
 @RequestMapping("*")
@@ -154,28 +155,13 @@ public class BoardRestController {
 		return string.replace("-", File.separator);
 	}
 
-	private String makeFilename(String d) {
-		Date now = new Date();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddhhmmSS");
-		String nowString = sdf1.format(now);
+	@GetMapping(value = "/file/{bno}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable("bno") Long bno) {
 
-		nowString = nowString + "." + d;
-		return nowString;
-	}
-
-	private String makeOnlyFileName(String a) {
-		return FilenameUtils.getBaseName(a);
-	}
-
-	@GetMapping(value = "/file/{bno}")
-	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable ("bno") Long bno){
-		
-		
 		return new ResponseEntity<>(service.getfiles(bno), HttpStatus.OK);
-		
+
 	}
-	
-	
+
 	@PostMapping(value = "/upload")
 	public void uploadFormPost(@RequestBody MultipartFile[] uploadFile) {
 		String uploadFolder = "D://UpLoadFile/main";
@@ -193,12 +179,12 @@ public class BoardRestController {
 
 			// 확장자 가져오기
 			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
-			String serverName = makeFilename(extension);
+			String serverName = service.makeFilename(extension);
 
 			try {
 				File saveFile = new File(uploadPath, serverName);
-				fileDTO.setClientName(makeOnlyFileName(multipartFile.getOriginalFilename()));
-				fileDTO.setServerName(makeOnlyFileName(serverName));
+				fileDTO.setClientName(multipartFile.getOriginalFilename());
+				fileDTO.setServerName(serverName);
 				fileDTO.setPath(saveFile.toString());
 				// 업로드 폴더에 이름으로 저장
 
@@ -215,5 +201,30 @@ public class BoardRestController {
 		}
 
 	};
+
+	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> download(String serverName) {
+		List<FileDTO> file = service.getfileName(serverName);
+		String path = file.get(0).getPath();
+		String name = file.get(0).getClientName();
+
+		log.info("Download File Name : " + serverName);
+
+		Resource resource = new FileSystemResource(path);
+
+		HttpHeaders headers = new HttpHeaders();
+
+		try {
+			headers.add("Content-Disposition",
+					"attachment; filename=" + new String(name.getBytes("UTF-8"), "ISO-8859-1"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		log.info(resource);
+
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
+
+	}
 
 };
