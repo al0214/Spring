@@ -63,7 +63,6 @@
 			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
 			= 'TQQ_SEQ'
 		</selectKey>
-
 		insert into boardExam(bno, title, detail) values (#{bno},#{title,
 		jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
 	</insert>

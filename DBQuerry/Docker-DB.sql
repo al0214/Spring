@@ -3,7 +3,7 @@ alter system set sec_case_sensitive_logon=false;
 
 drop table boardExam;
 drop sequence tqq_seq;
-
+drop sequence file_seq;
 -- 시퀀스 구성 1 부터 1씩 증가 최대 9999번까지 생성 가능 순환하지 않으며 순차적으로 순번 입력
 CREATE SEQUENCE tqq_seq
        INCREMENT BY 1
@@ -34,6 +34,13 @@ Create TABLE boardExam(
     createDate date default SYSDATE,
     changeDate date default SYSDATE
 );
+
+
+
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
+select FILE_SEQ.nextval from USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';;
+select FILE_SEQ.currval from USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
+
 
 select count(bno) from boardExam;
 
@@ -68,9 +75,6 @@ select fileBno from FileUpLoad;
 
 select * from FileUpLoad order by bno;
 select * from boardExam;
-
-select tqq_seq.nextval from DUAL;
-select tqq_seq.currval from dual;
 
 insert into FileUpLoad(fileBno, bno, clientName, serverName, path) values (1, 1,'4.pdf', '202310121112929.pdf',
 'D:\UpLoadFile\main\2023\10\12\202310121112929.pdf');

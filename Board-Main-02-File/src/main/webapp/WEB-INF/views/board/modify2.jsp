@@ -78,8 +78,8 @@
 			<strong><span class="t_red">*</span> 표시는 필수입력 항목입니다.</strong>
 
 
-			<form name="frr" role="form" onSubmit="return Checkform()"
-				accept-charset="utf-8">
+			<form name="frr" role="form" action="/board/modify/update"
+				method="post" onSubmit="return Checkform()" accept-charset="utf-8">
 				<div style="padding: 0px;">
 					<div style="margin-top: 10px">
 						<div class="form-group" style="margin-bottom: 10px">
@@ -101,16 +101,8 @@
 								placeholder="내용을 입력해 주세요 (최대 400 글자까지 적으실 수 있습니다.)"
 								maxlength="400" wrap="hard"></textarea>
 						</div>
-						<div class="form-group">
-							<h3>Attachment</h3>
-							<div style="margin-bottom: 5px;">
-								<strong>파일은 3개까지 첨부할 수 있습니다 <span class="t_red">*</span></strong>
-							</div>
-
-							<div id="attachment"></div>
-
-						</div>
-
+						<h3>첨부 파일</h3>
+						<ul id='attach'></ul>
 					</div>
 					<div id="but" style="margin-top: 10px; float: right;">
 						<button type="button" onclick="return updateData()"
@@ -146,50 +138,38 @@
 		creDate = "";
 		chanDate = "";
 		files = "";
-		var tub = "";
-		$
-				.ajax({
-					type : 'GET',
-					url : "/detail/${bno}.json",
-					dataType : "json"
+
+		$.ajax({
+			type : 'GET',
+			url : "/detail/${bno}.json",
+			dataType : "json"
+		}).done(
+				function(list) {
+					console.log(list)
+					board = list.board;
+					file = list.getfiles
+					console.log(file.length)
+
+					for (var i = 0; i < file.length; i++) {
+						console.log(typeof (i) + "_" + file[i].clientName)
+						files += "<li><a href='/download?serverName="
+								+ file[i].serverName + "'>"
+								+ file[i].clientName
+								+ "</a><button id='"+ file[i].fileBno +"'onclick='OnDelBtn("+ file[i].fileBno +")' style='border: none;'>X</button>"
+								+ "</li>";
+					}
+					;
+					if (a == 0) {
+						console.log("지나감");
+						$("#bno2").last().attr('value', board.bno);
+						$("#title2").attr('value', board.title);
+						$("#detail2").html(board.detail);
+						$("#attach").html(files);
+					} else {
+						alert("잘못된 접근 입니다.");
+					}
+
 				})
-				.done(
-						function(list) {
-
-							board = list.board;
-							file = list.getfiles
-							console.log(file.length)
-
-							for (var i = 0; i < file.length; i++) {
-								tub += "<div class='filebox-"+file[i].fileBno+"'>";
-								tub += "<input class='form-control' id='upload-name-"
-										+ file[i].fileBno
-										+ "' style='border-radius: 0px 4px 4px 0px !important; width: 88%; display: inline; margin-bottom:5px;' placeholder='첨부 파일' value='"
-										+ file[i].clientName + "'readonly>";
-								tub += "</div>"
-							}
-							;
-
-							if (file.length < 3) {
-								tub += "<div class='filebox-new'>"
-								tub += "<input class='form-control' id='upload-name' style='border-radius: 0px 4px 4px 0px !important; width: 88%; display: inline; margin-bottom:5px;' placeholder='첨부 파일' value='안녕' readonly>";
-								tub += "<label for='file' id='fileSearch' style='padding: 14px 10px 11px 10px; border-radius: 4px; background: #570df6; color: white;'>파일찾기</label>";
-								tub += "<input type='file' name='file' id='file' style='display: none;'>";
-								tub += "</div>"
-
-							}
-
-							if (a == 0) {
-								console.log("지나감");
-								$("#bno2").last().attr('value', board.bno);
-								$("#title2").attr('value', board.title);
-								$("#detail2").html(board.detail);
-								$("#attachment").html(tub);
-							} else {
-								alert("잘못된 접근 입니다.");
-							}
-
-						})
 	};
 
 	var b = 0;
@@ -233,17 +213,9 @@
 			}
 		});
 	};
-
-	function OnDelBtn(a) {
-		console.log("삭제 지나감");
-		$('#' + a).css("display", "none");
-	}
 	
-	$(document).on('change', '#file', function() {
-		const filename = $(this).get(0).files[0].name;
-		$("#upload-name").get(0).value = filename;
-		$("#fileSearch").remove();
+	function OnDelBtn(a){
 		
-	});
+	}
 </script>
 

@@ -162,7 +162,7 @@
 			error : function() {
 				return;
 			}
-			
+
 		});
 		console.log("파일 등록 성공");
 		location.replace("/list");
