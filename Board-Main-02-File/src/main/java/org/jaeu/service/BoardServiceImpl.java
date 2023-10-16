@@ -90,6 +90,12 @@ public class BoardServiceImpl implements BoardService {
 		
 		return mapper.getFileName(serverName);
 	}
+	
+	@Override
+	public void fileRemove(Long bno) {
+		mapper.fileRemove(bno); 
+		
+	}
 
 	@Override
 	public String makeFilename(String d) {

@@ -68,7 +68,6 @@ public class BoardRestController {
 		PageVO pageVO = new PageVO(cri, total);
 
 		response1.put("data", getWithPage);
-
 		response2.put("pageDTO", pageVO);
 		response2.put("total", total);
 
@@ -97,18 +96,11 @@ public class BoardRestController {
 		service.register(board);
 	}
 
-	@PostMapping(value = "/detail/page")
-	public ModelAndView detailpage() {
-		ModelAndView mav = new ModelAndView("board/detail");
-
-		return mav;
-	}
 
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ModelAndView detailView(@PathVariable Long bno) {
-
-		ModelAndView mav = new ModelAndView("board/page");
+		ModelAndView mav = new ModelAndView("board/detail");
 		mav.addObject("bno", bno);
 		log.info("Open Detail Page : " + bno + "번");
 
@@ -118,17 +110,24 @@ public class BoardRestController {
 
 	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<BoardDTO> detail(@PathVariable("bno") Long bno) {
-		return new ResponseEntity<>(service.detail(bno), HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> detail(@PathVariable("bno") Long bno) {
+		Map<String, Object> response = new HashMap<>();
+
+		BoardDTO board = service.detail(bno);
+		List<FileDTO> files = service.getfiles(bno);
+
+		response.put("board", board);
+		response.put("getfiles", files);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/modify", produces = "application/text; charset=UTF-8")
-	public ModelAndView modify() {
+	@GetMapping(value = "/modify/{bno}", produces = "application/text; charset=UTF-8")
+	public ModelAndView modify(@PathVariable Long bno) {
 		ModelAndView mav = new ModelAndView("/board/modify");
+		mav.addObject("bno", bno);
+		log.info("Open Modify Page : " + bno + "번");
 
-		log.info("지나감");
-
-		log.info(mav);
 		return mav;
 	}
 
@@ -142,6 +141,7 @@ public class BoardRestController {
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);
 		service.remove(bno);
+		service.fileRemove(bno);
 	}
 
 	private String getFolder() {

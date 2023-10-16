@@ -32,6 +32,8 @@ public interface BoardService {
 
 	public String makeFilename(String d);
 	
-	public String makeOnlyFileName(String a); 
+	public String makeOnlyFileName(String a);
+
+	public void fileRemove(Long bno); 
 
 }

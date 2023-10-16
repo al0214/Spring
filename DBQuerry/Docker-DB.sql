@@ -35,6 +35,8 @@ Create TABLE boardExam(
     changeDate date default SYSDATE
 );
 
+select count(bno) from boardExam;
+
 select FILEBNO from FileUpLoad;
 
 select fileBno, bno, clientName, serverName, path, createDate, changeDate from FileUpLoad;
@@ -60,6 +62,8 @@ CREATE TABLE FileUpLoad
 -- 년도 월 일 폴더 생성
 -- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
 select fileBno from FileUpLoad;
+
+
 
 
 select * from FileUpLoad order by bno;

@@ -165,7 +165,7 @@
 			
 		});
 		console.log("파일 등록 성공");
-		location.href = "list";
+		location.replace("/list");
 	}
 
 	function postRegister(b) {
@@ -176,7 +176,7 @@
 			data : JSON.stringify(b),
 			success : function() {
 				console.log("등록");
-				location.replace('list');
+				location.replace('/list');
 			},
 			error : function() {
 				alert("등록 실패");

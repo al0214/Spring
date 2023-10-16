@@ -19,4 +19,5 @@ public interface BoardMapper {
 	public void increase();
 	public List<FileDTO> getFiles(Long bno);
 	public List<FileDTO> getFileName(String serverName);
+	public void fileRemove(Long bno);
 }

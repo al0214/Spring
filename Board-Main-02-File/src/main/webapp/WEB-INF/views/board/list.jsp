@@ -172,7 +172,6 @@ th, td {
 
 						<div style="text-align: center;">
 							<ul class="pagination">
-
 							</ul>
 						</div>
 						<!-- /.table-responsive -->
@@ -254,9 +253,11 @@ th, td {
 		});
 		return c
 	}
-	
-	function getLink(d){
-		date = {"clientName" : d}
+
+	function getLink(d) {
+		date = {
+			"clientName" : d
+		}
 		$.ajax({
 			type : "GET",
 			url : "/download",
@@ -264,14 +265,14 @@ th, td {
 			daa : date,
 			processData : false,
 			contentType : false,
-			success : function(list){
+			success : function(list) {
 				console.log(list);
 			}
-			
+
 		});
 
 	}
-	
+
 	function showList(page) {
 		BoardService
 				.getList(
@@ -303,9 +304,7 @@ th, td {
 								str += "<td style='padding: 0px; vertical-align:middle;'>";
 								data = getFile(DaTe[i].bno)
 								for (var b = 0; data.length > b; b++) {
-									str += "<a href='download?serverName="
-											+ data[b].serverName
-											+ "'><img src='/resources/img/Chumbu.png' style='height: 36px; width: 34px;'></a>"
+									str += "<img src='/resources/img/Chumbu.png' style='height: 36px; width: 34px;'>"
 								}
 								str += "</td>";
 

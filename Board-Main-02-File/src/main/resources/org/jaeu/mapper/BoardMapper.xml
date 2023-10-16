@@ -8,11 +8,11 @@
 
 
 	<select id="getTotal" resultType="int">
-		select count(*) from boardExam
+		select count(bno) from boardExam
 	</select>
 
 	<select id="detail" resultType="org.jaeu.domain.BoardDTO">
-		select * from boardExam where bno
+		select bno, title, detail, createDate, changeDate from boardExam where bno
 		= #{bno}
 	</select>
 	
@@ -91,6 +91,10 @@
 
 	<delete id="remove">
 		delete from boardExam where bno=#{bno}
+	</delete>
+	
+	<delete id="fileRemove">
+		delete from FileUpLoad where bno=#{bno}
 	</delete>
 
 	<delete id="allremove">
