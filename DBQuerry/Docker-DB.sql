@@ -7,7 +7,7 @@ drop sequence file_seq;
 -- 시퀀스 구성 1 부터 1씩 증가 최대 9999번까지 생성 가능 순환하지 않으며 순차적으로 순번 입력
 CREATE SEQUENCE tqq_seq
        INCREMENT BY 1
-       START WITH 1
+       START WITH 0
        MINVALUE 0
        MAXVALUE 9999
        NOCYCLE
@@ -35,13 +35,18 @@ Create TABLE boardExam(
     changeDate date default SYSDATE
 );
 
+select * from FileUpLoad where bno=5;
 
 
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
 select FILE_SEQ.nextval from USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';;
 select FILE_SEQ.currval from USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
 
+select TQQ_SEQ.nextval from DUAL;
+select TQQ_SEQ.currval from DUAL;
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'TQQ_SEQ';
 
+delete from FileUpLoad where bno
 select count(bno) from boardExam;
 
 select FILEBNO from FileUpLoad;
