@@ -6,26 +6,24 @@
 <!-- DAO 파일을 대신하는 파일 -->
 <mapper namespace="org.jaeu.mapper.BoardMapper">
 
-
+	<!-- 총 게시물 수 -->
 	<select id="getTotal" resultType="int">
 		select count(bno) from
 		boardExam
 	</select>
 
-	<select id="detail" resultType="org.jaeu.domain.BoardDTO">
-		select bno, title, detail,
-		createDate, changeDate from boardExam where bno
-		= #{bno}
+	<!-- 모든 게시물 삭제 -->
+	<delete id="allremove">
+		delete from boardExam where bno = bno
+	</delete>
+
+	<!-- 게시물 번호 시퀀스 증가 -->
+	<select id="increase" resultType="int">
+		select TQQSEQ.nextval from
+		DUAL
 	</select>
 
-
-
-	<select id="getFileName" resultType="org.jaeu.domain.FileDTO">
-		select fileBno, bno,
-		clientName, serverName, path, createDate, changeDate from FileUpLoad
-		where serverName = #{serverName, jdbcType=VARCHAR}
-	</select>
-
+	<!-- 페이징 처리한 게시물 가져오기 -->
 	<select id="getWithPaging" resultType="org.jaeu.domain.BoardDTO">
 		<![CDATA[
 			select 
@@ -42,72 +40,82 @@
 		]]>
 	</select>
 
-	<select id="getFiles" resultType="org.jaeu.domain.FileDTO">
-		select fileBno, bno,
-		clientName, serverName, path, createDate, changeDate from FileUpLoad
-		where bno = #{bno}
-	</select>
-
-	<select id="increase" resultType="int">
-		select tqq_seq.nextval from
-		DUAL
-	</select>
-
-	<insert id="insert">
-		insert into boardExam(bno, title, detail) values
-		(tqq_seq.nextval,#{title, jdbcType=VARCHAR}, #{detail,
-		jdbcType=VARCHAR})
-	</insert>
-
+	<!-- 게시물 등록 -->
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="bno" order="BEFORE"
 			resultType="Long">
 			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
-			= 'TQQ_SEQ'
+			= 'TQQSEQ'
 		</selectKey>
 		insert into boardExam(bno, title, detail) values (#{bno},#{title,
 		jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
 	</insert>
 
-	<insert id="registerFile">
-		insert into FileUpLoad(fileBno, bno, clientName, serverName, path)
-		values
-		(FILE_SEQ.nextval, #{bno},#{clientName}, #{serverName}, #{path})
-	</insert>
+	<!-- 상세 및 수정 페이지 조회 -->
+	<select id="detail" resultType="org.jaeu.domain.BoardDTO">
+		select bno, title, detail,
+		createDate, changeDate from boardExam where bno
+		= #{bno}
+	</select>
 
-	<insert id="registerAlterFile">
-		insert into FileUpLoad(fileBno, bno, clientName,
-		serverName, path)
-		values
-		(FILE_SEQ.nextval, #{bno},#{clientName},
-		#{serverName}, #{path})
-	</insert>
-
+	<!-- 게시물 수정 -->
 	<update id="update">
 		update boardExam
 		set title=#{title, jdbcType=VARCHAR},
 		detail=#{detail, jdbcType=VARCHAR},
 		changeDate=SYSDATE
 		where bno=#{bno}
-
 	</update>
 
+	<!-- 게시물 삭제 -->
 	<delete id="remove">
 		delete from boardExam where bno=#{bno}
 	</delete>
 
+	<!-- 파일 등록 -->
+	<insert id="registerFile">
+		<selectKey keyProperty="bno" order="BEFORE"
+			resultType="Long">
+			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQSEQ'
+		</selectKey>
+		insert into FileUpLoad(fileBno, bno, clientName, serverName, path)
+		values
+		(FILESEQ.nextval, #{bno},#{clientName}, #{serverName}, #{path})
+	</insert>
+
+	<!-- 특정 번호를 사용한 파일 등록 -->
+	<insert id="registerAlterFile">
+		insert into FileUpLoad(fileBno, bno, clientName,
+		serverName, path)
+		values
+		(FILESEQ.nextval, #{bno},#{clientName},
+		#{serverName}, #{path})
+	</insert>
+
+	<!-- 서버 이름으로 파일 가져오기 -->
+	<select id="getFileName" resultType="org.jaeu.domain.FileDTO">
+		select fileBno, bno,
+		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		where serverName = #{serverName, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 번호로 파일 가져오기 -->
+	<select id="getFiles" resultType="org.jaeu.domain.FileDTO">
+		select fileBno, bno,
+		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		where bno = #{bno}
+	</select>
+
+	<!-- 게시물 번호로 파일 삭제 -->
 	<delete id="fileRemove">
 		delete from FileUpLoad where bno=#{bno}
 	</delete>
 
+	<!-- 파일 번호로 파일 삭제 -->
 	<delete id="AtfileRemove">
 		delete from FileUpload where fileBno=#{fileBno}
 	</delete>
-
-	<delete id="allremove">
-		delete from boardExam where bno = bno
-	</delete>
-	
 
 	<!-- java.sql.SQLException: ORA-17004: 열 유형이 부적합합니다.: 1111 해당 오류 발생해서 입력값을 
 		줄때 jdbcType을 지정해서 해결했습니다. -->
@@ -124,12 +132,5 @@
 		데이터 수정 불가 현상 해결 -->
 	<!-- ORA-12528: TNS:리스너: 적절한 모든 인스턴스가 새 접속을 차단하고 있습니다. 에러가 발생하여 DB에 접속 후 
 		lsnrctl services 명령어 실행후 정상 복구 -->
-
-	<!-- 리스트 Page -->
-	<!-- 조회 Page -->
-	<!-- 등록 Page -->
-	<!-- 상세 Page(수정, 삭제) -->
-	<!-- 수정 구현 -->
-	<!-- 삭제 구현 진행중 -->
 
 </mapper>	

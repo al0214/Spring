@@ -10,6 +10,8 @@ create table tbl_member(
     enabled char(1) default '1'
 );
 
+
+
 create table tbl_member_auth(
     userid varchar2(50) not null,
     auth varchar2(50) not null ,
@@ -18,40 +20,19 @@ create table tbl_member_auth(
 
 SELECT * FROM TBL_MEMBER;
 
-create table users(
-    username varchar2(50) not null primary key,
-    password varchar2(50) not null,
-    enabled char(1) default '1'
-);
-
-create table authorities(
-    username varchar2(50) not null,
-    authority varchar2(50) not null ,
-    constraint fk_authrities_users foreign key (username) references users(username)
-);
-
-select * from users;
-
-create unique index ix_auth_username on authorities(username, authority);
-
-insert into users(username, password) values ('user00', 'pw00');
-insert into users(username, password) values ('member00', 'pw00');
-insert into users(username, password) values ('admin00', 'pw00');
-
-insert into authorities (username, authority) values ('user00', 'ROLE_USER');
-insert into authorities (username, authority) values ('member00', 'ROLE_MANAGER');
-insert into authorities (username, authority) values ('admin00', 'ROLE_MANAGER');
-insert into authorities (username, authority) values ('user00', 'ROLE_ADMIN');
-
 commit;
 -- 11g부터는 대소문자 구분을 하기 떄문에 해당 구문을 사용하여 기능 Off
 alter system set sec_case_sensitive_logon=false;
-
+select FILE_SEQ.nextval from DUAL;
 drop table boardExam;
+drop table FileUpLoad;
 drop sequence tqq_seq;
 drop sequence file_seq;
+
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQ_SEQ';
 -- 시퀀스 구성 1 부터 1씩 증가 최대 9999번까지 생성 가능 순환하지 않으며 순차적으로 순번 입력
-CREATE SEQUENCE tqq_seq
+CREATE SEQUENCE tqqSeq
        INCREMENT BY 1
        START WITH 0
        MINVALUE 0
@@ -60,7 +41,7 @@ CREATE SEQUENCE tqq_seq
        ORDER
        NOCACHE ;
 
-CREATE SEQUENCE file_seq
+CREATE SEQUENCE fileSeq
        INCREMENT BY 1
        START WITH 1
        MINVALUE 0
@@ -81,7 +62,7 @@ Create TABLE boardExam(
     changeDate date default SYSDATE
 );
 
-select * from FileUpLoad where bno=5;
+select * from FileUpLoad;
 
 
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
@@ -103,6 +84,9 @@ alter table boardExam add constraint boardExam_bno_uq unique (bno);
 -- bno에 primary key 설정
 alter table boardExam add constraint pk_boardExam primary key (bno);
 
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQ_SEQ';
+
 CREATE TABLE FileUpLoad
 (
     fileBno number(10, 0) primary key ,
@@ -116,6 +100,9 @@ CREATE TABLE FileUpLoad
     CONSTRAINT fk_code FOREIGN KEY(bno) REFERENCES boardExam(bno) ON DELETE CASCADE
 );
 
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQ_SEQ';
+
 -- 최대 파일 업로드 개수 3개
 -- 년도 월 일 폴더 생성
 -- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
@@ -127,6 +114,10 @@ select fileBno from FileUpLoad;
 select * from FileUpLoad order by bno;
 select * from boardExam;
 
+insert into FileUpLoad(fileBno, bno, clientName, serverName, path)
+		values
+		(FILE_SEQ.nextval, 35,'a', 'a', 'a');
+
 insert into FileUpLoad(fileBno, bno, clientName, serverName, path) values (1, 1,'4.pdf', '202310121112929.pdf',
 'D:\UpLoadFile\main\2023\10\12\202310121112929.pdf');
 -- 더미 데이터 입력
@@ -135,6 +126,9 @@ insert into boardExam(bno, title, detail) (select tqq_seq.nextval, title, detail
 select count(*) from boardExam;
 
 delete from boardExam where bno > 1;
+
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQSEQ';
 
 -- DB에 반영
 commit ;

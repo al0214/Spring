@@ -1,14 +1,12 @@
 package org.jaeu.controller;
 
+import java.io.Console;
 import java.io.File;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.chainsaw.Main;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
@@ -43,30 +41,14 @@ import lombok.extern.log4j.Log4j;
 public class BoardRestController {
 	private BoardService service;
 
+	// 게시판 페이지
 	@GetMapping("/list")
 	public ModelAndView manage() {
 		ModelAndView mav = new ModelAndView("board/list");
 		return mav;
 	}
-	
-	@GetMapping("/main")
-	public ModelAndView main() {
-		ModelAndView mav = new ModelAndView("board/main");
-		return mav;
-	}
-	
-	@GetMapping("/userRegister")
-	public ModelAndView userRegister() {
-		ModelAndView mav = new ModelAndView("/board/userRegister");
-		return mav;
-	}
-	
-	@GetMapping(value = "/register")
-	public ModelAndView viewcreate() {
-		ModelAndView mav = new ModelAndView("board/register");
-		return mav;
-	}
 
+	// 게시판 페이징 처리 및 데이터 불러오기
 	@GetMapping(value = "/list/pages/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> getList(@PathVariable("page") int page) {
@@ -94,12 +76,21 @@ public class BoardRestController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	// 게시판 데이터 전부 지우기
 	@DeleteMapping(value = "/list")
 	public void alldel(BoardDTO board) {
 		log.info("All Remove Board Object");
 		service.allremove(board);
 	}
 
+	// 등록 페이지
+	@GetMapping(value = "/register")
+	public ModelAndView viewcreate() {
+		ModelAndView mav = new ModelAndView("board/register");
+		return mav;
+	}
+
+	// 게시물 등록
 	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public void create(@RequestBody BoardDTO board) {
@@ -108,8 +99,8 @@ public class BoardRestController {
 		service.increase();
 		service.register(board);
 	}
-
-
+	
+	// 상세 페이지
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ModelAndView detailView(@PathVariable Long bno) {
@@ -118,9 +109,9 @@ public class BoardRestController {
 		log.info("Open Detail Page : " + bno + "번");
 
 		return mav;
-
 	}
-
+	
+	// 상세 페이지 데이터 조회
 	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<Map<String, Object>> detail(@PathVariable("bno") Long bno) {
@@ -134,7 +125,8 @@ public class BoardRestController {
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
+	
+	// 수정 페이지
 	@GetMapping(value = "/modify/{bno}", produces = "application/text; charset=UTF-8")
 	public ModelAndView modify(@PathVariable Long bno) {
 		ModelAndView mav = new ModelAndView("/board/modify");
@@ -143,53 +135,45 @@ public class BoardRestController {
 
 		return mav;
 	}
-
+	
+	// 수정 기능
 	@PutMapping(value = "/modify/update")
 	public void update(@RequestBody BoardDTO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
-
+	
+	// 삭제 기능
 	@DeleteMapping(value = "/modify/delete/{bno}")
 	public void delete(@PathVariable Long bno) {
 		log.info("삭제 : " + bno);
 		service.remove(bno);
 		service.fileRemove(bno);
 	}
-
+	
+	// 파일 삭제
 	@DeleteMapping(value = "/file/remove/{fileBno}")
 	public void deleteFile(@PathVariable Long fileBno) {
 		log.info("삭제 : " + fileBno);
 		service.AtfileRemove(fileBno);
 	}
 	
-	
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date date = new Date();
-
-		String string = sdf.format(date);
-
-		// yyyy-MM-dd -> yyyy/mm/dd
-		return string.replace("-", File.separator);
-	}
-
+	// 파일 가져오기
 	@GetMapping(value = "/file/{bno}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable("bno") Long bno) {
 
 		return new ResponseEntity<>(service.getfiles(bno), HttpStatus.OK);
-
 	}
 
+	// 파일 업로드
 	@PostMapping(value = "/upload")
 	public void uploadFormPost(@RequestBody MultipartFile[] uploadFile) {
-		log.info("업로드 지나감");
+		log.info("파일 데이터 : " +uploadFile);
 		String uploadFolder = "D://UpLoadFile/main";
 		FileDTO fileDTO = new FileDTO();
 
 		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
 		// 파일 생성
 		if (uploadPath.exists() == false) {
@@ -197,11 +181,11 @@ public class BoardRestController {
 		}
 
 		for (MultipartFile multipartFile : uploadFile) {
-			
+
 			// 확장자 가져오기
 			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 			String serverName = service.makeFilename(extension);
-			
+
 			try {
 				File saveFile = new File(uploadPath, serverName);
 				fileDTO.setClientName(multipartFile.getOriginalFilename());
@@ -218,11 +202,13 @@ public class BoardRestController {
 
 			}
 			log.info(fileDTO);
+			
 			service.registerFile(fileDTO);
 		}
 
 	};
-
+	
+	// 특정 번호에 파일 업로드
 	@PostMapping(value = "/upload/file")
 	public void uploadPost(@RequestBody MultipartFile[] uploadFile, Long bno) {
 		log.info("업로드 지나감");
@@ -230,7 +216,7 @@ public class BoardRestController {
 		FileDTO fileDTO = new FileDTO();
 
 		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
 		// 파일 생성
 		if (uploadPath.exists() == false) {
@@ -265,10 +251,11 @@ public class BoardRestController {
 
 	};
 	
-	
+	// 파일 다운로드
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> download(String serverName) {
+		log.info(serverName);
 		List<FileDTO> file = service.getfileName(serverName);
 		String path = file.get(0).getPath();
 		String name = file.get(0).getClientName();

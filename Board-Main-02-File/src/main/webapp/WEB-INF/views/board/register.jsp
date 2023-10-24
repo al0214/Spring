@@ -147,18 +147,15 @@
 <script type="text/javascript">
 	len = $("input[type='file']").get(0).files.length;
 
+	// 게시판에 첨부될 파일 업로드
 	function postFile(a) {
-		console.log("지나감");
 		$.ajax({
 			url : "/upload",
 			type : 'POST',
 			dataType : 'json',
-			processData : false,
-			contentType : false,
+			processData : false,// 파일 전송 시 Query String 형태로 변환되면 안되기 때문에 Flase를 사용 
+			contentType : false, // Default 값이 application/x-www-form-urlencoded; charset=UTF-8인데 보내기전에 인코딩해서 보내기 때문에 False를 줘서 multipart/form-data 형식으로 변경해 준다
 			data : a,
-			success : function() {
-
-			},
 			error : function() {
 				return;
 			}
@@ -184,6 +181,7 @@
 		});
 	}
 
+	// 게시물 등록 및 첨부 파일이 존재 시 파일도 업로드
 	$('#submit').on("click", function() {
 		if (Checkform(0) == 1) {
 			if (Checklen() == 1) {
@@ -232,6 +230,7 @@
 
 	})
 
+	// 첨부 파일이 업로드할 파일 이름들을 보여줌
 	$('#file').on('change', function() {
 		var len = $("input[type='file']").get(0).files.length;
 		var str = "";
@@ -245,11 +244,13 @@
 
 	});
 
+	// 리셋 버튼을 눌렀을 경우 전부 리셋하고 제목에 포커스가 간다
 	function Returnform() {
 		alert("리셋합니다.")
 		frr.title.focus();
 	};
 
+	// 파일은 총 3개까지 업로드가 가능하기 때문에 3개가 넘어갈 경수 alert을 뛰
 	function Checklen() {
 		len = $("input[type='file']").get(0).files.length;
 		if (len > 3) {
