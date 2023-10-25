@@ -37,6 +37,9 @@ Create TABLE boardExam(
     changeDate date default SYSDATE
 );
 
+drop sequence fileSeq;
+drop sequence tqqSeq;
+
 -- bno에 primary key 설정
 alter table boardExam add constraint pk_boardExam primary key (bno);
 
