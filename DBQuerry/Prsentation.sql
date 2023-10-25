@@ -63,6 +63,31 @@ CREATE TABLE FileUpLoad
     CONSTRAINT fk_code FOREIGN KEY(bno) REFERENCES boardExam(bno) ON DELETE CASCADE
 );
 
+drop table TABLE_USER;
+drop table USER_AUTH;
+
+CREATE TABLE TABLE_USER(
+    userId varchar2(50) primary key,
+    userPw varchar2(50) not null,
+    userName varchar2(50) not null,
+    enable char(1) default '1',
+    createDate date default sysdate,
+    changeDate date default sysdate
+);
+
+CREATE TABLE USER_AUTH(
+    userId varchar2(50) not null ,
+    auth varchar2(50) not null,
+    constraint FK_USER_AUTH foreign key (userId)references TABLE_USER(userId)
+);
+
+SELECT mem.userId, userPw,
+		userName, enabled, regdate, updatedate, auth FROM TABLE_USER mem
+		LEFT OUTER JOIN USER_AUTH auth on mem.userId = auth.userId where mem.userId = 'admin90';
+
+select * from USER_AUTH;
+select * from TABLE_USER;
+
 select * from boardExam;
 select * from FileUpLoad;
 

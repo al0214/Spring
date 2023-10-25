@@ -131,5 +131,26 @@
 	<!-- 상세 Page(수정, 삭제) -->
 	<!-- 수정 구현 -->
 	<!-- 삭제 구현 진행중 -->
+	
+	<resultMap type="org.jaeu.domain.UserDTO" id="userMap">
+		<id property="userId" column="userId" />
+		<result property="userId" column="userId" />
+		<result property="userPw" column="userPw" />
+		<result property="userName" column="userName" />
+		<result property="regdate" column="regdate" />
+		<result property="updatedate" column="updatedate" />
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
 
+	<resultMap type="org.jaeu.domain.AuthDTO" id="authMap">
+		<result property="userId" column="userId" />
+		<result property="auth" column="auth" />
+	</resultMap>
+
+	<select id="getUser" resultType="userMap">
+		SELECT mem.userId, userPw,
+		userName, enabled, regdate, updatedate, auth FROM TABLE_USER mem
+		LEFT OUTER JOIN USER_AUTH auth on mem.userId = auth.userId WHERE mem.userId = #{userId}
+	</select>
 </mapper>	

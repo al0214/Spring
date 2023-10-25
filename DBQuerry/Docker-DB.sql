@@ -10,8 +10,8 @@ create table tbl_member(
     enabled char(1) default '1'
 );
 
-
-
+alter table tbl_member rename to TABLE_USER;
+alter table tbl_member_auth rename to USER_AUTH;
 create table tbl_member_auth(
     userid varchar2(50) not null,
     auth varchar2(50) not null ,
@@ -19,6 +19,7 @@ create table tbl_member_auth(
 );
 
 SELECT * FROM TBL_MEMBER;
+select * from tbl_member_auth;
 
 commit;
 -- 11g부터는 대소문자 구분을 하기 떄문에 해당 구문을 사용하여 기능 Off
