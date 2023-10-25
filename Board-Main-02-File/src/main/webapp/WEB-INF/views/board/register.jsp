@@ -108,7 +108,11 @@
 							<div class="form-group">
 								<h3>Attachment</h3>
 								<div style="margin-bottom: 5px;">
-									<strong>파일은 3개까지 첨부할 수 있습니다 <span class="t_red">*</span></strong>
+									<strong>파일은 3개까지 첨부할 수 있습니다 <span class="t_red">*</span></strong><br>
+									<strong>한개 파일의 최대 크기는 2097Kbyte 입니다. <span
+										class="t_red">*</span></strong><br> <strong>파일의 최대 크기는
+										104857Kbyte 입니다. <span class="t_red">*</span>
+									</strong>
 								</div>
 
 								<input class="form-control" id="upload-name"
@@ -154,16 +158,17 @@
 			processData : false,// 파일 전송 시 Query String 형태로 변환되면 안되기 때문에 Flase를 사용 
 			contentType : false, // Default 값이 application/x-www-form-urlencoded; charset=UTF-8인데 보내기전에 인코딩해서 보내기 때문에 False를 줘서 multipart/form-data 형식으로 변경해 준다
 			data : a,
-			succcess: function(){
-				console.log("요청 성공!")
+			succcess : function() {
+				console.log("요청 성공!");
+
 			},
 			error : function() {
-				console.error("요청이 성공하지 못했습니다");
+				alert("전송요류");
+				console.error("전송오류");
 			}
 
-		});
-		
-		location.replace("/list");
+		})
+
 	}
 
 	function postRegister(b) {
@@ -186,11 +191,12 @@
 	$('#submit').on("click", function() {
 		if (Checkform(0) == 1) {
 			if (Checklen() == 1) {
+
 				var formm = {
 					title : frr.title.value,
 					detail : frr.detail.value
 				}
-				
+
 				var formData = new FormData();
 
 				var inputFile = $("input[type='file']");
@@ -209,6 +215,7 @@
 						data : JSON.stringify(formm),
 						success : function() {
 							postFile(formData);
+							location.replace("/list");
 						},
 						error : function() {
 							console.error("요청이 성공하지 못했습니다");
@@ -246,9 +253,23 @@
 		frr.title.focus();
 	};
 
+	var sizes = 0;
 	// 파일은 총 3개까지 업로드가 가능하기 때문에 3개가 넘어갈 경수 alert을 뛰
 	function Checklen() {
 		len = $("input[type='file']").get(0).files.length;
+		for (var i = 0; i < len; i++) {
+			if ($("input[type='file']").get(0).files[i].size > 10485756) {
+				alert("1개 파일의 최대 사이즈를 넘겼습니다.")
+				return 0;
+			}
+			sizes = sizes + $("input[type='file']").get(0).files[i].size;
+		}
+
+		if (sizes > 104857560) {
+			alert("최대 업로드 사이즈를 넘겼습니다.")
+			return 0;
+		}
+
 		if (len > 3) {
 			alert("3개까지 첨부가 가능합니다.");
 			return 0;
