@@ -139,7 +139,6 @@
 
 						board = list.board;
 						file = list.getfiles
-						console.log(file.length)
 
 						// "<a href='download?serverName="+ data[b].serverName+ "'>
 
@@ -157,15 +156,12 @@
 						}
 
 						for (var i = 0; i < file.length; i++) {
-							console.log(typeof (i) + "_" + file[i].clientName)
 							files += "<li><a href='/download?serverName="
 									+ file[i].serverName + "'>"
 									+ file[i].clientName + "</a></li>";
 						}
 						;
 						if (a == 0) {
-
-							console.log("지나감");
 							$("#bno").attr('value', board.bno);
 							$("#title").attr('value', board.title);
 							$("#detail").html(board.detail);
@@ -178,7 +174,7 @@
 
 					},
 					error : function() {
-						console.log("error");
+						console.error("error");
 					}
 				});
 	}

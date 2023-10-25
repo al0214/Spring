@@ -156,7 +156,6 @@
 					success : function(list) {
 						board = list.board;
 						file = list.getfiles
-						console.log(file.length)
 
 						tub += "<div class='filebox-new'>"
 						tub += "<input class='form-control' id='upload-name' style='border-radius: 0px 4px 4px 0px !important; width: 88%; display: inline; margin-bottom:5px;' placeholder='첨부 파일을 입력해 주세요' readonly>";
@@ -178,7 +177,6 @@
 						;
 
 						if (a == 0) {
-							console.log("지나감");
 							$("#bno2").last().attr('value', board.bno);
 							$("#title2").attr('value', board.title);
 							$("#detail2").html(board.detail);
@@ -196,7 +194,6 @@
 
 	// 파일 전송
 	function postFile(a) {
-		console.log("지나감");
 		$.ajax({
 			url : "/upload/file",
 			type : 'POST',
@@ -221,7 +218,6 @@
 		formData.append("bno", $("#bno2").val())
 		for (var i = 0; i < filesArray.length; i++) {
 			formData.append("uploadFile", filesArray[i]);
-			console.log("폼 데이터 : " + formData);
 		}
 		;
 		$.ajax({
@@ -234,7 +230,7 @@
 				postFile(formData, $("#bno2").val());
 			},
 			error : function() {
-				alert("요청이 성공하지 못했습니다");
+				console.error("요청이 성공하지 못했습니다")
 			}
 		})
 	};
@@ -250,7 +246,7 @@
 				location.replace('/list');
 			},
 			error : function() {
-				alert("요청이 성공하지 못했습니다");
+				console.error("요청이 성공하지 못했습니다");
 			}
 		});
 	};
@@ -263,6 +259,9 @@
 			contentType : "application/json; charset=utf-8",
 			success : function() {
 				console.log(a + "번이 삭제되었습니다");
+			},
+			error : function() {
+				console.error("요청이 성공하지 못했습니다");
 			}
 		})
 		$("#upload-name-" + a).remove();
@@ -276,7 +275,6 @@
 		filesArray.splice(deleteIndex, 1);
 		$("#upload-new-name-" + a).remove();
 		$("#upload-new-name-" + a).remove();
-		console.log(filesArray);
 	}
 
 	$(document)

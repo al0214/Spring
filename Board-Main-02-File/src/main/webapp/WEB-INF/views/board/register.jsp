@@ -118,8 +118,6 @@
 								<input type='file' name='files' id="file" style="display: none;"
 									multiple>
 							</div>
-
-
 						</div>
 						<div style="margin-top: 10px; float: right;">
 							<button type="button" class="btn btn-sm btn-primary" id='submit'>Submit
@@ -156,12 +154,15 @@
 			processData : false,// 파일 전송 시 Query String 형태로 변환되면 안되기 때문에 Flase를 사용 
 			contentType : false, // Default 값이 application/x-www-form-urlencoded; charset=UTF-8인데 보내기전에 인코딩해서 보내기 때문에 False를 줘서 multipart/form-data 형식으로 변경해 준다
 			data : a,
+			succcess: function(){
+				console.log("요청 성공!")
+			},
 			error : function() {
-				return;
+				console.error("요청이 성공하지 못했습니다");
 			}
 
 		});
-		console.log("파일 등록 성공");
+		
 		location.replace("/list");
 	}
 
@@ -176,7 +177,7 @@
 				location.replace('/list');
 			},
 			error : function() {
-				alert("등록 실패");
+				console.error("요청이 성공하지 못했습니다");
 			}
 		});
 	}
@@ -189,10 +190,7 @@
 					title : frr.title.value,
 					detail : frr.detail.value
 				}
-
-				console.log(frr.files.value);
-				console.log(formm);
-
+				
 				var formData = new FormData();
 
 				var inputFile = $("input[type='file']");
@@ -201,7 +199,6 @@
 
 				for (var i = 0; i < files.length; i++) {
 					formData.append("uploadFile", files[i]);
-					console.log(formData);
 				}
 
 				if (len > 0) {
@@ -211,11 +208,10 @@
 						contentType : "application/json; charset=utf-8",
 						data : JSON.stringify(formm),
 						success : function() {
-							console.log("지나감@")
 							postFile(formData);
 						},
 						error : function() {
-							alert("등록 실패");
+							console.error("요청이 성공하지 못했습니다");
 						}
 					});
 				} else {

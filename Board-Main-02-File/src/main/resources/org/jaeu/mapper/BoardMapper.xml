@@ -96,14 +96,14 @@
 	<!-- 서버 이름으로 파일 가져오기 -->
 	<select id="getFileName" resultType="org.jaeu.domain.FileDTO">
 		select fileBno, bno,
-		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		clientName, serverName, path, createDate from FileUpLoad
 		where serverName = #{serverName, jdbcType=VARCHAR}
 	</select>
 
 	<!-- 번호로 파일 가져오기 -->
 	<select id="getFiles" resultType="org.jaeu.domain.FileDTO">
 		select fileBno, bno,
-		clientName, serverName, path, createDate, changeDate from FileUpLoad
+		clientName, serverName, path, createDate from FileUpLoad
 		where bno = #{bno}
 	</select>
 

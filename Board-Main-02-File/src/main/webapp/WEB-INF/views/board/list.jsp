@@ -208,7 +208,7 @@ th, td {
 					$("#myModal").modal("show");
 				}
 				;
-				
+
 				var actionForm = $("#actionForm");
 
 				$(".paginate_button a").on(
@@ -237,7 +237,6 @@ th, td {
 	var BoardPaging = $(".pagination")
 	showList(1);
 
-	
 	// 파일들 가져오기
 	function getFile(a) {
 		$.ajax({
@@ -247,6 +246,9 @@ th, td {
 			async : false,
 			success : function(list) {
 				return c = list
+			},
+			error : function() {
+				console.error("요청이 성공하지 못했습니다");
 			}
 		});
 		return c
@@ -282,7 +284,7 @@ th, td {
 										+ DaTe[i].title + "</a></td>";
 								str += "<td style='padding: 0px; vertical-align:middle;'>";
 								data = getFile(DaTe[i].bno)
-								
+
 								// 첨부파일 이미지 만큼 이미지 그리기
 								for (var b = 0; data.length > b; b++) {
 									str += "<img src='/resources/img/Chumbu.png' style='height: 36px; width: 34px;'>"
@@ -305,11 +307,13 @@ th, td {
 							var startPa = (list.ListData.pageDTO.startPage);
 							var endPa = (list.ListData.pageDTO.endPage);
 
+							// Prev True일 경우 버튼 추가
 							if ((list.ListData.pageDTO.prev) == true) {
 								strr += "<li class=paginate_button previous>";
 								strr += "<button class='Prev'>Prev</a></li>";
 							}
 
+							// 페이지 개수 만큼 버튼 추가
 							for (var i = startPa; i <= endPa; i++) {
 								var tf = (list.ListData.pageDTO.cri.pageNum == i ? "'paginate_button active'"
 										: "paginate_button");
@@ -318,6 +322,7 @@ th, td {
 										+ i + "</button></li>";
 							}
 
+							// Next True일 경우 버튼 추가
 							if ((list.ListData.pageDTO.next) == true) {
 								strr += "<li class='paginate_button next' style='float:right'>";
 								strr += "<button class='Next'>Next</button></li>"
@@ -343,7 +348,7 @@ th, td {
 						});
 
 	};
-	
+
 	// 게시물 데이터 전부 삭제
 	function OnDelBtn() {
 		$.ajax({
@@ -352,6 +357,8 @@ th, td {
 		}).done(function() {
 			console.log("모든 데이터가 삭제 되었습니다.");
 			showList(1);
+		}).error(function() {
+			console.error("요청이 성공하지 못했습니다");
 		})
 	}
 </script>
