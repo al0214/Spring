@@ -5,7 +5,6 @@ import java.util.List;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
-import org.jaeu.domain.UserDTO;
 
 public interface BoardService {
 
@@ -41,5 +40,5 @@ public interface BoardService {
 
 	public void registerAlterFile(FileDTO fileDTO); 
 
-	public UserDTO getUser(String userId);
+
 }

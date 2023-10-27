@@ -5,7 +5,6 @@ import java.util.List;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
-import org.jaeu.domain.UserDTO;
 
 public interface BoardMapper {
 	
@@ -24,5 +23,4 @@ public interface BoardMapper {
 	public void AtfileRemove(Long fileBno);
 	public void registerAlterFile(FileDTO fileDTO);
 	
-	public UserDTO getUser(String userId);
 }

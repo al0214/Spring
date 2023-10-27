@@ -70,9 +70,11 @@
 	</insert>
 
 	<insert id="registerFile">
-		insert into FileUpLoad(fileBno, bno, clientName, serverName, path)
+		insert into FileUpLoad(fileBno, bno, clientName,
+		serverName, path)
 		values
-		(FILE_SEQ.nextval, #{bno},#{clientName}, #{serverName}, #{path})
+		(FILE_SEQ.nextval, #{bno},#{clientName},
+		#{serverName}, #{path})
 	</insert>
 
 	<insert id="registerAlterFile">
@@ -107,7 +109,7 @@
 	<delete id="allremove">
 		delete from boardExam where bno = bno
 	</delete>
-	
+
 
 	<!-- java.sql.SQLException: ORA-17004: 열 유형이 부적합합니다.: 1111 해당 오류 발생해서 입력값을 
 		줄때 jdbcType을 지정해서 해결했습니다. -->
@@ -131,26 +133,6 @@
 	<!-- 상세 Page(수정, 삭제) -->
 	<!-- 수정 구현 -->
 	<!-- 삭제 구현 진행중 -->
-	
-	<resultMap type="org.jaeu.domain.UserDTO" id="userMap">
-		<id property="userId" column="userId" />
-		<result property="userId" column="userId" />
-		<result property="userPw" column="userPw" />
-		<result property="userName" column="userName" />
-		<result property="regdate" column="regdate" />
-		<result property="updatedate" column="updatedate" />
-		<collection property="authList" resultMap="authMap">
-		</collection>
-	</resultMap>
 
-	<resultMap type="org.jaeu.domain.AuthDTO" id="authMap">
-		<result property="userId" column="userId" />
-		<result property="auth" column="auth" />
-	</resultMap>
 
-	<select id="getUser" resultType="userMap">
-		SELECT mem.userId, userPw,
-		userName, enabled, regdate, updatedate, auth FROM TABLE_USER mem
-		LEFT OUTER JOIN USER_AUTH auth on mem.userId = auth.userId WHERE mem.userId = #{userId}
-	</select>
 </mapper>	

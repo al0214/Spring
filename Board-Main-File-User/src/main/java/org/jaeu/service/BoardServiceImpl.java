@@ -8,7 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.jaeu.domain.BoardDTO;
 import org.jaeu.domain.CriteriaVO;
 import org.jaeu.domain.FileDTO;
-import org.jaeu.domain.UserDTO;
 import org.jaeu.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,10 +124,5 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 	
-	@Override
-	public UserDTO getUser(String userId) {
-	
-		return mapper.getUser(userId);
-	}
 
 }

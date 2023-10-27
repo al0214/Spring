@@ -71,8 +71,8 @@ CREATE TABLE TABLE_USER(
     userPw varchar2(50) not null,
     userName varchar2(50) not null,
     enable char(1) default '1',
-    createDate date default sysdate,
-    changeDate date default sysdate
+    regDate date default sysdate,
+    updateDate date default sysdate
 );
 
 CREATE TABLE USER_AUTH(
@@ -82,7 +82,7 @@ CREATE TABLE USER_AUTH(
 );
 
 SELECT mem.userId, userPw,
-		userName, enabled, regdate, updatedate, auth FROM TABLE_USER mem
+		userName, enable, regdate, updatedate, auth FROM TABLE_USER mem
 		LEFT OUTER JOIN USER_AUTH auth on mem.userId = auth.userId where mem.userId = 'admin90';
 
 select * from USER_AUTH;
