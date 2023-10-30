@@ -18,13 +18,13 @@
 		class="org.jaeu.security.CustomUserDetailsService"></bean>
 
 	<security:http>
-		<security:intercept-url pattern="/sample/all"
+		<security:intercept-url pattern="/board/*"
 			access="permitAll" />
 
 		<security:intercept-url
-			pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
+			pattern="/detail" access="hasRole('ROLE_MEMBER')" />
 
-		<security:intercept-url pattern="/sample/admin"
+		<security:intercept-url pattern="/admin"
 			access="hasRole('ROLE_ADMIN')" />
 
 		<!-- <security:form-login /> -->
@@ -34,18 +34,17 @@
 		<security:access-denied-handler
 			ref="customAccessDenied" />
 
-		<security:form-login login-page="/customLogin"
+		<security:form-login login-page="/login"
 			authentication-success-handler-ref="customLoginSuccess" />
 
 		<security:logout logout-url="/customLogout"
 			invalidate-session="true" />
 
-		<security:remember-me
-			data-source-ref="dataSource" token-validity-seconds="604800" />
-
 		<security:logout logout-url='/customLogout'
 			invalidate-session="true" delete-cookies="remember-me,JESSION_ID" />
-
+		
+		<security:remember-me
+			data-source-ref="dataSource" token-validity-seconds="604800" />
 	</security:http>
 
 	<security:authentication-manager>

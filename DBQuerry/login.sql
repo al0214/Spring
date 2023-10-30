@@ -7,7 +7,7 @@ create table users(
 create table authorities(
     username varchar2(50) not null,
     authority varchar2(50) not null,
-    constraint fk_authorities_users foreign key (username) references users(username)
+    constraint fk_authorities_users foreign key (username) references users(username) on delete cascade
 );
 
 create unique index ix_auth_username on authorities(username, authority);
@@ -66,3 +66,7 @@ CREATE TABLE persistent_logins (
 );
 
 select * from persistent_logins;
+
+select * from tbl_member;
+
+select * from tbl_member_auth;

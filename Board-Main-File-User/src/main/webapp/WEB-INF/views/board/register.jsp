@@ -171,7 +171,7 @@
 	function postRegister(b) {
 		$.ajax({
 			type : 'POST',
-			url : "/register",
+			url : "/board/register",
 			contentType : "application/json; charset=utf-8",
 			data : JSON.stringify(b),
 			success : function() {

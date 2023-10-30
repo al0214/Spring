@@ -48,19 +48,19 @@ public class BoardRestController {
 		ModelAndView mav = new ModelAndView("board/list");
 		return mav;
 	}
-	
+
 	@GetMapping("/main")
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView("board/main");
 		return mav;
 	}
-	
+
 	@GetMapping("/userRegister")
 	public ModelAndView userRegister() {
 		ModelAndView mav = new ModelAndView("/board/userRegister");
 		return mav;
 	}
-	
+
 	@GetMapping(value = "/register")
 	public ModelAndView viewcreate() {
 		ModelAndView mav = new ModelAndView("board/register");
@@ -108,7 +108,6 @@ public class BoardRestController {
 		service.increase();
 		service.register(board);
 	}
-
 
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -162,18 +161,7 @@ public class BoardRestController {
 		log.info("삭제 : " + fileBno);
 		service.AtfileRemove(fileBno);
 	}
-	
-	
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		Date date = new Date();
-
-		String string = sdf.format(date);
-
-		// yyyy-MM-dd -> yyyy/mm/dd
-		return string.replace("-", File.separator);
-	}
 
 	@GetMapping(value = "/file/{bno}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable("bno") Long bno) {
@@ -182,34 +170,98 @@ public class BoardRestController {
 
 	}
 
+	/*
+	 * @PostMapping(value = "/upload") public void uploadFormPost(@RequestBody
+	 * MultipartFile[] uploadFile) { log.info("업로드 지나감"); String uploadFolder =
+	 * "D://UpLoadFile/main"; FileDTO fileDTO = new FileDTO();
+	 * 
+	 * // 업로드 폴더에 getFolder 위치 추가 File uploadPath = new File(uploadFolder,
+	 * getFolder());
+	 * 
+	 * // 파일 생성 if (uploadPath.exists() == false) { uploadPath.mkdirs(); }
+	 * 
+	 * for (MultipartFile multipartFile : uploadFile) {
+	 * 
+	 * // 확장자 가져오기 String extension =
+	 * StringUtils.getFilenameExtension(multipartFile.getOriginalFilename()); String
+	 * serverName = service.makeFilename(extension);
+	 * 
+	 * try { File saveFile = new File(uploadPath, serverName);
+	 * fileDTO.setClientName(multipartFile.getOriginalFilename());
+	 * fileDTO.setServerName(serverName); fileDTO.setPath(saveFile.toString()); //
+	 * 업로드 폴더에 이름으로 저장
+	 * 
+	 * // 파일에 실질적으로 저장 multipartFile.transferTo(saveFile);
+	 * 
+	 * } catch (Exception e) { // TODO Auto-generated catch block
+	 * log.error(e.getMessage());
+	 * 
+	 * } log.info(fileDTO); service.registerFile(fileDTO); }
+	 * 
+	 * };
+	 * 
+	 * @PostMapping(value = "/upload/file") public void uploadPost(@RequestBody
+	 * MultipartFile[] uploadFile, Long bno) { log.info("업로드 지나감"); String
+	 * uploadFolder = "D://UpLoadFile/main"; FileDTO fileDTO = new FileDTO();
+	 * 
+	 * // 업로드 폴더에 getFolder 위치 추가 File uploadPath = new File(uploadFolder,
+	 * getFolder());
+	 * 
+	 * // 파일 생성 if (uploadPath.exists() == false) { uploadPath.mkdirs(); }
+	 * 
+	 * for (MultipartFile multipartFile : uploadFile) {
+	 * 
+	 * // 확장자 가져오기 String extension =
+	 * StringUtils.getFilenameExtension(multipartFile.getOriginalFilename()); String
+	 * serverName = service.makeFilename(extension);
+	 * 
+	 * try { fileDTO.setBno(bno); File saveFile = new File(uploadPath, serverName);
+	 * fileDTO.setClientName(multipartFile.getOriginalFilename());
+	 * fileDTO.setServerName(serverName); fileDTO.setPath(saveFile.toString()); //
+	 * 업로드 폴더에 이름으로 저장
+	 * 
+	 * // 파일에 실질적으로 저장 multipartFile.transferTo(saveFile);
+	 * 
+	 * } catch (Exception e) { // TODO Auto-generated catch block
+	 * log.error(e.getMessage());
+	 * 
+	 * } log.info(fileDTO); service.registerAlterFile(fileDTO); }
+	 * 
+	 * };
+	 * 
+	 */
+
+	// �뙆�씪 �뾽濡쒕뱶
 	@PostMapping(value = "/upload")
 	public void uploadFormPost(@RequestBody MultipartFile[] uploadFile) {
-		log.info("업로드 지나감");
+		log.info(uploadFile);
 		String uploadFolder = "D://UpLoadFile/main";
 		FileDTO fileDTO = new FileDTO();
 
-		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		// �뾽濡쒕뱶 �뤃�뜑�뿉 getFolder �쐞移� 異붽�
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
-		// 파일 생성
+		log.info(service.getFolder());
+
+		// �뙆�씪 �깮�꽦
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
 
 		for (MultipartFile multipartFile : uploadFile) {
-			
-			// 확장자 가져오기
+
+			// �솗�옣�옄 媛��졇�삤湲�
 			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 			String serverName = service.makeFilename(extension);
-			
+
 			try {
 				File saveFile = new File(uploadPath, serverName);
 				fileDTO.setClientName(multipartFile.getOriginalFilename());
 				fileDTO.setServerName(serverName);
 				fileDTO.setPath(saveFile.toString());
-				// 업로드 폴더에 이름으로 저장
+				// �뾽濡쒕뱶 �뤃�뜑�뿉 �씠由꾩쑝濡� ���옣
 
-				// 파일에 실질적으로 저장
+				// �뙆�씪�뿉 �떎吏덉쟻�쑝濡� ���옣
 				multipartFile.transferTo(saveFile);
 
 			} catch (Exception e) {
@@ -218,28 +270,30 @@ public class BoardRestController {
 
 			}
 			log.info(fileDTO);
+
 			service.registerFile(fileDTO);
 		}
 
 	};
 
+	// �듅�젙 踰덊샇�뿉 �뙆�씪 �뾽濡쒕뱶
 	@PostMapping(value = "/upload/file")
 	public void uploadPost(@RequestBody MultipartFile[] uploadFile, Long bno) {
-		log.info("업로드 지나감");
+		log.info("�뾽濡쒕뱶 吏��굹媛�");
 		String uploadFolder = "D://UpLoadFile/main";
 		FileDTO fileDTO = new FileDTO();
 
-		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		// �뾽濡쒕뱶 �뤃�뜑�뿉 getFolder �쐞移� 異붽�
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
-		// 파일 생성
+		// �뙆�씪 �깮�꽦
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
 
 		for (MultipartFile multipartFile : uploadFile) {
 
-			// 확장자 가져오기
+			// �솗�옣�옄 媛��졇�삤湲�
 			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 			String serverName = service.makeFilename(extension);
 
@@ -249,9 +303,9 @@ public class BoardRestController {
 				fileDTO.setClientName(multipartFile.getOriginalFilename());
 				fileDTO.setServerName(serverName);
 				fileDTO.setPath(saveFile.toString());
-				// 업로드 폴더에 이름으로 저장
+				// �뾽濡쒕뱶 �뤃�뜑�뿉 �씠由꾩쑝濡� ���옣
 
-				// 파일에 실질적으로 저장
+				// �뙆�씪�뿉 �떎吏덉쟻�쑝濡� ���옣
 				multipartFile.transferTo(saveFile);
 
 			} catch (Exception e) {
@@ -264,8 +318,7 @@ public class BoardRestController {
 		}
 
 	};
-	
-	
+
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> download(String serverName) {

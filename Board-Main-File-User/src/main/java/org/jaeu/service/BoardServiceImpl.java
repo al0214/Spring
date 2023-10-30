@@ -1,5 +1,6 @@
 package org.jaeu.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -87,14 +88,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<FileDTO> getfileName(String serverName) {
-		
+
 		return mapper.getFileName(serverName);
 	}
-	
+
 	@Override
 	public void fileRemove(Long bno) {
-		mapper.fileRemove(bno); 
-		
+		mapper.fileRemove(bno);
+
 	}
 
 	@Override
@@ -115,14 +116,26 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void AtfileRemove(Long fileBno) {
 		mapper.AtfileRemove(fileBno);
-		
+
 	}
 
 	@Override
 	public void registerAlterFile(FileDTO fileDTO) {
 		mapper.registerAlterFile(fileDTO);
-		
+
 	}
-	
+
+	@Override
+	public String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date date = new Date();
+
+		String string = sdf.format(date);
+
+		// yyyy-MM-dd -> yyyy/mm/dd
+		return string.replace("-", File.separator);
+
+	}
 
 }

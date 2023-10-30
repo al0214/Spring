@@ -1,5 +1,6 @@
 package org.jaeu.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -129,6 +130,18 @@ public class BoardServiceImpl implements BoardService {
 	public UserDTO getUser(String userId) {
 	
 		return mapper.getUser(userId);
+	}
+
+	@Override
+	public String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date date = new Date();
+
+		String string = sdf.format(date);
+
+		// yyyy-MM-dd -> yyyy/mm/dd
+		return string.replace("-", File.separator);
 	}
 
 }

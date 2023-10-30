@@ -245,15 +245,16 @@ th, td {
 		$.ajax({
 			type : "GET",
 			url : "/file/" + a + ".json",
-			dataType : "JSON",
 			async : false,
 			success : function(list) {
 				return c = list
+			},
+			error : function() {
+				console.error("요청이 성공하지 못했습니다");
 			}
 		});
 		return c
 	}
-
 	function getLink(d) {
 		date = {
 			"clientName" : d

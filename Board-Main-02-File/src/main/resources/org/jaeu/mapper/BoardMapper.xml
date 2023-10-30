@@ -19,7 +19,7 @@
 
 	<!-- 게시물 번호 시퀀스 증가 -->
 	<select id="increase" resultType="int">
-		select TQQSEQ.nextval from
+		select TQQ_SEQ.nextval from
 		DUAL
 	</select>
 
@@ -45,7 +45,7 @@
 		<selectKey keyProperty="bno" order="BEFORE"
 			resultType="Long">
 			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
-			= 'TQQSEQ'
+			= 'TQQ_SEQ'
 		</selectKey>
 		insert into boardExam(bno, title, detail) values (#{bno},#{title,
 		jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
@@ -77,11 +77,11 @@
 		<selectKey keyProperty="bno" order="BEFORE"
 			resultType="Long">
 			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
-			= 'TQQSEQ'
+			= 'TQQ_SEQ'
 		</selectKey>
 		insert into FileUpLoad(fileBno, bno, clientName, serverName, path)
 		values
-		(FILESEQ.nextval, #{bno},#{clientName}, #{serverName}, #{path})
+		(FILE_SEQ.nextval, #{bno},#{clientName}, #{serverName}, #{path})
 	</insert>
 
 	<!-- 특정 번호를 사용한 파일 등록 -->
@@ -89,7 +89,7 @@
 		insert into FileUpLoad(fileBno, bno, clientName,
 		serverName, path)
 		values
-		(FILESEQ.nextval, #{bno},#{clientName},
+		(FILE_SEQ.nextval, #{bno},#{clientName},
 		#{serverName}, #{path})
 	</insert>
 

@@ -1,7 +1,7 @@
 package org.jaeu.controller;
 
 import java.io.File;
-
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,72 +43,46 @@ import lombok.extern.log4j.Log4j;
 public class BoardRestController {
 	private BoardService service;
 
-	@GetMapping("/list")
-	public ModelAndView manage() {
-		ModelAndView mav = new ModelAndView("board/list");
+	@GetMapping("/admin")
+	public ModelAndView admin(Principal principal) {
+		ModelAndView mav = new ModelAndView("admin/admin");
+		mav.addObject("username", principal.getName());
 		return mav;
 	}
-	
-	@GetMapping("/main")
-	public ModelAndView main() {
-		ModelAndView mav = new ModelAndView("board/main");
+
+	@GetMapping("/accessError")
+	public ModelAndView accessError() {
+		ModelAndView mav = new ModelAndView("errorPage/accessError");
 		return mav;
 	}
-	
+
+	@GetMapping("/customLogout")
+	public ModelAndView Logout() {
+		ModelAndView mav = new ModelAndView("custom/customLogout");
+		return mav;
+	}
+
+	@GetMapping("/login")
+	public ModelAndView login(String error, String logout) {
+		ModelAndView mav = new ModelAndView("board/login");
+		log.info("error : " + error);
+		log.info("logout : " + logout);
+		
+		if (error != null) {
+			mav.addObject("error", "Login Error Check Your Account");
+		}
+		
+		if (logout != null) {
+			mav.addObject("logout", "Logout!!");
+		}
+		return mav;
+	}
+
 	@GetMapping("/userRegister")
 	public ModelAndView userRegister() {
 		ModelAndView mav = new ModelAndView("/board/userRegister");
 		return mav;
 	}
-	
-	@GetMapping(value = "/register")
-	public ModelAndView viewcreate() {
-		ModelAndView mav = new ModelAndView("board/register");
-		return mav;
-	}
-
-	@GetMapping(value = "/list/pages/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<Map<String, Object>> getList(@PathVariable("page") int page) {
-		Map<String, Object> response = new HashMap<>();
-		Map<String, Object> response1 = new HashMap<>();
-		Map<String, Object> response2 = new HashMap<>();
-
-		int total = service.getTotal();
-		CriteriaVO cri = new CriteriaVO(page, 10);
-		List<BoardDTO> getWithPage = service.getWithPaging(cri);
-
-		PageVO pageVO = new PageVO(cri, total);
-
-		response1.put("data", getWithPage);
-		response2.put("pageDTO", pageVO);
-		response2.put("total", total);
-
-		response.put("TableData", response1);
-		response.put("ListData", response2);
-		log.info(cri);
-
-		log.info(cri.getPageNum());
-		log.info(service.getWithPaging(cri));
-
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	@DeleteMapping(value = "/list")
-	public void alldel(BoardDTO board) {
-		log.info("All Remove Board Object");
-		service.allremove(board);
-	}
-
-	@PostMapping(value = "/register", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public void create(@RequestBody BoardDTO board) {
-		log.info("Send Register : " + board);
-		log.info(board);
-		service.increase();
-		service.register(board);
-	}
-
 
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -162,18 +136,6 @@ public class BoardRestController {
 		log.info("삭제 : " + fileBno);
 		service.AtfileRemove(fileBno);
 	}
-	
-	
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date date = new Date();
-
-		String string = sdf.format(date);
-
-		// yyyy-MM-dd -> yyyy/mm/dd
-		return string.replace("-", File.separator);
-	}
 
 	@GetMapping(value = "/file/{bno}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable("bno") Long bno) {
@@ -189,7 +151,7 @@ public class BoardRestController {
 		FileDTO fileDTO = new FileDTO();
 
 		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
 		// 파일 생성
 		if (uploadPath.exists() == false) {
@@ -197,11 +159,11 @@ public class BoardRestController {
 		}
 
 		for (MultipartFile multipartFile : uploadFile) {
-			
+
 			// 확장자 가져오기
 			String extension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 			String serverName = service.makeFilename(extension);
-			
+
 			try {
 				File saveFile = new File(uploadPath, serverName);
 				fileDTO.setClientName(multipartFile.getOriginalFilename());
@@ -230,7 +192,7 @@ public class BoardRestController {
 		FileDTO fileDTO = new FileDTO();
 
 		// 업로드 폴더에 getFolder 위치 추가
-		File uploadPath = new File(uploadFolder, getFolder());
+		File uploadPath = new File(uploadFolder, service.getFolder());
 
 		// 파일 생성
 		if (uploadPath.exists() == false) {
@@ -264,8 +226,7 @@ public class BoardRestController {
 		}
 
 	};
-	
-	
+
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> download(String serverName) {

@@ -95,7 +95,8 @@ insert into boardExam(bno, title, detail)(select TQQSEQ.nextval, title, detail f
 
 insert into boardExam(bno, title, detail) (select TQQSEQ.nextval, title, detail from boardExam);
 
-
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'tqqseq';
 -- 삭제
 delete from boardExam where bno = 1;
 

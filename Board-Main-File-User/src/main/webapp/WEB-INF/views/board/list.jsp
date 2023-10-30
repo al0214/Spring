@@ -242,16 +242,16 @@ th, td {
 	showList(1);
 
 	function getFile(a) {
-		$.ajax({
+		return $.ajax({
 			type : "GET",
 			url : "/file/" + a + ".json",
 			dataType : "JSON",
 			async : false,
 			success : function(list) {
-				return c = list
+				return list
 			}
-		});
-		return c
+		})
+
 	}
 
 	function getLink(d) {

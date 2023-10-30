@@ -7,7 +7,7 @@ var BoardService = (function() {
 		var page = param.page;
 
 		$.ajax({
-			url : "/list/pages/"+page+".json",
+			url : "/board/list/pages/"+page+".json",
 			data : param,
 			dataType : "json",
 			type : "GET"
@@ -50,7 +50,7 @@ var BoardService = (function() {
 		var dateObj = new Date(timeValue);
 
 		var yy = dateObj.getFullYear();
-		var mm = dateObj.getMonth() + 1; // getMonth´Â 0ºÎÅÍ ½ÃÀÛ
+		var mm = dateObj.getMonth() + 1; // getMonthï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		var dd = dateObj.getDate();
 
 		return [ yy, '-', mm + '-', dd ].join('');

@@ -1,5 +1,8 @@
 drop table users;
 drop table authorities;
+drop sequence tqqSeq;
+drop sequence fileSeq;
+
 
 create table tbl_member(
     userid varchar2(50) not null primary key,
@@ -33,7 +36,7 @@ drop sequence file_seq;
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
 			= 'TQQ_SEQ';
 -- 시퀀스 구성 1 부터 1씩 증가 최대 9999번까지 생성 가능 순환하지 않으며 순차적으로 순번 입력
-CREATE SEQUENCE tqqSeq
+CREATE SEQUENCE tqq_seq
        INCREMENT BY 1
        START WITH 0
        MINVALUE 0
@@ -42,7 +45,7 @@ CREATE SEQUENCE tqqSeq
        ORDER
        NOCACHE ;
 
-CREATE SEQUENCE fileSeq
+CREATE SEQUENCE file_seq
        INCREMENT BY 1
        START WITH 1
        MINVALUE 0
@@ -51,20 +54,27 @@ CREATE SEQUENCE fileSeq
        ORDER
        NOCACHE ;
 
+commit ;
+
 -- bno 4자리수까지 표현 가능 소수점은 허용하지 않음
 -- 제목은 한글 기준 30 글자까지 가능하며 빈값을 허용하지 않음
 -- 내용은 한글 기준 400 글자까지 가능하며 빈값을 허용하지 않음
 -- 생성, 수정 일자는 입력하지 않을시 컴퓨터 기준 시간이 자동 입력됩니다.
 Create TABLE boardExam(
-    bno number(10, 0) ,
+    username varchar2(50),
+    bno number(10, 0) primary key ,
     title varchar2(90) not null ,
     detail varchar2(1200) not null ,
     createDate date default SYSDATE,
-    changeDate date default SYSDATE
+    changeDate date default SYSDATE,
+     constraint fk_boardExam foreign key (username) references users(username) on delete cascade
 );
 
 select * from FileUpLoad;
 
+insert into boardExam(username, bno, title, detail) VALUES ('user00', tqq_seq.nextval, '테스트', '테스트');
+
+commit ;
 
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';
 select FILE_SEQ.nextval from USER_SEQUENCES WHERE SEQUENCE_NAME = 'FILE_SEQ';;
@@ -87,6 +97,10 @@ alter table boardExam add constraint pk_boardExam primary key (bno);
 
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
 			= 'TQQ_SEQ';
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'tqq_seq';
+
+drop table FileUpLoad;
 
 CREATE TABLE FileUpLoad
 (
@@ -104,13 +118,23 @@ CREATE TABLE FileUpLoad
 SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
 			= 'TQQ_SEQ';
 
+select * from boardExam;
+
+commit ;
+
+select * from FileUpLoad;
+
+
+SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
+			= 'TQQ_SEQ';
+
 -- 최대 파일 업로드 개수 3개
 -- 년도 월 일 폴더 생성
 -- bno | 일련번호 | 클라이언트 파일명 | 서버 파일명 | 서버 경로
 select fileBno from FileUpLoad;
 
 
-
+select * from boardExam;
 
 select * from FileUpLoad order by bno;
 select * from boardExam;
@@ -210,4 +234,7 @@ alter sequence tqq_seq INCREMENT BY 1;
 
 commit;
 
-select path from FileUpLoad where bno = 38
+select path from FileUpLoad where bno = 38;
+
+select *
+from tbl_member_auth;

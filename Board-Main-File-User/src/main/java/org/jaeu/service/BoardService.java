@@ -38,7 +38,9 @@ public interface BoardService {
 
 	public void AtfileRemove(Long fileBno);
 
-	public void registerAlterFile(FileDTO fileDTO); 
+	public void registerAlterFile(FileDTO fileDTO);
+
+	public String getFolder(); 
 
 
 }

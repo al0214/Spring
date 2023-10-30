@@ -42,4 +42,6 @@ public interface BoardService {
 	public void registerAlterFile(FileDTO fileDTO); 
 
 	public UserDTO getUser(String userId);
+
+	public String getFolder();
 }
