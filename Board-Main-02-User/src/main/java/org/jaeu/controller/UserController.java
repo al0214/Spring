@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,62 +28,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RequestMapping("*")
-@RestController
+@RequestMapping("/user")
+@Controller
 @Log4j
-@AllArgsConstructor
-public class BoardRestController {
+public class UserController {
 	private BoardService service;
-
-	// 어드민 페이지
-	@GetMapping("/admin")
-	public ModelAndView adminPage(Principal principal) {
-		ModelAndView mav = new ModelAndView("board/admin");
-		mav.addObject("username", principal.getName());
-		return mav;
-	}
 	
-	// 로그인 페이지
-	@GetMapping("/login")
-	public ModelAndView customLogin(String error, String logout) {
-		ModelAndView mav = new ModelAndView("board/login");
-		log.info("error : " + error);
-		log.info("logout : " + logout);
-		
-		if (error != null) {
-			mav.addObject("error", "Login Error Check Your Account");
-		}
-		
-		if (logout != null) {
-			mav.addObject("logout", "Logout!!");
-		}
-		return mav;
-	}
-
-	// 로그아웃 페이지
-	@GetMapping("/logout")
-	public ModelAndView logoutPage() {
-		ModelAndView mav = new ModelAndView("board/customLogout");
-		return mav;
-	}
-	
-	// 접근 제한 페이지
-	@GetMapping("/accessError")
-	public ModelAndView accessError() {
-		ModelAndView mav = new ModelAndView("/board/accessError");
-		return mav;
-	}
 	
 	// 게시판 페이지
 	@GetMapping("/list")
-	public ModelAndView manage( Authentication auth) {
+	public ModelAndView manage(Authentication auth) {
 		ModelAndView mav = new ModelAndView("board/list");
 		mav.addObject("userAuth", auth.getAuthorities());
 		mav.addObject("userName", auth.getName());
@@ -102,8 +62,10 @@ public class BoardRestController {
 		List<BoardDTO> getWithPage = service.getWithPaging(cri);
 
 		PageVO pageVO = new PageVO(cri, total);
-
+		
+		log.info(total);
 		response1.put("data", getWithPage);
+		
 		response2.put("pageDTO", pageVO);
 		response2.put("total", total);
 
@@ -117,12 +79,7 @@ public class BoardRestController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	// 게시판 데이터 전부 지우기
-	@DeleteMapping(value = "/list")
-	public void alldel(BoardDTO board) {
-		log.info("All Remove Board Object");
-		service.allremove(board);
-	}
+
 
 	// 등록 페이지
 	@GetMapping(value = "/register")
@@ -141,7 +98,7 @@ public class BoardRestController {
 		service.increase();
 		service.register(board);
 	}
-	
+
 	// 상세 페이지
 	@GetMapping(value = "/detail/{bno}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -152,7 +109,7 @@ public class BoardRestController {
 
 		return mav;
 	}
-	
+
 	// 상세 페이지 데이터 조회
 	@GetMapping(value = "/detail/{bno}.json", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -167,7 +124,7 @@ public class BoardRestController {
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	// 수정 페이지
 	@GetMapping(value = "/modify/{bno}", produces = "application/text; charset=UTF-8")
 	public ModelAndView modify(@PathVariable Long bno) {
@@ -177,14 +134,14 @@ public class BoardRestController {
 
 		return mav;
 	}
-	
+
 	// 수정 기능
 	@PutMapping(value = "/modify/update")
 	public void update(@RequestBody BoardDTO board) {
 		log.info("수정 : " + board);
 		service.update(board);
 	}
-	
+
 	// 삭제 기능
 	@DeleteMapping(value = "/modify/delete/{bno}")
 	public void delete(@PathVariable Long bno) {
@@ -192,14 +149,14 @@ public class BoardRestController {
 		service.remove(bno);
 		service.fileRemove(bno);
 	}
-	
+
 	// 파일 삭제
 	@DeleteMapping(value = "/file/remove/{fileBno}")
 	public void deleteFile(@PathVariable Long fileBno) {
 		log.info("삭제 : " + fileBno);
 		service.AtfileRemove(fileBno);
 	}
-	
+
 	// 파일 가져오기
 	@GetMapping(value = "/file/{bno}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileDTO>> getfiles(@PathVariable("bno") Long bno) {
@@ -210,7 +167,7 @@ public class BoardRestController {
 	// 파일 업로드
 	@PostMapping(value = "/upload")
 	public void uploadFormPost(@RequestBody MultipartFile[] uploadFile) {
-		log.info("파일 데이터 : " +uploadFile);
+		log.info("파일 데이터 : " + uploadFile);
 		String uploadFolder = "D://UpLoadFile/main";
 		FileDTO fileDTO = new FileDTO();
 
@@ -244,12 +201,12 @@ public class BoardRestController {
 
 			}
 			log.info(fileDTO);
-			
+
 			service.registerFile(fileDTO);
 		}
 
 	};
-	
+
 	// 특정 번호에 파일 업로드
 	@PostMapping(value = "/upload/file")
 	public void uploadPost(@RequestBody MultipartFile[] uploadFile, Long bno) {
@@ -292,7 +249,7 @@ public class BoardRestController {
 		}
 
 	};
-	
+
 	// 파일 다운로드
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
@@ -319,5 +276,4 @@ public class BoardRestController {
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 
 	}
-
-};
+}

@@ -240,7 +240,7 @@ th, td {
 	function getFile(a) {
 		$.ajax({
 			type : "GET",
-			url : "/file/" + a + ".json",
+			url : "/user/file/" + a + ".json",
 			dataType : "JSON",
 			async : false,
 			success : function(list) {

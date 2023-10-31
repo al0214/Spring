@@ -21,10 +21,13 @@
 		<security:intercept-url pattern="/*"
 			access="permitAll" />
 
-		<security:intercept-url
-			pattern="/detail" access="hasRole('ROLE_MEMBER')" />
+		<!-- <security:intercept-url pattern="/user/*"
+			access="hasRole('ROLE_USER')" />
 
-		<security:intercept-url pattern="/admin"
+		<security:intercept-url pattern="/member/*"
+			access="hasRole('ROLE_MEMBER')" /> -->
+
+		<security:intercept-url pattern="/admin/*"
 			access="hasRole('ROLE_ADMIN')" />
 
 		<!-- <security:form-login /> -->
@@ -34,15 +37,15 @@
 		<security:access-denied-handler
 			ref="customAccessDenied" />
 
-		<security:form-login login-page="/login"
+		<security:form-login login-page="/main/login"
 			authentication-success-handler-ref="customLoginSuccess" />
 
-		<security:logout logout-url="/customLogout"
+		<security:logout logout-url="/main/logout"
 			invalidate-session="true" />
 
-		<security:logout logout-url='/customLogout'
+		<security:logout logout-url='/main/logout'
 			invalidate-session="true" delete-cookies="remember-me,JESSION_ID" />
-		
+
 		<security:remember-me
 			data-source-ref="dataSource" token-validity-seconds="604800" />
 	</security:http>

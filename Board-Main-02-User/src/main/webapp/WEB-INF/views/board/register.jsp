@@ -82,16 +82,14 @@
 					onReset="return Returnform()">
 					<div style="padding: 5px 10px; padding-bottom: 20px;">
 						<div style="margin-top: 10px">
-							
+
 							<!-- 유저 아이디 -->
 							<div class="form-group" style="margin-bottom: 10px">
-								<h3>
-									UserName
-								</h3>
+								<h3>UserName</h3>
 								<input name="title" id="userName" class="form-control"
 									maxlength='30' style="height: 40px !important;" readonly>
 							</div>
-							
+
 							<!-- 제목 입력 -->
 							<div class="form-group" style="margin-bottom: 10px">
 								<h3>
@@ -158,7 +156,7 @@
 <script type="text/javascript">
 	console.log('${username}')
 	$('#userName').attr('value', '${username}');
-	
+
 	len = $("input[type='file']").get(0).files.length;
 
 	// 게시판에 첨부될 파일 업로드
@@ -205,11 +203,12 @@
 			if (Checklen() == 1) {
 
 				var formm = {
+					userid : '${username}',
 					title : frr.title.value,
-					detail : frr.detail.value,
-					username: '${username}'
-				}
+					detail : frr.detail.value
 
+				}
+				console.log('${username}입니다')
 				var formData = new FormData();
 
 				var inputFile = $("input[type='file']");

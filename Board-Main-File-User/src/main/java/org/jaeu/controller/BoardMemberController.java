@@ -1,5 +1,6 @@
 package org.jaeu.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,9 @@ public class BoardMemberController {
 	}
 
 	@GetMapping(value = "/register")
-	public ModelAndView viewcreate() {
+	public ModelAndView viewcreate(Principal principal) {
 		ModelAndView mav = new ModelAndView("board/register");
+		mav.addObject("username", principal.getName());
 		return mav;
 	}
 

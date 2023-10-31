@@ -7,7 +7,7 @@ var BoardService = (function() {
 		var page = param.page;
 
 		$.ajax({
-			url : "/list/pages/"+page+".json",
+			url : "/user/list/pages/"+page+".json",
 			data : param,
 			dataType : "json",
 			type : "GET"

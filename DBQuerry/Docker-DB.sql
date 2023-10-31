@@ -54,21 +54,36 @@ CREATE SEQUENCE file_seq
        ORDER
        NOCACHE ;
 
+select count(bno) from
+		boardExam;
+
 commit ;
+
+drop drop type body
+
+select count(bno) from
+		boardExam;
+insert into boardExam(userid, bno, title, detail) VALUES ('user0', 10, '테스트', '테스트');
 
 -- bno 4자리수까지 표현 가능 소수점은 허용하지 않음
 -- 제목은 한글 기준 30 글자까지 가능하며 빈값을 허용하지 않음
 -- 내용은 한글 기준 400 글자까지 가능하며 빈값을 허용하지 않음
 -- 생성, 수정 일자는 입력하지 않을시 컴퓨터 기준 시간이 자동 입력됩니다.
 Create TABLE boardExam(
-    username varchar2(50),
+    userid varchar2(50),
     bno number(10, 0) primary key ,
     title varchar2(90) not null ,
     detail varchar2(1200) not null ,
     createDate date default SYSDATE,
     changeDate date default SYSDATE,
-     constraint fk_boardExam foreign key (username) references users(username) on delete cascade
+    constraint fk_boardExam foreign key (userid) references tbl_member(userid) on delete cascade
 );
+
+drop table boardExam cascade constraints ;
+
+drop table USERS cascade constraints;
+
+select * from tbl_member;
 
 select * from FileUpLoad;
 

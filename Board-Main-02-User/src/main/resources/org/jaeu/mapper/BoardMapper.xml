@@ -27,11 +27,11 @@
 	<select id="getWithPaging" resultType="org.jaeu.domain.BoardDTO">
 		<![CDATA[
 			select 
-				bno, title, detail, createDate, changeDate
+				userid,bno, title, detail, createDate, changeDate
 			from 
 			(
 			select
-			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn, BNO, title, detail, createDate, changeDate
+			 	/*+INDEX_ASC(boardExam pk_board)*/ ROWNUM rn,BNO, title, detail, createDate, changeDate, userid
 			 from 
 			 	boardExam where ROWNUM <= #{pageNum} * #{amount}
 			 	order by bno asc
@@ -47,13 +47,15 @@
 			SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME
 			= 'TQQ_SEQ'
 		</selectKey>
-		insert into boardExam(username,bno, title, detail) values (#{username},#{bno},#{title,
-		jdbcType=VARCHAR}, #{detail, jdbcType=VARCHAR})
+		insert into boardExam(userid,bno, title, detail) values
+		(#{userid},#{bno},#{title,
+		jdbcType=VARCHAR}, #{detail,
+		jdbcType=VARCHAR})
 	</insert>
 
 	<!-- 상세 및 수정 페이지 조회 -->
 	<select id="detail" resultType="org.jaeu.domain.BoardDTO">
-		select bno, title, detail,
+		select userid,bno, title, detail,
 		createDate, changeDate from boardExam where bno
 		= #{bno}
 	</select>
@@ -97,14 +99,16 @@
 	<select id="getFileName" resultType="org.jaeu.domain.FileDTO">
 		select fileBno, bno,
 		clientName, serverName, path, createDate from FileUpLoad
-		where serverName = #{serverName, jdbcType=VARCHAR}
+		where
+		serverName = #{serverName, jdbcType=VARCHAR}
 	</select>
 
 	<!-- 번호로 파일 가져오기 -->
 	<select id="getFiles" resultType="org.jaeu.domain.FileDTO">
 		select fileBno, bno,
 		clientName, serverName, path, createDate from FileUpLoad
-		where bno = #{bno}
+		where bno =
+		#{bno}
 	</select>
 
 	<!-- 게시물 번호로 파일 삭제 -->

@@ -8,7 +8,7 @@
 <body>
 <h1>Admin Page</h1>
 <h3>${username}</h3>
-<a href='/logout'>로그아웃</a>
-<a href='/list'>게시판으로 이동</a>
+<a href='/main/logout'>로그아웃</a>
+<a href='/user/list'>게시판으로 이동</a>
 </body>
 </html>

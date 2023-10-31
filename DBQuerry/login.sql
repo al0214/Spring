@@ -4,6 +4,8 @@ create table users(
     enabled char(1) default '1'
 );
 
+drop table authorities;
+
 create table authorities(
     username varchar2(50) not null,
     authority varchar2(50) not null,
@@ -23,6 +25,10 @@ insert into authorities(username, authority) VALUES ('admin00', 'ADMIN_MANAGER')
 
 commit;
 
+select userid,bno, title, detail,
+		createDate, changeDate from boardExam where bno
+		= '10';
+
 create table tbl_member(
     userid varchar2(50) not null primary key ,
     userpw varchar2(100) not null ,
@@ -31,6 +37,11 @@ create table tbl_member(
     updatedate date default sysdate,
     enabled char(1) default '1'
 );
+
+select * from tbl_member;
+
+
+select * from tbl_member;
 
 create table tbl_member_auth (
     userid varchar2(50) not null ,
